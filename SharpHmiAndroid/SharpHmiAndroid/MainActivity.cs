@@ -21,6 +21,9 @@ namespace SharpHmiAndroid
 			Button button = FindViewById<Button>(Resource.Id.myButton);
 
 			button.Click += delegate { button.Text = $"{count++} clicks!"; };
+
+			CoreListener coreListener = new CoreListener("192.168.1.213", 8087);
+			coreListener.setupConnection();
 		}
 	}
 }

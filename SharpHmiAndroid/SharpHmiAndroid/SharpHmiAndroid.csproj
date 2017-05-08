@@ -55,6 +55,18 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AppInstanceManager.cs" />
+    <Compile Include="AppSetting.cs" />
+    <Compile Include="CoreListener.cs" />
+    <Compile Include="logAdapter.cs" />
+    <Compile Include="LogMessage.cs" />
+    <Compile Include="MessageAdapter.cs" />
+    <Compile Include="MsgSender.cs" />
+    <Compile Include="RPCLogMessage.cs" />
+    <Compile Include="SdlService.cs" />
+    <Compile Include="SharpHmiApplication.cs" />
+    <Compile Include="StringLogMessage.cs" />
+    <Compile Include="UiThreadTools.cs" />
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs</Link>
     </Compile>
@@ -634,24 +646,15 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Manager\ConnectionManager.cs">
       <Link>SharpHmiApi\SharedHmiLib\Manager\ConnectionManager.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Proxy\ProxyHelper.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Proxy\ProxyHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Types\FunctionType.cs">
       <Link>SharpHmiApi\SharedHmiLib\Types\FunctionType.cs</Link>
     </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs">
       <Link>SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs</Link>
     </Compile>
-    <Compile Include="AppInstanceManager.cs" />
-    <Compile Include="AppSetting.cs" />
-    <Compile Include="CoreListener.cs" />
-    <Compile Include="logAdapter.cs" />
-    <Compile Include="LogMessage.cs" />
-    <Compile Include="MessageAdapter.cs" />
-    <Compile Include="MsgSender.cs" />
-    <Compile Include="RPCLogMessage.cs" />
-    <Compile Include="SdlService.cs" />
-    <Compile Include="SharpHmiApplication.cs" />
-    <Compile Include="StringLogMessage.cs" />
-    <Compile Include="UiThreadTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
