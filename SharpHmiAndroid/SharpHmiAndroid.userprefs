@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{D6B444FE-87BC-41E9-A24A-A66234FA6ECA}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Builder\BuildRpc.cs">
+    <Files>
+      <File FileName="SharpHmiAndroid\MainActivity.cs" Line="25" Column="3" />
+      <File FileName="SharpHmiAndroid\AppInstanceManager.cs" Line="12" Column="3" />
+      <File FileName="SharpHmiAndroid\AppSetting.cs" Line="34" Column="1" />
+      <File FileName="SharpHmiAndroid\CoreListener.cs" Line="14" Column="1" />
+      <File FileName="SharpHmiAndroid\logAdapter.cs" Line="1" Column="1" />
+      <File FileName="SharpHmiAndroid\LogMessage.cs" Line="1" Column="1" />
+      <File FileName="SharpHmiAndroid\MessageAdapter.cs" Line="1" Column="1" />
+      <File FileName="SharpHmiAndroid\MsgSender.cs" Line="1" Column="1" />
+      <File FileName="SharpHmiAndroid\RPCLogMessage.cs" Line="1" Column="1" />
+      <File FileName="SharpHmiAndroid\SdlService.cs" Line="1" Column="1" />
+      <File FileName="SharpHmiAndroid\SharpHmiApplication.cs" Line="14" Column="4" />
+      <File FileName="SharpHmiAndroid\StringLogMessage.cs" Line="1" Column="1" />
+      <File FileName="SharpHmiAndroid\UiThreadTools.cs" Line="11" Column="1" />
+      <File FileName="..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Builder\BuildRpc.cs" Line="2" Column="7" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.SharpHmiAndroid HideGettingStarted="True" PreferredExecutionTarget="Android.075aff2613d7e9c8" />
+</Properties>

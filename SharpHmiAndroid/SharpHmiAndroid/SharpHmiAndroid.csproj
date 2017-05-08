@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6B444FE-87BC-41E9-A24A-A66234FA6ECA}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SharpHmiAndroid</RootNamespace>
+    <AssemblyName>SharpHmiAndroid</AssemblyName>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.23.1.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.23.1.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\IncomingRequest.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\IncomingRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\RequestNotifyMessage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\RequestNotifyMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\Result.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\Result.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\RpcNotification.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\RpcNotification.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\RpcRequest.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\RpcRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\RpcResponse.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\RpcResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Builder\BuildRpc.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Builder\BuildRpc.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\AlertType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\AlertType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\AmbientLightStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\AmbientLightStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\AppHMIType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\AppHMIType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ApplicationExitReason.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ApplicationExitReason.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ApplicationsCloseReason.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ApplicationsCloseReason.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\AppPriority.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\AppPriority.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\AudioType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\AudioType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\BitsPerSample.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\BitsPerSample.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ButtonEventMode.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ButtonEventMode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ButtonName.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ButtonName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ButtonPressMode.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ButtonPressMode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\CarModeStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\CarModeStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\CharacterSet.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\CharacterSet.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ClockUpdateMode.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ClockUpdateMode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\CompassDirection.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\CompassDirection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ComponentVolumeStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ComponentVolumeStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ConsentSource.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ConsentSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\DeliveryMode.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\DeliveryMode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\DeviceLevelStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\DeviceLevelStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\DeviceState.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\DeviceState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\Dimension.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\Dimension.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\DisplayType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\DisplayType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\DriverDistractionState.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\DriverDistractionState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ECallConfirmationStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ECallConfirmationStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\EmergencyEventType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\EmergencyEventType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\EmergencyState.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\EmergencyState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\EventTypes.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\EventTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\FileType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\FileType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\FuelCutoffStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\FuelCutoffStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\HMILevel.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\HMILevel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\HmiZoneCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\HmiZoneCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\IgnitionStableStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\IgnitionStableStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\IgnitionStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\IgnitionStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ImageFieldName.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ImageFieldName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\ImageType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\ImageType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\KeyboardEvent.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\KeyboardEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\KeyboardLayout.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\KeyboardLayout.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\KeypressMode.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\KeypressMode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\Language.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\Language.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\LayoutMode.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\LayoutMode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\MediaClockFormat.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\MediaClockFormat.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\MethodName.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\MethodName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\PowerModeQualificationStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\PowerModeQualificationStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\PowerModeStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\PowerModeStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\PrerecordedSpeech.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\PrerecordedSpeech.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\PrimaryAudioSource.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\PrimaryAudioSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\PRNDL.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\PRNDL.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\RequestType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\RequestType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\Result.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\Result.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\SamplingRate.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\SamplingRate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\SoftButtonType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\SoftButtonType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\SpeechCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\SpeechCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\StatisticsType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\StatisticsType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\SystemAction.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\SystemAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\SystemContext.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\SystemContext.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\SystemError.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\SystemError.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\TBTState.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\TBTState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\TextAlignment.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\TextAlignment.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\TextFieldName.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\TextFieldName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\TouchType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\TouchType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\TransportType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\TransportType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\UpdateResult.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\UpdateResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataEventStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataEventStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataNotificationStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataNotificationStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataResultCode.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataResultCode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\VehicleDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\VrCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\VrCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\VRCommandType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\VRCommandType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\WarningLightStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\WarningLightStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\WayPointType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\WayPointType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\WiperStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\WiperStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\AirbagStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\AirbagStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\AudioPassThruCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\AudioPassThruCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\BeltStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\BeltStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\BodyInformation.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\BodyInformation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\ButtonCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\ButtonCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\Choice.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\Choice.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\ClusterModeStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\ClusterModeStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\Coordinate.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\Coordinate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\DateTime.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\DateTime.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\DeviceInfo.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\DeviceInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\DeviceStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\DeviceStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\DIDResult.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\DIDResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\DisplayCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\DisplayCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\ECallInfo.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\ECallInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\EmergencyEvent.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\EmergencyEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\GPSData.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\GPSData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\HeadLampStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\HeadLampStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\HMIApplication.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\HMIApplication.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\HMICapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\HMICapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\Image.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\Image.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\ImageField.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\ImageField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\ImageResolution.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\ImageResolution.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\KeyboardProperties.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\KeyboardProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\LocationDetails.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\LocationDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\MenuParams.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\MenuParams.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\MyKey.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\MyKey.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\OASISAddress.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\OASISAddress.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\PermissionItem.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\PermissionItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\PresetBankCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\PresetBankCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\ScreenParams.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\ScreenParams.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\ServiceInfo.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\ServiceInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\SingleTireStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\SingleTireStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\SoftButton.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\SoftButton.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\SoftButtonCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\SoftButtonCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\TextField.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\TextField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\TextFieldStruct.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\TextFieldStruct.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\TimeFormat.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\TimeFormat.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\TireStatus.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\TireStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\TouchCoord.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\TouchCoord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\TouchEvent.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\TouchEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\TouchEventCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\TouchEventCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\TTSChunk.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\TTSChunk.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\Turn.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\Turn.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\UserFriendlyMessage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\UserFriendlyMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\VehicleDataResult.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\VehicleDataResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\VehicleType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\VehicleType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Structs\VrHelpItem.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Structs\VrHelpItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingNotifications\OnAppRegistered.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingNotifications\OnAppRegistered.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingNotifications\OnAppUnregistered.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingNotifications\OnAppUnregistered.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingRequests\ActivateApp.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingRequests\ActivateApp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingRequests\MixingAudioSupported.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingRequests\MixingAudioSupported.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnAppActivated.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnAppActivated.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnAppDeactivated.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnAppDeactivated.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnExitAllApplications.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnExitAllApplications.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnExitApplication.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnExitApplication.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingNotifications\OnReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingResponses\ActivateApp.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingResponses\ActivateApp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingResponses\MixingAudioSupported.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingResponses\MixingAudioSupported.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Buttons\IncomingRequests\GetCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Buttons\IncomingRequests\GetCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Buttons\OutgoingResponses\GetCapabilities.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Buttons\OutgoingResponses\GetCapabilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Navigation\IncomingRequests\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Navigation\IncomingRequests\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Navigation\OutgoingResponses\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Navigation\OutgoingResponses\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\SDL\IncomingResponses\ActivateApp.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\SDL\IncomingResponses\ActivateApp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\SDL\OutgoingRequests\ActivateApp.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\SDL\OutgoingRequests\ActivateApp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingRequests\GetLanguage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingRequests\GetLanguage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingRequests\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingRequests\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingRequests\Speak.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingRequests\Speak.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingRequests\StopSpeaking.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingRequests\StopSpeaking.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingNotifications\Started.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingNotifications\Started.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingNotifications\Stopped.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingNotifications\Stopped.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingResponses\GetLanguage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingResponses\GetLanguage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingResponses\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingResponses\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingResponses\Speak.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingResponses\Speak.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingResponses\StopSpeaking.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingResponses\StopSpeaking.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\AddCommand.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\AddCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\Alert.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\Alert.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\DeleteCommand.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\DeleteCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\GetLanguage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\GetLanguage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\PerformInteraction.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\PerformInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\SetAppIcon.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\SetAppIcon.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\Show.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingRequests\Show.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingNotifications\OnSystemContext.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingNotifications\OnSystemContext.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\AddCommand.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\AddCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\Alert.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\Alert.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\DeleteCommand.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\DeleteCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\GetLanguage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\GetLanguage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\PerformInteraction.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\PerformInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\SetAppIcon.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\SetAppIcon.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\Show.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingResponses\Show.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\IncomingRequests\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\IncomingRequests\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\OutgoingResponses\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\OutgoingResponses\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\AddCommand.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\AddCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\DeleteCommand.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\DeleteCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\GetLanguage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\GetLanguage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\PerformInteraction.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingRequests\PerformInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingNotifications\Started.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingNotifications\Started.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingNotifications\Stopped.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingNotifications\Stopped.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\AddCommand.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\AddCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\DeleteCommand.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\DeleteCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\GetLanguage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\GetLanguage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\IsReady.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\IsReady.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\PerformInteraction.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingResponses\PerformInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Handshaking\ComponentName.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Handshaking\ComponentName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Handshaking\ComponentPrefix.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Handshaking\ComponentPrefix.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Handshaking\MessageBrokerTypes.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Handshaking\MessageBrokerTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Handshaking\OnButtonSubscription.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Handshaking\OnButtonSubscription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Handshaking\PropertyName.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Handshaking\PropertyName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Handshaking\RegisterComponent.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Handshaking\RegisterComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Interfaces\IMessageListener.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Interfaces\IMessageListener.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Manager\ConnectionManager.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Manager\ConnectionManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Types\FunctionType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Types\FunctionType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs</Link>
+    </Compile>
+    <Compile Include="AppInstanceManager.cs" />
+    <Compile Include="AppSetting.cs" />
+    <Compile Include="CoreListener.cs" />
+    <Compile Include="logAdapter.cs" />
+    <Compile Include="LogMessage.cs" />
+    <Compile Include="MessageAdapter.cs" />
+    <Compile Include="MsgSender.cs" />
+    <Compile Include="RPCLogMessage.cs" />
+    <Compile Include="SdlService.cs" />
+    <Compile Include="SharpHmiApplication.cs" />
+    <Compile Include="StringLogMessage.cs" />
+    <Compile Include="UiThreadTools.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib.sln">
+      <Link>SharpHmiApi\SharedHmiLib.sln</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib.userprefs">
+      <Link>SharpHmiApi\SharedHmiLib.userprefs</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.csproj">
+      <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.csproj</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.projitems">
+      <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.projitems</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.shproj">
+      <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.shproj</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.sln">
+      <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.sln</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\IncomingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingRequests\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingRequests\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\BasicCommunication\OutgoingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Buttons\IncomingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Buttons\IncomingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Buttons\IncomingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Buttons\IncomingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Buttons\OutgoingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Buttons\OutgoingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Buttons\OutgoingRequests\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Buttons\OutgoingRequests\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Buttons\OutgoingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Buttons\OutgoingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Navigation\IncomingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Navigation\IncomingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Navigation\IncomingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Navigation\IncomingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Navigation\OutgoingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Navigation\OutgoingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\Navigation\OutgoingRequests\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\Navigation\OutgoingRequests\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\SDL\IncomingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\SDL\IncomingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\SDL\IncomingRequests\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\SDL\IncomingRequests\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\SDL\IncomingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\SDL\IncomingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\SDL\OutgoingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\SDL\OutgoingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\SDL\OutgoingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\SDL\OutgoingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\IncomingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingRequests\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\TTS\OutgoingRequests\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\IncomingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingRequests\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\UI\OutgoingRequests\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\IncomingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\IncomingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\IncomingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\IncomingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\OutgoingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\OutgoingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\OutgoingRequests\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VehicleInfo\OutgoingRequests\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingNotifications\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingNotifications\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingResponses\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\IncomingResponses\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingRequests\AddFiles.txt">
+      <Link>SharpHmiApi\SharedHmiLib\Controllers\VR\OutgoingRequests\AddFiles.txt</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\libs\readme.txt">
+      <Link>SharpHmiApi\SharedHmiLib\libs\readme.txt</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Main.axml" />
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\mipmap-hdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>
