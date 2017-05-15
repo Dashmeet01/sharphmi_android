@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="log_regular_text_color">#DDD</color>
+    <color name="log_request_text_color">#0e40a3</color>
+    <color name="log_response_success_text_color">#157c10</color>
+    <color name="log_response_failure_text_color">#b71313</color>
+    <color name="log_notification_text_color">#9e9104</color>
+    <color name="red">#ff0000</color>
+    <color name="colorPrimary">#795548</color>
+    <color name="colorPrimaryDark">#5D4037</color>
+    <color name="colorAccent">#BCAAA4</color>
+    <color name="windowBackground">#5e5c5d</color>
+    <color name="blue_filling">#e0e0ff</color>
+    <color name="blue_outline">#6060ff</color>
+    <color name="bullet_gray">#898989</color>
+    <color name="bullet_green">#30e162</color>
+	<color name="white">#FFFFFF</color>
+</resources>

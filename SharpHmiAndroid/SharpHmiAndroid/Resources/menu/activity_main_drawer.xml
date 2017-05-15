@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/consoleLogs"
+            android:icon="@drawable/ic_description_white_24dp"
+            android:title="Console Logs" />
+        <item
+            android:id="@+id/findApps"
+            android:icon="@drawable/ic_map_white_24dp"
+            android:title="Find Apps" />
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_exit_to_app_white_24dp"
+            android:title="Exit App" />
+    </group>
+
+</menu>
