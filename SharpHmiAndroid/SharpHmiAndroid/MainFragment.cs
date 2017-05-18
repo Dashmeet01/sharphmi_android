@@ -14,7 +14,7 @@ using Android.Widget;
 
 namespace SharpHmiAndroid
 {
-	public class InitialFragment : Fragment
+	public class MainFragment : Fragment
 	{
 		public override void OnCreate(Bundle savedInstanceState)
 		{
@@ -28,7 +28,10 @@ namespace SharpHmiAndroid
 			// Use this to return your custom view for this Fragment
 			// return inflater.Inflate(Resource.Layout.YourFragment, container, false);
 
-			return base.OnCreateView(inflater, container, savedInstanceState);
+			View rootView = inflater.Inflate(Resource.Layout.main_fragment, container,
+				false);
+			return rootView;
+			//return base.OnCreateView(inflater, container, savedInstanceState);
 		}
 	}
 }

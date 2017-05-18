@@ -28,7 +28,10 @@ namespace SharpHmiAndroid
 			// Use this to return your custom view for this Fragment
 			// return inflater.Inflate(Resource.Layout.YourFragment, container, false);
 
-			return base.OnCreateView(inflater, container, savedInstanceState);
+			View rootView = inflater.Inflate(Resource.Layout.console_fragment, container,
+											 false);
+			return rootView;
+			//return base.OnCreateView(inflater, container, savedInstanceState);
 		}
 	}
 }

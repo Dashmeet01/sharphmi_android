@@ -708,7 +708,7 @@
       <Link>SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs</Link>
     </Compile>
     <Compile Include="ConsoleFragment.cs" />
-    <Compile Include="InitialFragment.cs" />
+    <Compile Include="MainFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -853,6 +853,8 @@
     <AndroidResource Include="Resources\menu\activity_main_drawer.xml" />
     <AndroidResource Include="Resources\drawable\ic_launcher.png" />
     <AndroidResource Include="Resources\drawable\ic_menu.xml" />
+    <AndroidResource Include="Resources\layout\console_fragment.xml" />
+    <AndroidResource Include="Resources\layout\main_fragment.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
