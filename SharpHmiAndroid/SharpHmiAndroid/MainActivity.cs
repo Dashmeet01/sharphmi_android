@@ -53,6 +53,8 @@ namespace SharpHmiAndroid
 			{
 				this.appSetting = theInstance.getAppSetting();
 			}
+
+			setMainFragment();
 		}
 
 		private void OnNavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
@@ -146,7 +148,7 @@ namespace SharpHmiAndroid
 			{
 				consoleFragment = new ConsoleFragment();
 				fragmentManager.BeginTransaction()
-						.Add(Resource.Id.frame_container, consoleFragment, CONSOLE_FRAGMENT_TAG).CommitAllowingStateLoss();
+				               .Replace(Resource.Id.frame_container, consoleFragment, CONSOLE_FRAGMENT_TAG).CommitAllowingStateLoss();
 				fragmentManager.ExecutePendingTransactions();
 				SetTitle(Resource.String.app_name);
 			}
