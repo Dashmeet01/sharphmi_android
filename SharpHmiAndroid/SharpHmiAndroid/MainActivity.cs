@@ -42,12 +42,13 @@ namespace SharpHmiAndroid
 			navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
 			navigationView.NavigationItemSelected += OnNavigationItemSelected;
 
-			AppInstanceManager theInstance = AppInstanceManager.getInstance();
+			AppInstanceManager theInstance = AppInstanceManager.Instance;
 
 			if ((AppInstanceManager.bRecycled == false) || (theInstance.getAppSetting() == null))
 			{ //Newly launched application.
 				this.appSetting = new AppSetting(this);
 				theInstance.setAppSetting(this.appSetting);
+				theInstance.setupConnection("192.168.1.213", 8087);
 			}
 			else
 			{

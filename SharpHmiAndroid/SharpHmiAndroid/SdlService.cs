@@ -19,44 +19,7 @@ namespace SharpHmiAndroid
 
 		public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
 		{
-			proxyListener = AppInstanceManager.getInstance().getProxyListener();
-
-			if (proxyListener != null)
-			{
-				if (!proxyListener.doesServiceMatch(this))
-				{
-					proxyListener.setService(this);
-				}
-				_msgAdapter = proxyListener.getMsgAdapter();
-				appSetting = proxyListener.getAppSetting();
-
-				if (appSetting != null)
-				{
-					isVerboseEnabled = appSetting.getVerboseLoggingEnabled();
-				}
-				setupVideoStreamWriter();
-
-			}
-			else
-			{
-				return StartCommandResult.Sticky;
-			}
-
 			instance = this;
-
-			setupService(false);
-
-			if (_msgAdapter != null)
-			{
-				logMessage = new StringLogMessage("onStartCommand");
-				_msgAdapter.logMessage(logMessage, Log.ERROR, true);
-			}
-
-			if (intent != null)
-			{
-				startProxy();
-			}
-
 			return StartCommandResult.Sticky;		}
 
 		public override IBinder OnBind(Intent intent)
@@ -68,4 +31,5 @@ namespace SharpHmiAndroid
 		{
 			base.OnDestroy();
 		}
+	}
 }
