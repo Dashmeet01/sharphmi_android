@@ -103,8 +103,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppInstanceManager.cs" />
     <Compile Include="AppSetting.cs" />
-    <Compile Include="logAdapter.cs" />
-    <Compile Include="LogMessage.cs" />
     <Compile Include="MessageAdapter.cs" />
     <Compile Include="MsgSender.cs" />
     <Compile Include="RPCLogMessage.cs" />
@@ -1134,11 +1132,17 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Interfaces\IConnectionListener.cs">
       <Link>SharpHmiApi\SharedHmiLib\Interfaces\IConnectionListener.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Interfaces\IDispatchingHelper.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Interfaces\IDispatchingHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Interfaces\IMessageListener.cs">
       <Link>SharpHmiApi\SharedHmiLib\Interfaces\IMessageListener.cs</Link>
     </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Manager\ConnectionManager.cs">
       <Link>SharpHmiApi\SharedHmiLib\Manager\ConnectionManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Manager\ConsoleLogDispatchManager.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Manager\ConsoleLogDispatchManager.cs</Link>
     </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs">
       <Link>SharpHmiApi\SharedHmiLib\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</Link>
@@ -1157,6 +1161,9 @@
     </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs">
       <Link>SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\LogMessage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Utility\LogMessage.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1214,6 +1221,7 @@
     <AndroidResource Include="Resources\drawable\ic_menu.xml" />
     <AndroidResource Include="Resources\layout\console_fragment.xml" />
     <AndroidResource Include="Resources\layout\main_fragment.xml" />
+    <AndroidResource Include="Resources\layout\row.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

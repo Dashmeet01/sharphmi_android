@@ -16,11 +16,16 @@ namespace SharpHmiAndroid
 {
 	public class MainFragment : Fragment
 	{
+		AppSetting appSetting = null;
+
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 
-			// Create your fragment here
+			if(SdlService.instance == null) {
+				var intent = new Intent((MainActivity)this.Activity, typeof(SdlService));
+				((MainActivity) this.Activity).StartService(intent);
+			}
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

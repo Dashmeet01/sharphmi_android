@@ -2,14 +2,21 @@
 using System.Runtime.CompilerServices;
 using HmiApiLib.Interfaces;
 using HmiApiLib.Proxy;
+using System.Collections.Generic;
+using HmiApiLib;
+using Android.App;
 
 namespace SharpHmiAndroid
 {
-	public class AppInstanceManager : ProxyHelper, IConnectionListener
+	public class AppInstanceManager : ProxyHelper, IConnectionListener, IDispatchingHelper<LogMessage>
 	{
 		private static volatile AppInstanceManager instance;
 		private static object syncRoot = new Object();
+		private List<LogMessage> _logMessages = new List<LogMessage>();
+		public MessageAdapter _msgAdapter = null;
 		public static Boolean bRecycled = false;
+		public Boolean isConnected = false;
+		private Activity curActivity = null;
 
 		public static Boolean appResumed = false;
 
@@ -53,9 +60,26 @@ namespace SharpHmiAndroid
 			return this.appSetting;
 		}
 
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public void setActivity(Activity activity)
+		{
+			this.curActivity = activity;
+
+			curActivity.RunOnUiThread(() => initializeMsgAdapter());
+		}
+
+		public void initializeMsgAdapter()
+		{
+			if (_msgAdapter == null)
+			{
+				_msgAdapter = new MessageAdapter(this.curActivity, Resource.Layout.row, _logMessages);
+			}
+
+		}
+
 		public void setupConnection(String ipAddr, int portNum)
 		{
-			initConnectionManager(ipAddr, portNum, this, this);
+			initConnectionManager(ipAddr, portNum, this, this, this);
 		}
 
 		//UI interface callbacks
@@ -189,18 +213,45 @@ namespace SharpHmiAndroid
 		{
 			// Handle logic for Callback triggered when Socket is Opened.
 			Console.WriteLine("Debug: onOpen()");
+			isConnected = true;
 		}
 
 		public void onClose()
 		{
 			// Handle logic for Callback triggered when Socket is Opened.
 			Console.WriteLine("Debug: onClose()");
+			isConnected = false;
 		}
 
 		public void onError()
 		{
 			// Handle logic for Callback triggered when Socket is Opened.
 			Console.WriteLine("Debug: onError()");
+			isConnected = false;
+		}
+
+		private void addMessageToUI(LogMessage message)
+		{
+			if (curActivity == null) return;
+
+			curActivity.RunOnUiThread(() => _msgAdapter.addMessage(message));
+		}
+
+		public void dispatch(LogMessage message)
+		{
+			addMessageToUI(message);
+		}
+
+		public void handleDispatchingError(string info, Exception ex)
+		{
+			LogMessage logMessage = new LogMessage(info);
+            addMessageToUI(logMessage);
+		}
+
+		public void handleQueueingError(string info, Exception ex)
+		{
+			LogMessage logMessage = new LogMessage(info);
+			addMessageToUI(logMessage);
 		}
 	}
 }

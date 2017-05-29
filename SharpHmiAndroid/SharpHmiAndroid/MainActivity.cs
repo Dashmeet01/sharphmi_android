@@ -48,12 +48,12 @@ namespace SharpHmiAndroid
 			{ //Newly launched application.
 				this.appSetting = new AppSetting(this);
 				theInstance.setAppSetting(this.appSetting);
-				theInstance.setupConnection("192.168.1.213", 8087);
 			}
 			else
 			{
 				this.appSetting = theInstance.getAppSetting();
 			}
+			theInstance.setActivity(this);
 
 			setMainFragment();
 		}

@@ -16,6 +16,7 @@ namespace SharpHmiAndroid
 {
 	public class ConsoleFragment : Fragment
 	{
+		private ListView _listview = null;
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -30,6 +31,16 @@ namespace SharpHmiAndroid
 
 			View rootView = inflater.Inflate(Resource.Layout.console_fragment, container,
 											 false);
+
+			_listview = (ListView) rootView.FindViewById(Resource.Id.messageList);
+			_listview.Clickable = true;
+			_listview.Adapter = AppInstanceManager.Instance._msgAdapter;
+			_listview.TranscriptMode = TranscriptMode.AlwaysScroll;
+
+			if (AppInstanceManager.Instance._msgAdapter.Count > 10)
+			{
+				_listview.StackFromBottom = true;
+			}
 			return rootView;
 			//return base.OnCreateView(inflater, container, savedInstanceState);
 		}
