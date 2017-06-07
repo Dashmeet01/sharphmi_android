@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.Views;
@@ -9,15 +9,17 @@ using HmiApiLib;
 
 namespace SharpHmiAndroid
 {
-	public class MessageAdapter : ArrayAdapter<LogMessage>
+	public class MessageAdapter : BaseAdapter<LogMessage>
 	{
 		private List<LogMessage> items;
 		private LayoutInflater vi;
-		public MessageAdapter(Context context, int textViewResourceId, List<LogMessage> items) : base(context, textViewResourceId, items)
+		private Activity activity;
+		public MessageAdapter(Activity context, List<LogMessage> items) : base()
 		{
             this.vi = (LayoutInflater)context
 				.GetSystemService(Context.LayoutInflaterService);
 			this.items = items;
+			this.activity = context;
 		}
 
 		public List<LogMessage> getLogMessageList()
@@ -33,9 +35,18 @@ namespace SharpHmiAndroid
 		}
 
 		/** Adds the specified message to the items list and notifies of the change. */
+		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void addMessage(LogMessage m)
 		{
-			Add(m);
+			if (this.activity == null) return;
+
+			this.activity.RunOnUiThread(() => addMessageAndNotify(m));
+		}
+
+		public void addMessageAndNotify(LogMessage logMessage)
+		{
+			items.Add(logMessage);
+			NotifyDataSetChanged();
 		}
 
 		public override int Count
@@ -46,7 +57,15 @@ namespace SharpHmiAndroid
 			}
 		}
 
-		public View getView(int position, View convertView, ViewGroup parent)
+		public override LogMessage this[int position]
+		{
+			get
+			{
+				return items[position];
+			}
+		}
+
+		public override View GetView(int position, View convertView, ViewGroup parent)
 		{
 			ViewHolder holder = null;
 			TextView lblTop = null;
@@ -82,7 +101,7 @@ namespace SharpHmiAndroid
 				lblTop.Text = "";
 			}
 
-			LogMessage logObj = GetItem(position);
+			LogMessage logObj = items[position];
 			if (logObj != null)
 			{
 				lblTop.Text = logObj.getMessage();
@@ -91,6 +110,11 @@ namespace SharpHmiAndroid
 			}
 
 			return rowView;
+		}
+
+		public override long GetItemId(int position)
+		{
+			return position;
 		}
 	}
 }

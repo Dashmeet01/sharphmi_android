@@ -53,9 +53,8 @@ namespace SharpHmiAndroid
 			{
 				this.appSetting = theInstance.getAppSetting();
 			}
-			theInstance.setActivity(this);
 
-			setMainFragment();
+			setConsoleFragment();
 		}
 
 		private void OnNavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
@@ -67,12 +66,12 @@ namespace SharpHmiAndroid
 			switch (menuItem.ItemId)
 			{
 				case Resource.Id.mainFragment:
-					clearAllBackStackFragments();
+                    setMainFragment();
 					Android.Widget.Toast.MakeText(Application.Context, "Main fragment selected", Android.Widget.ToastLength.Long).Show();
 					break;
 
 				case Resource.Id.consoleLogs:
-					setConsoleFragment();
+					clearAllBackStackFragments();
 					Android.Widget.Toast.MakeText(Application.Context, "Console Logs selected", Android.Widget.ToastLength.Long).Show();
 					break;
 
@@ -115,11 +114,6 @@ namespace SharpHmiAndroid
 		{
 			FragmentManager fm = this.FragmentManager;
 			fm.PopBackStackImmediate();
-
-			//FragmentTransaction fragmentTx = this.FragmentManager.BeginTransaction();
-			//DetailsFragment detailsFrag = new DetailsFragment();
-			//fragmentTx.Add(Resource.Id.fragment_container, detailsFrag);
-			//fragmentTx.Commit();
 		}
 
 		public void setMainFragment()
@@ -132,7 +126,7 @@ namespace SharpHmiAndroid
 			{
 				mainFragment = new MainFragment();
 				FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
-				fragmentTransaction.Add(Resource.Id.frame_container, mainFragment, MAIN_FRAGMENT_TAG).AddToBackStack(null).Commit();
+				fragmentTransaction.Replace(Resource.Id.frame_container, mainFragment, MAIN_FRAGMENT_TAG).AddToBackStack(null).Commit();
 				fragmentManager.ExecutePendingTransactions();
 				this.SetTitle(Resource.String.app_name);
 			}
@@ -149,7 +143,7 @@ namespace SharpHmiAndroid
 			{
 				consoleFragment = new ConsoleFragment();
 				fragmentManager.BeginTransaction()
-				               .Replace(Resource.Id.frame_container, consoleFragment, CONSOLE_FRAGMENT_TAG).CommitAllowingStateLoss();
+				               .Add(Resource.Id.frame_container, consoleFragment, CONSOLE_FRAGMENT_TAG).CommitAllowingStateLoss();
 				fragmentManager.ExecutePendingTransactions();
 				SetTitle(Resource.String.app_name);
 			}

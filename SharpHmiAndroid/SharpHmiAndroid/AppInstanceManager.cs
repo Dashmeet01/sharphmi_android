@@ -2,9 +2,7 @@
 using System.Runtime.CompilerServices;
 using HmiApiLib.Interfaces;
 using HmiApiLib.Proxy;
-using System.Collections.Generic;
 using HmiApiLib;
-using Android.App;
 
 namespace SharpHmiAndroid
 {
@@ -12,11 +10,9 @@ namespace SharpHmiAndroid
 	{
 		private static volatile AppInstanceManager instance;
 		private static object syncRoot = new Object();
-		private List<LogMessage> _logMessages = new List<LogMessage>();
 		public MessageAdapter _msgAdapter = null;
 		public static Boolean bRecycled = false;
 		public Boolean isConnected = false;
-		private Activity curActivity = null;
 
 		public static Boolean appResumed = false;
 
@@ -61,20 +57,15 @@ namespace SharpHmiAndroid
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void setActivity(Activity activity)
+		public void setMsgAdapter(MessageAdapter messageAdapter)
 		{
-			this.curActivity = activity;
-
-			curActivity.RunOnUiThread(() => initializeMsgAdapter());
+			this._msgAdapter = messageAdapter;
 		}
 
-		public void initializeMsgAdapter()
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public MessageAdapter getMsgAdapter()
 		{
-			if (_msgAdapter == null)
-			{
-				_msgAdapter = new MessageAdapter(this.curActivity, Resource.Layout.row, _logMessages);
-			}
-
+			return this._msgAdapter;
 		}
 
 		public void setupConnection(String ipAddr, int portNum)
@@ -232,9 +223,9 @@ namespace SharpHmiAndroid
 
 		private void addMessageToUI(LogMessage message)
 		{
-			if (curActivity == null) return;
+			if (_msgAdapter == null) return;
 
-			curActivity.RunOnUiThread(() => _msgAdapter.addMessage(message));
+			_msgAdapter.addMessage(message);
 		}
 
 		public void dispatch(LogMessage message)

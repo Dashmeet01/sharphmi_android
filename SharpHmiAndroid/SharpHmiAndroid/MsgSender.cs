@@ -1,5 +1,4 @@
-﻿using System;
-namespace SharpHmiAndroid
+﻿namespace SharpHmiAndroid
 {
 	public class MsgSender
 	{

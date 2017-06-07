@@ -1,48 +1,57 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
+using HmiApiLib;
 
 namespace SharpHmiAndroid
 {
 	public class ConsoleFragment : Fragment
 	{
 		private ListView _listview = null;
+		public MessageAdapter _msgAdapter = null;
+		private List<LogMessage> _logMessages = new List<LogMessage>();
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 
-			// Create your fragment here
+			if (AppInstanceManager.Instance.getMsgAdapter() == null)
+			{
+				_msgAdapter = new MessageAdapter(this.Activity, _logMessages);
+				AppInstanceManager.Instance.setMsgAdapter(_msgAdapter);
+			}
+			else
+			{
+				_msgAdapter = AppInstanceManager.Instance.getMsgAdapter();
+			}
+
+			if (SdlService.instance == null)
+			{
+				var intent = new Intent((MainActivity)this.Activity, typeof(SdlService));
+				((MainActivity)this.Activity).StartService(intent);
+			}
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			// Use this to return your custom view for this Fragment
-			// return inflater.Inflate(Resource.Layout.YourFragment, container, false);
-
 			View rootView = inflater.Inflate(Resource.Layout.console_fragment, container,
 											 false);
 
 			_listview = (ListView) rootView.FindViewById(Resource.Id.messageList);
 			_listview.Clickable = true;
-			_listview.Adapter = AppInstanceManager.Instance._msgAdapter;
+
+
+			_listview.Adapter = _msgAdapter;
 			_listview.TranscriptMode = TranscriptMode.AlwaysScroll;
 
-			if (AppInstanceManager.Instance._msgAdapter.Count > 10)
+			if (_listview.Adapter.Count > 10)
 			{
 				_listview.StackFromBottom = true;
 			}
 			return rootView;
-			//return base.OnCreateView(inflater, container, savedInstanceState);
 		}
 	}
 }
