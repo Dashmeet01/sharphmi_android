@@ -28,7 +28,7 @@ namespace SharpHmiAndroid
 
 			if (!theInstance.isConnected)
 			{
-				theInstance.setupConnection("192.168.1.213", 8087);				
+				theInstance.setupConnection("127.0.0.1", 8087);				
 			}
 
             setupService(false);
