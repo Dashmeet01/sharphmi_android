@@ -1144,15 +1144,6 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Manager\ConsoleLogDispatchManager.cs">
       <Link>SharpHmiApi\SharedHmiLib\Manager\ConsoleLogDispatchManager.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs">
-      <Link>SharpHmiApi\SharedHmiLib\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs">
-      <Link>SharpHmiApi\SharedHmiLib\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs">
-      <Link>SharpHmiApi\SharedHmiLib\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Proxy\ProxyHelper.cs">
       <Link>SharpHmiApi\SharedHmiLib\Proxy\ProxyHelper.cs</Link>
     </Compile>
@@ -1165,6 +1156,7 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\LogMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Utility\LogMessage.cs</Link>
     </Compile>
+    <Compile Include="Const.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -1188,9 +1180,6 @@
     </None>
     <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.sln">
       <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.sln</Link>
-    </None>
-    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.userprefs">
-      <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.userprefs</Link>
     </None>
     <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\libs\readme.txt">
       <Link>SharpHmiApi\SharedHmiLib\libs\readme.txt</Link>
@@ -1217,11 +1206,13 @@
     <AndroidResource Include="Resources\drawable\button_background.xml" />
     <AndroidResource Include="Resources\drawable\button_background_selected.xml" />
     <AndroidResource Include="Resources\menu\activity_main_drawer.xml" />
-    <AndroidResource Include="Resources\drawable\ic_launcher.png" />
     <AndroidResource Include="Resources\drawable\ic_menu.xml" />
     <AndroidResource Include="Resources\layout\console_fragment.xml" />
     <AndroidResource Include="Resources\layout\main_fragment.xml" />
     <AndroidResource Include="Resources\layout\row.xml" />
+    <AndroidResource Include="Resources\menu\main.xml" />
+    <AndroidResource Include="Resources\layout\setting_option.xml" />
+    <AndroidResource Include="Resources\drawable\ic_launcher.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

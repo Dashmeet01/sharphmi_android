@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-		<item
-            android:id="@+id/mainFragment"
-            android:icon="@drawable/ic_description_white_24dp"
-            android:title="Main Fragment" />
         <item
             android:id="@+id/consoleLogs"
             android:icon="@drawable/ic_description_white_24dp"

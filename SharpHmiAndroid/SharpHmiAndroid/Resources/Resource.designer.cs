@@ -2492,6 +2492,15 @@ namespace SharpHmiAndroid
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f0800ab
+			public const int Debug_Settings = 2131230891;
+			
+			// aapt resource value: 0x7f0800ac
+			public const int TextView7 = 2131230892;
+			
+			// aapt resource value: 0x7f0800ae
+			public const int TextView8 = 2131230894;
+			
 			// aapt resource value: 0x7f08008d
 			public const int action0 = 2131230861;
 			
@@ -2615,8 +2624,8 @@ namespace SharpHmiAndroid
 			// aapt resource value: 0x7f080035
 			public const int collapseActionView = 2131230773;
 			
-			// aapt resource value: 0x7f0800ad
-			public const int consoleLogs = 2131230893;
+			// aapt resource value: 0x7f0800b2
+			public const int consoleLogs = 2131230898;
 			
 			// aapt resource value: 0x7f080052
 			public const int contentPanel = 2131230802;
@@ -2687,8 +2696,8 @@ namespace SharpHmiAndroid
 			// aapt resource value: 0x7f08001c
 			public const int fill_vertical = 2131230748;
 			
-			// aapt resource value: 0x7f0800ae
-			public const int findApps = 2131230894;
+			// aapt resource value: 0x7f0800b3
+			public const int findApps = 2131230899;
 			
 			// aapt resource value: 0x7f080043
 			public const int @fixed = 2131230787;
@@ -2750,11 +2759,8 @@ namespace SharpHmiAndroid
 			// aapt resource value: 0x7f08004c
 			public const int list_item = 2131230796;
 			
-			// aapt resource value: 0x7f0800ac
-			public const int mainFragment = 2131230892;
-			
-			// aapt resource value: 0x7f0800ab
-			public const int masked = 2131230891;
+			// aapt resource value: 0x7f0800b1
+			public const int masked = 2131230897;
 			
 			// aapt resource value: 0x7f080090
 			public const int media_actions = 2131230864;
@@ -2768,11 +2774,14 @@ namespace SharpHmiAndroid
 			// aapt resource value: 0x7f080042
 			public const int mini = 2131230786;
 			
+			// aapt resource value: 0x7f0800aa
+			public const int moreSettingOptions_Root = 2131230890;
+			
 			// aapt resource value: 0x7f08002c
 			public const int multiply = 2131230764;
 			
-			// aapt resource value: 0x7f0800af
-			public const int nav_exit = 2131230895;
+			// aapt resource value: 0x7f0800b4
+			public const int nav_exit = 2131230900;
 			
 			// aapt resource value: 0x7f080088
 			public const int nav_view = 2131230856;
@@ -2881,6 +2890,15 @@ namespace SharpHmiAndroid
 			
 			// aapt resource value: 0x7f080076
 			public const int select_dialog_listview = 2131230838;
+			
+			// aapt resource value: 0x7f0800ad
+			public const int selectprotocol_ipAddr = 2131230893;
+			
+			// aapt resource value: 0x7f0800af
+			public const int selectprotocol_tcpPort = 2131230895;
+			
+			// aapt resource value: 0x7f0800b5
+			public const int settings = 2131230901;
 			
 			// aapt resource value: 0x7f080060
 			public const int shortcut = 2131230816;
@@ -3011,8 +3029,8 @@ namespace SharpHmiAndroid
 			// aapt resource value: 0x7f08000e
 			public const int view_offset_helper = 2131230734;
 			
-			// aapt resource value: 0x7f0800aa
-			public const int visible = 2131230890;
+			// aapt resource value: 0x7f0800b0
+			public const int visible = 2131230896;
 			
 			// aapt resource value: 0x7f080038
 			public const int withText = 2131230776;
@@ -3299,7 +3317,10 @@ namespace SharpHmiAndroid
 			public const int select_dialog_singlechoice_material = 2130968650;
 			
 			// aapt resource value: 0x7f04004b
-			public const int support_simple_spinner_dropdown_item = 2130968651;
+			public const int setting_option = 2130968651;
+			
+			// aapt resource value: 0x7f04004c
+			public const int support_simple_spinner_dropdown_item = 2130968652;
 			
 			static Layout()
 			{
@@ -3316,6 +3337,9 @@ namespace SharpHmiAndroid
 			
 			// aapt resource value: 0x7f0e0000
 			public const int activity_main_drawer = 2131623936;
+			
+			// aapt resource value: 0x7f0e0001
+			public const int main = 2131623937;
 			
 			static Menu()
 			{
@@ -3345,6 +3369,9 @@ namespace SharpHmiAndroid
 		
 		public partial class String
 		{
+			
+			// aapt resource value: 0x7f0a002f
+			public const int Debug_Settings = 2131361839;
 			
 			// aapt resource value: 0x7f0a0002
 			public const int abc_action_bar_home_description = 2131361794;
@@ -3477,6 +3504,18 @@ namespace SharpHmiAndroid
 			
 			// aapt resource value: 0x7f0a0015
 			public const int search_menu_title = 2131361813;
+			
+			// aapt resource value: 0x7f0a0030
+			public const int selectprotocol_ipAddress = 2131361840;
+			
+			// aapt resource value: 0x7f0a0031
+			public const int selectprotocol_ipAddressDefault = 2131361841;
+			
+			// aapt resource value: 0x7f0a0032
+			public const int selectprotocol_tcpPort = 2131361842;
+			
+			// aapt resource value: 0x7f0a0033
+			public const int selectprotocol_tcpPortDefault = 2131361843;
 			
 			// aapt resource value: 0x7f0a0016
 			public const int status_bar_notification_info_overflow = 2131361814;

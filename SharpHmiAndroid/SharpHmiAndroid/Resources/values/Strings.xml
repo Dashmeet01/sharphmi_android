@@ -4,4 +4,9 @@
 	<string name="connect">Connect</string>
 	<string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+	<string name="Debug_Settings"><b><i><u>Connection Settings</u></i></b></string>
+	<string name="selectprotocol_ipAddress">IP address:</string>
+    <string name="selectprotocol_ipAddressDefault">127.0.0.1</string>
+    <string name="selectprotocol_tcpPort">Port:</string>
+    <string name="selectprotocol_tcpPortDefault">8087</string>
 </resources>

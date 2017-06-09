@@ -12,6 +12,7 @@ namespace SharpHmiAndroid
 		// variable to contain the current state of the service
 		public static SdlService instance = null;
 		NotificationManager mNotificationManager;
+		AppSetting appSetting;
 
 		public override void OnCreate()
 		{
@@ -26,9 +27,17 @@ namespace SharpHmiAndroid
 
 			AppInstanceManager theInstance = AppInstanceManager.Instance;
 
+			appSetting = theInstance.getAppSetting();
+
 			if (!theInstance.isConnected)
 			{
-				theInstance.setupConnection("127.0.0.1", 8087);				
+				if (appSetting != null)
+				{
+					new System.Threading.Thread(new System.Threading.ThreadStart(() =>
+					{
+						theInstance.setupConnection(appSetting.getIPAddress(), int.Parse(appSetting.getTcpPort()));
+					})).Start();
+				}
 			}
 
             setupService(false);

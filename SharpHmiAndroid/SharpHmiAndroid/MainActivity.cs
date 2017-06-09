@@ -6,6 +6,11 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
 using System.Timers;
+using Android.Content;
+using Android.Widget;
+using Android.Text;
+using Android.Content.Res;
+using Android.Support.V7.Preferences;
 
 namespace SharpHmiAndroid
 {
@@ -25,9 +30,9 @@ namespace SharpHmiAndroid
 			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Main);
 
-			var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+			var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
 			SetSupportActionBar(toolbar);
-			SupportActionBar.SetHomeButtonEnabled(true);
+//			SupportActionBar.SetHomeButtonEnabled(true);
 			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu);
 
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
@@ -57,6 +62,13 @@ namespace SharpHmiAndroid
 			setConsoleFragment();
 		}
 
+		public override bool OnCreateOptionsMenu(IMenu menu)
+		{
+			var inflater = MenuInflater;
+			inflater.Inflate(Resource.Menu.main, menu);
+			return base.OnCreateOptionsMenu(menu);
+		}
+
 		private void OnNavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
 		{
 			var menuItem = e.MenuItem;
@@ -65,18 +77,14 @@ namespace SharpHmiAndroid
 
 			switch (menuItem.ItemId)
 			{
-				case Resource.Id.mainFragment:
-                    setMainFragment();
-					Android.Widget.Toast.MakeText(Application.Context, "Main fragment selected", Android.Widget.ToastLength.Long).Show();
-					break;
-
 				case Resource.Id.consoleLogs:
 					clearAllBackStackFragments();
 					Android.Widget.Toast.MakeText(Application.Context, "Console Logs selected", Android.Widget.ToastLength.Long).Show();
 					break;
 
 				case Resource.Id.findApps:
-					Android.Widget.Toast.MakeText(Application.Context, "Find New Apps selected", Android.Widget.ToastLength.Long).Show();
+                    setMainFragment();
+					Android.Widget.Toast.MakeText(Application.Context, "Find Apps selected", Android.Widget.ToastLength.Long).Show();
 					break;
 
 				case Resource.Id.nav_exit:
@@ -97,14 +105,14 @@ namespace SharpHmiAndroid
 
 			var timer = new Timer();
 			//What to do when the time elapses
-			timer.Elapsed += (sender, args) => FireTheMissiles();
+			timer.Elapsed += (sender, args) => ExitAppCallback();
 			//How often (5 sec)
 			timer.Interval = 50;
 			//Start it!
 			timer.Enabled = true;
 		}
 
-		private void FireTheMissiles()
+		private void ExitAppCallback()
 		{
 			Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
 		}
@@ -153,11 +161,86 @@ namespace SharpHmiAndroid
 		{
 			switch (item.ItemId)
 			{
-				case Android.Resource.Id.Home:
-					drawer.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
+				case Resource.Id.settings:
+					settingsDialog();
 					return true;
+
+				default:
+					return base.OnOptionsItemSelected(item);
 			}
-			return base.OnOptionsItemSelected(item);
+		}
+
+		public void settingsDialog()
+		{
+			Android.Support.V7.App.AlertDialog.Builder builder;
+			Android.Support.V7.App.AlertDialog dlg;
+
+			appSetting = AppInstanceManager.Instance.getAppSetting();
+
+			LayoutInflater inflater = (LayoutInflater)GetSystemService(Context.LayoutInflaterService);
+			View layout = inflater.Inflate(Resource.Layout.setting_option, null);
+
+			EditText ipAddressEditText = layout
+				.FindViewById(Resource.Id.selectprotocol_ipAddr) as EditText;
+			EditText tcpPortEditText = (EditText)layout
+				.FindViewById(Resource.Id.selectprotocol_tcpPort);
+
+			string ipAddress = appSetting.getIPAddress();
+			string tcpPort = appSetting.getTcpPort();
+
+
+			builder = new Android.Support.V7.App.AlertDialog.Builder(this);
+
+			ipAddressEditText.Text = ipAddress;
+			tcpPortEditText.Text = tcpPort;
+
+			string htmlString = "<b><u>SharpHmi Settings</u></b>";
+			TextView title = new TextView(this);
+			title.Gravity = GravityFlags.Center;
+			title.Text = Html.FromHtml(htmlString).ToString();
+			title.TextSize = 25;
+
+			builder.SetCustomTitle(title);
+			builder.SetPositiveButton("OK", (senderAlert, args) => { 
+
+				if (ipAddressEditText.Length() != 0)
+				{
+					appSetting.setIPAddress(ipAddressEditText.Text.ToString());
+				}
+
+				if (tcpPortEditText.Length() != 0)
+				{
+					appSetting.setTcpPort(tcpPortEditText.Text.ToString());
+				}
+
+				string tmpIpAddress = appSetting.getIPAddress();
+				string tmpTcpPortNumber = appSetting.getTcpPort();
+
+				ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+
+				prefs.Edit().PutString(Const.PREFS_KEY_TRANSPORT_IP, appSetting.getIPAddress())
+						    .PutInt(Const.PREFS_KEY_TRANSPORT_PORT, int.Parse(appSetting.getTcpPort())).Commit();
+
+				if ((ipAddress != tmpIpAddress) || (tcpPort != tmpTcpPortNumber))
+				{
+					new System.Threading.Thread(new System.Threading.ThreadStart(() =>
+					{
+						AppInstanceManager.Instance.setupConnection(appSetting.getIPAddress(), int.Parse(appSetting.getTcpPort()));
+					})).Start();
+
+				}
+
+				builder.Dispose();
+			});
+
+			builder.SetNegativeButton("Cancel", (senderAlert, args) => {
+				builder.Dispose();
+			});
+
+			builder.SetCancelable(true);
+			builder.SetView(layout);
+			dlg = builder.Create();
+			dlg.Show();
 		}
 
 		public ConsoleFragment getConsoleFragment()

@@ -7,7 +7,7 @@ namespace SharpHmiAndroid
 	public class AppSetting
 	{
 		private String sIPAddress = null;
-		private int iTcpPort = 8087;
+		private String sTcpPort = null;
 		private static Context appContext = null;
 		private ISharedPreferences prefs = null;
 
@@ -19,6 +19,10 @@ namespace SharpHmiAndroid
 
 		public String getIPAddress()
 		{
+			if (prefs != null)
+				if (sIPAddress == null)
+					sIPAddress = prefs.GetString(Const.PREFS_KEY_TRANSPORT_IP,Const.PREFS_DEFAULT_TRANSPORT_IP);
+
 			return sIPAddress;
 		}
 
@@ -27,14 +31,23 @@ namespace SharpHmiAndroid
 			sIPAddress = sVal;
 		}
 
-		public int getTcpPort()
+		public string getTcpPort()
 		{
-			return iTcpPort;
+			if (prefs != null)
+			{
+				if (sTcpPort == null)
+				{
+					int iTcpPort = prefs.GetInt(Const.PREFS_KEY_TRANSPORT_PORT, Const.PREFS_DEFAULT_TRANSPORT_PORT);
+					sTcpPort = iTcpPort.ToString();
+				}
+			}
+
+			return sTcpPort;
 		}
 
-		public void setTcpPort(int iVal)
+		public void setTcpPort(string sVal)
 		{
-			iTcpPort = iVal;
+			sTcpPort = sVal;
 		}
 	}
 }
