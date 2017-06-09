@@ -1213,6 +1213,7 @@
     <AndroidResource Include="Resources\menu\main.xml" />
     <AndroidResource Include="Resources\layout\setting_option.xml" />
     <AndroidResource Include="Resources\drawable\ic_launcher.png" />
+    <AndroidResource Include="Resources\drawable\sharp.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

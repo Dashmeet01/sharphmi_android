@@ -62,8 +62,8 @@ namespace SharpHmiAndroid
 				PendingIntent pi = PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.UpdateCurrent);
 				var builder = new NotificationCompat.Builder(this)
 				.SetContentTitle("SharpHmi")
-				.SetContentText("SharpHmi Android")
-				.SetSmallIcon(Resource.Drawable.ic_launcher)
+				.SetContentText("SharpHmi")
+				.SetSmallIcon(Resource.Drawable.sharp)
 				.SetContentIntent(pi)
 				.SetOngoing(true);
 

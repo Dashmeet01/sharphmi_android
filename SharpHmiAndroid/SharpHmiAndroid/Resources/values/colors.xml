@@ -6,9 +6,9 @@
     <color name="log_response_failure_text_color">#b71313</color>
     <color name="log_notification_text_color">#9e9104</color>
     <color name="red">#ff0000</color>
-    <color name="colorPrimary">#795548</color>
-    <color name="colorPrimaryDark">#5D4037</color>
-    <color name="colorAccent">#BCAAA4</color>
+    <color name="colorPrimary">#405694</color>
+    <color name="colorPrimaryDark">#2b4489</color>
+    <color name="colorAccent">#192852</color>
     <color name="windowBackground">#5e5c5d</color>
     <color name="blue_filling">#e0e0ff</color>
     <color name="blue_outline">#6060ff</color>
