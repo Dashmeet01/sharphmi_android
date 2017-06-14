@@ -203,21 +203,21 @@ namespace SharpHmiAndroid
 		public void onOpen()
 		{
 			// Handle logic for Callback triggered when Socket is Opened.
-			Console.WriteLine("Debug: onOpen()");
+			//Console.WriteLine("Debug: onOpen()");
 			isConnected = true;
 		}
 
 		public void onClose()
 		{
 			// Handle logic for Callback triggered when Socket is Opened.
-			Console.WriteLine("Debug: onClose()");
+			//Console.WriteLine("Debug: onClose()");
 			isConnected = false;
 		}
 
 		public void onError()
 		{
 			// Handle logic for Callback triggered when Socket is Opened.
-			Console.WriteLine("Debug: onError()");
+			//Console.WriteLine("Debug: onError()");
 			isConnected = false;
 		}
 
@@ -235,13 +235,13 @@ namespace SharpHmiAndroid
 
 		public void handleDispatchingError(string info, Exception ex)
 		{
-			LogMessage logMessage = new LogMessage(info);
+			LogMessage logMessage = new StringLogMessage(info);
             addMessageToUI(logMessage);
 		}
 
 		public void handleQueueingError(string info, Exception ex)
 		{
-			LogMessage logMessage = new LogMessage(info);
+			LogMessage logMessage = new StringLogMessage(info);
 			addMessageToUI(logMessage);
 		}
 	}

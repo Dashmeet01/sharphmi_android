@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Android.App;
 using Android.Content;
@@ -6,6 +7,8 @@ using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 using HmiApiLib;
+using HmiApiLib.Base;
+using HmiApiLib.Common.Enums;
 
 namespace SharpHmiAndroid
 {
@@ -16,7 +19,7 @@ namespace SharpHmiAndroid
 		private Activity activity;
 		public MessageAdapter(Activity context, List<LogMessage> items) : base()
 		{
-            this.vi = (LayoutInflater)context
+			this.vi = (LayoutInflater)context
 				.GetSystemService(Context.LayoutInflaterService);
 			this.items = items;
 			this.activity = context;
@@ -101,14 +104,46 @@ namespace SharpHmiAndroid
 				lblTop.Text = "";
 			}
 
-			LogMessage logObj = items[position];
-			if (logObj != null)
+			LogMessage rpcObj = items[position];
+			if (rpcObj != null)
 			{
-				lblTop.Text = logObj.getMessage();
-				lblTime.Text = logObj.getDate();
-				lblTop.SetTextColor(Color.Black);
-			}
+				if (rpcObj is StringLogMessage)
+				{
+					StringLogMessage myStringLog = (StringLogMessage)rpcObj;
 
+					lblTop.Text = myStringLog.getMessage();
+					lblTime.Text = rpcObj.getDate();
+					lblTop.SetTextColor(Color.Black);
+				}
+				else if (rpcObj is RpcLogMessage)
+				{
+					RpcMessage func = ((RpcLogMessage)rpcObj).getMessage();
+
+					if (func.getRpcMessageType() == RpcMessageType.REQUEST)
+					{
+						lblTop.SetTextColor(Color.Blue);
+						lblTop.Text = rpcObj.getPrependComment() + ((RpcRequest)func).method + " ("+ func.getRpcMessageFlow() + " " + func.getRpcMessageType() + ")";
+					}
+					else if (func.getRpcMessageType() == RpcMessageType.RESPONSE)
+					{
+						lblTop.SetTextColor(Color.GreenYellow);
+						lblTop.Text = rpcObj.getPrependComment() + ((HmiApiLib.Base.Result)((RpcResponse)func).result).method + " (" + func.getRpcMessageFlow()	+ " " + func.getRpcMessageType() + ")";
+					}
+					else if (func.getRpcMessageType() == RpcMessageType.NOTIFICATION)
+					{
+						lblTop.SetTextColor(Color.DarkCyan);
+						lblTop.Text = rpcObj.getPrependComment() + ((RpcNotification)func).method + " (" + func.getRpcMessageFlow() + " " + func.getRpcMessageType() + ")";
+					}
+					else if (func.getRpcMessageType() == RpcMessageType.REQUEST_NOTIFY)
+					{
+						lblTop.SetTextColor(Color.Cyan);
+						lblTop.Text = rpcObj.getPrependComment() + ((RequestNotifyMessage)func).method + " (" + func.getRpcMessageFlow() + " " + func.getRpcMessageType() + ")";
+					}
+
+					lblTime.Text = rpcObj.getDate();
+				}
+				lblBottom.Visibility = ViewStates.Gone;
+			}
 			return rowView;
 		}
 

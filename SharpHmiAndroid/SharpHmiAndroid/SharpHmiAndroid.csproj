@@ -105,13 +105,12 @@
     <Compile Include="AppSetting.cs" />
     <Compile Include="MessageAdapter.cs" />
     <Compile Include="MsgSender.cs" />
-    <Compile Include="RPCLogMessage.cs" />
     <Compile Include="SdlService.cs" />
     <Compile Include="SharpHmiApplication.cs" />
-    <Compile Include="StringLogMessage.cs" />
     <Compile Include="UiThreadTools.cs" />
     <Compile Include="ConsoleFragment.cs" />
     <Compile Include="MainFragment.cs" />
+    <Compile Include="Const.cs" />
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs</Link>
     </Compile>
@@ -123,6 +122,9 @@
     </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\Result.cs">
       <Link>SharpHmiApi\SharedHmiLib\Base\Result.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\RpcMessage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\RpcMessage.cs</Link>
     </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\RpcNotification.cs">
       <Link>SharpHmiApi\SharedHmiLib\Base\RpcNotification.cs</Link>
@@ -282,6 +284,12 @@
     </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\Result.cs">
       <Link>SharpHmiApi\SharedHmiLib\Common\Enums\Result.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\RpcMessageFlow.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\RpcMessageFlow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\RpcMessageType.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Common\Enums\RpcMessageType.cs</Link>
     </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Common\Enums\SamplingRate.cs">
       <Link>SharpHmiApi\SharedHmiLib\Common\Enums\SamplingRate.cs</Link>
@@ -1156,7 +1164,12 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\LogMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Utility\LogMessage.cs</Link>
     </Compile>
-    <Compile Include="Const.cs" />
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\RpcLogMessage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Utility\RpcLogMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -1180,6 +1193,9 @@
     </None>
     <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.sln">
       <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.sln</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.userprefs">
+      <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.userprefs</Link>
     </None>
     <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\libs\readme.txt">
       <Link>SharpHmiApi\SharedHmiLib\libs\readme.txt</Link>
@@ -1214,6 +1230,7 @@
     <AndroidResource Include="Resources\layout\setting_option.xml" />
     <AndroidResource Include="Resources\drawable\ic_launcher.png" />
     <AndroidResource Include="Resources\drawable\sharp.png" />
+    <AndroidResource Include="Resources\layout\consolelogpreview.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
