@@ -41,7 +41,7 @@ namespace SharpHmiAndroid
 			}
 
             setupService(false);
-			return StartCommandResult.Sticky;		}
+			return StartCommandResult.NotSticky;		}
 
 		public void setupService(Boolean updateForeground)
 		{

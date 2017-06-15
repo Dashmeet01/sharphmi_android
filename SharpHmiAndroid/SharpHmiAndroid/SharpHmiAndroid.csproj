@@ -15,8 +15,9 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <RootNamespace>SharpHmiAndroid</RootNamespace>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,6 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
+<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -111,6 +113,7 @@
     <Compile Include="ConsoleFragment.cs" />
     <Compile Include="MainFragment.cs" />
     <Compile Include="Const.cs" />
+    <Compile Include="RpcMessageGetterInfo.cs" />
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs</Link>
     </Compile>
@@ -1170,7 +1173,6 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs</Link>
     </Compile>
-    <Compile Include="RpcMessageGetterInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -1194,9 +1196,6 @@
     </None>
     <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.sln">
       <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.sln</Link>
-    </None>
-    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.userprefs">
-      <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.userprefs</Link>
     </None>
     <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\libs\readme.txt">
       <Link>SharpHmiApi\SharedHmiLib\libs\readme.txt</Link>
