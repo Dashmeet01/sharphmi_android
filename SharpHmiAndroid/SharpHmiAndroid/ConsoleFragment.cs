@@ -42,7 +42,7 @@ namespace SharpHmiAndroid
 			View rootView = inflater.Inflate(Resource.Layout.console_fragment, container,
 											 false);
 
-			_listview = (ListView) rootView.FindViewById(Resource.Id.messageList);
+			_listview = (ListView)rootView.FindViewById(Resource.Id.messageList);
 			_listview.Clickable = true;
 
 
@@ -56,6 +56,40 @@ namespace SharpHmiAndroid
 				_listview.StackFromBottom = true;
 			}
 			return rootView;
+		}
+
+		private void showDialogWithBack(string sTitle, string sBody, Boolean isRpcResendAllowed, AlertDialog.Builder builder, View jsonLayout)
+		{
+			AlertDialog.Builder dialogNew = new AlertDialog.Builder(this.Activity);
+			dialogNew.SetMessage(sBody);
+			dialogNew.SetTitle("Show Getter Methods");
+			dialogNew.SetPositiveButton("Back", (senderAlert, args) =>
+				{
+
+					if (jsonLayout != null)
+					{
+						ViewGroup parent = (ViewGroup)jsonLayout.Parent;
+						if (parent != null)
+						{
+							parent.RemoveView(jsonLayout);
+						}
+					}
+					AlertDialog alertDlg = builder.Create();
+					alertDlg.Show();
+
+					Button resendRpcAllowed = alertDlg.GetButton((int)DialogButtonType.Neutral);
+					if (isRpcResendAllowed)
+					{
+						resendRpcAllowed.Enabled = true;
+					}
+					else
+					{
+						resendRpcAllowed.Enabled = false;
+					}
+
+				});
+			AlertDialog ad = dialogNew.Create();
+			ad.Show();
 		}
 
 		void listView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
@@ -98,17 +132,20 @@ namespace SharpHmiAndroid
 
 				try
 				{
-					rawJSON = Newtonsoft.Json.JsonConvert.SerializeObject(message, Formatting.Indented);
+					rawJSON = JsonConvert.SerializeObject(message, Formatting.Indented);
 					builder.SetTitle("Raw JSON" + (corrId != -1 ? " (Corr ID " + corrId + ")" : ""));
 				}
 				catch (Exception ex)
 				{
 					try
 					{
-						rawJSON = methodName + 
-							   " (" + message.getRpcMessageFlow() + " " + message.getRpcMessageType() + ")";
+						rawJSON = methodName +
+							" (" + message.getRpcMessageFlow().ToString().ToLower() + " " + message.getRpcMessageType().ToString().ToLower() + ")";
 					}
-					catch (Exception e1) { rawJSON = "Undefined"; }
+					catch (Exception e1)
+					{
+						rawJSON = "Undefined";
+					}
 				}
 
 				string finalJSON = rawJSON;
@@ -117,12 +154,39 @@ namespace SharpHmiAndroid
 
 				builder.SetView(jsonLayout);
 
-				builder.SetPositiveButton("OK", (senderAlert, args) =>
+				builder.SetPositiveButton("Getters", (senderAlert, args) =>
+				{
+					string sInfo = RpcMessageGetterInfo.viewDetails(message, false, 0);
+					Boolean isRpcResendAllowed = false;
+
+					if (message.rpcMessageFlow == HmiApiLib.Common.Enums.RpcMessageFlow.OUTGOING)
+					{
+						isRpcResendAllowed = true;
+					}
+
+					showDialogWithBack("GetterInfo", sInfo, isRpcResendAllowed, builder, jsonLayout);
+				});
+
+				builder.SetNeutralButton("Resend", (senderAlert, args) =>
+				{
+					AppInstanceManager.Instance.sendRpc(message);
+				});
+
+				builder.SetNegativeButton("Cancel", (senderAlert, args) =>
 				{
 					builder.Dispose();
 				});
+
 				AlertDialog ad = builder.Create();
 				ad.Show();
+
+				Button resendRpc = ad.GetButton((int)DialogButtonType.Neutral);
+				if (message.rpcMessageFlow == HmiApiLib.Common.Enums.RpcMessageFlow.OUTGOING) {
+					resendRpc.Enabled = true;
+				} else {
+					resendRpc.Enabled = false;
+				}
+
 			}
 			else if (listObj is StringLogMessage)
 			{

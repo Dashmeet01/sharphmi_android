@@ -122,22 +122,22 @@ namespace SharpHmiAndroid
 					if (func.getRpcMessageType() == RpcMessageType.REQUEST)
 					{
 						lblTop.SetTextColor(Color.Blue);
-						lblTop.Text = rpcObj.getPrependComment() + ((RpcRequest)func).method + " ("+ func.getRpcMessageFlow() + " " + func.getRpcMessageType() + ")";
+						lblTop.Text = rpcObj.getPrependComment() + ((RpcRequest)func).method + " ("+ func.getRpcMessageFlow().ToString().ToLower() + " " + func.getRpcMessageType().ToString().ToLower() + ")";
 					}
 					else if (func.getRpcMessageType() == RpcMessageType.RESPONSE)
 					{
 						lblTop.SetTextColor(Color.GreenYellow);
-						lblTop.Text = rpcObj.getPrependComment() + ((HmiApiLib.Base.Result)((RpcResponse)func).result).method + " (" + func.getRpcMessageFlow()	+ " " + func.getRpcMessageType() + ")";
+						lblTop.Text = rpcObj.getPrependComment() + ((HmiApiLib.Base.Result)((RpcResponse)func).result).method + " (" + func.getRpcMessageFlow().ToString().ToLower()	+ " " + func.getRpcMessageType().ToString().ToLower() + ")";
 					}
 					else if (func.getRpcMessageType() == RpcMessageType.NOTIFICATION)
 					{
 						lblTop.SetTextColor(Color.DarkCyan);
-						lblTop.Text = rpcObj.getPrependComment() + ((RpcNotification)func).method + " (" + func.getRpcMessageFlow() + " " + func.getRpcMessageType() + ")";
+						lblTop.Text = rpcObj.getPrependComment() + ((RpcNotification)func).method + " (" + func.getRpcMessageFlow().ToString().ToLower() + " " + func.getRpcMessageType().ToString().ToLower() + ")";
 					}
 					else if (func.getRpcMessageType() == RpcMessageType.REQUEST_NOTIFY)
 					{
 						lblTop.SetTextColor(Color.Cyan);
-						lblTop.Text = rpcObj.getPrependComment() + ((RequestNotifyMessage)func).method + " (" + func.getRpcMessageFlow() + " " + func.getRpcMessageType() + ")";
+						lblTop.Text = rpcObj.getPrependComment() + ((RequestNotifyMessage)func).method + " (" + func.getRpcMessageFlow().ToString().ToLower() + " " + func.getRpcMessageType().ToString().ToLower() + ")";
 					}
 
 					lblTime.Text = rpcObj.getDate();
