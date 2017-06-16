@@ -108,7 +108,6 @@
     <Compile Include="MsgSender.cs" />
     <Compile Include="SdlService.cs" />
     <Compile Include="SharpHmiApplication.cs" />
-    <Compile Include="UiThreadTools.cs" />
     <Compile Include="ConsoleFragment.cs" />
     <Compile Include="MainFragment.cs" />
     <Compile Include="Const.cs" />

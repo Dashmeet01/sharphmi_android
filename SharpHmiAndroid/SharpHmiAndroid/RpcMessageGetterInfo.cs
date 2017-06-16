@@ -30,7 +30,13 @@ namespace SharpHmiAndroid
 				if ((m.Name.StartsWith("get")) &&
 				    m.GetParameters().Length == 0)
 				{
-					if (m.Name.StartsWith("getClass") || m.Name.StartsWith("getBytes") || m.Name.StartsWith("getDeclaringClass")) continue;
+					if (m.Name.StartsWith("getClass") ||
+						m.Name.StartsWith("getBytes") ||
+						m.Name.StartsWith("getDeclaringClass"))
+					{
+						continue;
+					}
+
 					sb = appendSpaces(sb.ToString(), '-', iNumSpaces);
 					sb.Append(m.Name);
 					sb.Append(": ");
