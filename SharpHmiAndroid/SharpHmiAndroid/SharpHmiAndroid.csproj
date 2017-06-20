@@ -135,6 +135,9 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\RpcResponse.cs">
       <Link>SharpHmiApi\SharedHmiLib\Base\RpcResponse.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\RpcStruct.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Base\RpcStruct.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Builder\BuildRpc.cs">
       <Link>SharpHmiApi\SharedHmiLib\Builder\BuildRpc.cs</Link>
     </Compile>
