@@ -9,4 +9,14 @@
     <string name="selectprotocol_ipAddressDefault">127.0.0.1</string>
     <string name="selectprotocol_tcpPort">Port:</string>
     <string name="selectprotocol_tcpPortDefault">8087</string>
+	<string name="_12_34_00">12:34:00</string>
+    <string name="show_line_1">Show Line 1</string>
+    <string name="show_line_2">Show Line 2</string>
+    <string name="show_line_3">Show Line 3</string>
+    <string name="show_line_4">Show Line 4</string>
+    <string name="media_track">Media Track</string>
+    <string name="previous_button">Previous Button</string>
+    <string name="play_pause_button">Play/Pause Button</string>
+    <string name="next_button">Next Button</string>
+    <string name="show_image_icon">Show Image Icon</string>
 </resources>

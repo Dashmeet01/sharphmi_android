@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using HmiApiLib.Interfaces;
 using HmiApiLib.Proxy;
 using HmiApiLib;
+using System.Collections.Generic;
+using HmiApiLib.Manager;
+using HmiApiLib.Base;
+using Android.Graphics;
+using Java.IO;
+using System.IO;
 
 namespace SharpHmiAndroid
 {
@@ -17,6 +24,11 @@ namespace SharpHmiAndroid
 		public static Boolean appResumed = false;
 
 		private AppSetting appSetting = null;
+		public static List<AppItem> appList = new List<AppItem>();
+		AppUiCallback appUiCallback;
+        public static Dictionary<int, List<RpcRequest>> menuOptionListUi = new Dictionary<int, List<RpcRequest>>();
+		public static Dictionary<int, List<Dictionary<string, Bitmap>>> appIdPutfileList = new Dictionary<int, List<Dictionary<string, Bitmap>>>();
+		public static Dictionary<int, string> appIdPolicyIdDictionary = new Dictionary<int, string>();
 
 		public static AppInstanceManager Instance
 		{
@@ -42,6 +54,11 @@ namespace SharpHmiAndroid
 		private AppInstanceManager()
 		{
 
+		}
+
+		internal void setAppUiCallback(AppUiCallback callback)
+		{
+			appUiCallback = callback;
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
@@ -76,7 +93,61 @@ namespace SharpHmiAndroid
 		//UI interface callbacks
 		public override void onUiSetAppIconRequest(HmiApiLib.Controllers.UI.IncomingRequests.SetAppIcon msg)
 		{
+			if (null != appUiCallback)
+			{
+				int appId = -1;
+
+				if (appIdPutfileList.ContainsKey(msg.getAppId()))
+				{
+					appId = msg.getAppId();
+				}
+				else
+				{
+					appId = getCorrectAppId(msg.getAppId());
+				}
+
+				if (appId != -1)
+				{
+					for (int i = 0; i < appIdPutfileList[appId].Count; i++)
+					{
+						if (appIdPutfileList[appId][i].ContainsKey(msg.getAppIcon().getValue()))
+						{
+							for (int j = 0; j < appList.Count; j++)
+							{
+								if ((appList[j].getAppID() == appId) || (appList[j].getAppID() == msg.getAppId()))
+								{ 
+									appList[j].setAppIcon(appIdPutfileList[appId][i][msg.getAppIcon().getValue()]);
+									break;
+								}
+							}
+
+							appUiCallback.setDownloadedAppIcon();
+							break;
+						}
+					}
+				}
+			}
+
 			base.onUiSetAppIconRequest(msg);
+		}
+
+		public int getCorrectAppId(int? matchValue)
+		{
+			int appId = -1;
+
+			if (matchValue == null) return appId;
+
+			if (appIdPolicyIdDictionary.ContainsKey(matchValue.Value))
+			{
+				appId = int.Parse(appIdPolicyIdDictionary[matchValue.Value]);
+			}
+
+			if (appIdPolicyIdDictionary.ContainsValue(matchValue.Value.ToString()))
+			{
+				appId = appIdPolicyIdDictionary.FirstOrDefault(x => x.Value == matchValue.Value.ToString()).Key;
+			}
+
+			return appId;
 		}
 
 		public override void onUiShowRequest(HmiApiLib.Controllers.UI.IncomingRequests.Show msg)
@@ -87,7 +158,40 @@ namespace SharpHmiAndroid
 		public override void onUiAddCommandRequest(HmiApiLib.Controllers.UI.IncomingRequests.AddCommand msg)
 		{
 			base.onUiAddCommandRequest(msg);
+            List<RpcRequest> data;
+            if(menuOptionListUi.ContainsKey(msg.getAppId()))
+            {
+                data = menuOptionListUi[msg.getAppId()];
+                data.Add(msg);
+                menuOptionListUi.Remove(msg.getAppId());
+            }
+            else
+            {
+                data = new List<RpcRequest>();
+                data.Add(msg);
+            }
+            menuOptionListUi.Add(msg.getAppId(), data);
+            appUiCallback.refreshOptionsMenu();
 		}
+
+        public override void onUiAddSubMenuRequest(HmiApiLib.Controllers.UI.IncomingRequests.AddSubMenu msg)
+        {
+            base.onUiAddSubMenuRequest(msg);
+			List<RpcRequest> data;
+			if (menuOptionListUi.ContainsKey(msg.getAppId()))
+			{
+				data = menuOptionListUi[msg.getAppId()];
+				data.Add(msg);
+				menuOptionListUi.Remove(msg.getAppId());
+			}
+			else
+			{
+				data = new List<RpcRequest>();
+				data.Add(msg);
+			}
+			menuOptionListUi.Add(msg.getAppId(), data);
+			appUiCallback.refreshOptionsMenu();
+        }
 
 		public override void onUiAlertRequest(HmiApiLib.Controllers.UI.IncomingRequests.Alert msg)
 		{
@@ -177,11 +281,34 @@ namespace SharpHmiAndroid
 		public override void onBcAppRegisteredNotification(HmiApiLib.Controllers.BasicCommunication.IncomingNotifications.OnAppRegistered msg)
 		{
 			base.onBcAppRegisteredNotification(msg);
+            appList.Add(new AppItem(msg.getApplication().appName, msg.getApplication().appID));
+			appIdPolicyIdDictionary.Add(msg.getApplication().getAppID(), msg.getApplication().getPolicyAppID());
+			if (null != appUiCallback)
+				appUiCallback.onBcAppRegisteredNotificationCallback(true);
 		}
 
 		public override void onBcAppUnRegisteredNotification(HmiApiLib.Controllers.BasicCommunication.IncomingNotifications.OnAppUnregistered msg)
 		{
 			base.onBcAppUnRegisteredNotification(msg);
+            int appID = msg.getAppId();
+            for (int i = 0; i < appList.Count; i++)
+            {
+                if (appList[i].getAppID() == appID)
+				{
+                    appList.RemoveAt(i);
+					appIdPolicyIdDictionary.Remove(appID);
+                    i--;
+				}
+            }
+
+			if (appIdPutfileList.ContainsKey(appID))
+			{
+				appIdPutfileList[appID].Clear();
+				appIdPutfileList.Remove(appID);
+			}
+
+			if (null != appUiCallback)
+				appUiCallback.onBcAppRegisteredNotificationCallback(false);
 		}
 
 		public override void onBcMixingAudioSupportedRequest(HmiApiLib.Controllers.BasicCommunication.IncomingRequests.MixingAudioSupported msg)
@@ -198,6 +325,60 @@ namespace SharpHmiAndroid
 		public override void onButtonsGetCapabilitiesRequest(HmiApiLib.Controllers.Buttons.IncomingRequests.GetCapabilities msg)
 		{
 			base.onButtonsGetCapabilitiesRequest(msg);
+		}
+
+		//Bc interface callbacks
+		public override void onBcPutfileNotification(HmiApiLib.Controllers.BasicCommunication.IncomingNotifications.OnPutFile msg)
+		{
+			Dictionary<string, Bitmap> tmpMapping = new Dictionary<string, Bitmap>();
+			string storedFileName = HttpUtility.getStoredFileName(msg.getSyncFileName());
+			int appId = HttpUtility.getAppId(storedFileName);
+
+			Stream inputStream = HttpUtility.downloadImage(storedFileName);
+			Bitmap image = null;
+
+			try
+			{
+				image = BitmapFactory.DecodeStream(inputStream);
+			}
+			catch (Exception ex)
+			{				
+			}
+
+			if (image != null)
+			{
+				if (appIdPutfileList.ContainsKey(appId))
+				{
+					bool elementFound = false;
+					for (int i = 0; i < appIdPutfileList[appId].Count; i++)
+					{
+						if (appIdPutfileList[appId][i].ContainsKey(msg.getSyncFileName()))
+						{
+							tmpMapping.Add(msg.getSyncFileName(), image);
+							appIdPutfileList[appId][i] = tmpMapping;
+
+							elementFound = true;
+							break;
+						}
+					}
+
+					if (!elementFound)
+					{
+						tmpMapping.Add(msg.getSyncFileName(), image);
+						appIdPutfileList[appId].Add(tmpMapping);
+					}
+				}
+				else
+				{
+					List<Dictionary<string, Bitmap>> tmpPutFileList = new List<Dictionary<string, Bitmap>>();
+					tmpMapping.Add(msg.getSyncFileName(), image);
+					tmpPutFileList.Add(tmpMapping);
+					appIdPutfileList.Add(appId, tmpPutFileList);
+				}
+
+			}
+
+			base.onBcPutfileNotification(msg);
 		}
 
 		public void onOpen()

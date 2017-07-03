@@ -11,17 +11,23 @@ using Android.Widget;
 using Android.Text;
 using Android.Content.Res;
 using Android.Support.V7.Preferences;
+using System;
+using HmiApiLib.Manager;
+using HmiApiLib;
+using Android.Graphics;
 
 namespace SharpHmiAndroid
 {
 	[Activity(Label = "SharpHmiAndroid", MainLauncher = true)]
-	public class MainActivity : AppCompatActivity
+	public class MainActivity : AppCompatActivity, AppUiCallback
 	{
 		NavigationView navigationView;
 		DrawerLayout drawer;
 		private AppSetting appSetting;
 		private static string CONSOLE_FRAGMENT_TAG = "console_frag";
 		private static string MAIN_FRAGMENT_TAG = "main_frag";
+        static string HMI_FULL_FRAGMENT_TAG = "hmi_full_frag";
+        static string HMI_OPTIONS_MENU_FRAGMENT_TAG = "hmi_options_menu_frag";
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -58,6 +64,7 @@ namespace SharpHmiAndroid
 			{
 				this.appSetting = theInstance.getAppSetting();
 			}
+			theInstance.setAppUiCallback(this);
 
 			setConsoleFragment();
 		}
@@ -245,13 +252,114 @@ namespace SharpHmiAndroid
 
 		public ConsoleFragment getConsoleFragment()
 		{
-			return (ConsoleFragment)this.FragmentManager.FindFragmentByTag(CONSOLE_FRAGMENT_TAG);
+			return (ConsoleFragment)FragmentManager.FindFragmentByTag(CONSOLE_FRAGMENT_TAG);
 		}
 
 		public MainFragment getMainFragment()
 		{
 			return (MainFragment)this.FragmentManager.FindFragmentByTag(MAIN_FRAGMENT_TAG);
 		}
+
+		public FullHmiFragment getFullHMiFragment()
+		{
+            return (FullHmiFragment)this.FragmentManager.FindFragmentByTag(HMI_FULL_FRAGMENT_TAG);
+		}
+
+        public OptionsMenuFragment getOptionsMenuFragment()
+		{
+			return (OptionsMenuFragment)this.FragmentManager.FindFragmentByTag(HMI_OPTIONS_MENU_FRAGMENT_TAG);
+		}
+
+        public void onBcAppRegisteredNotificationCallback(Boolean isNewAppRegistered)
+        {
+            if (isNewAppRegistered)
+            {
+				if (getMainFragment() is MainFragmentCallback)
+				{
+					getMainFragment().onRefreshCallback();
+				}
+            }
+            else
+            {
+				if (getFullHMiFragment() != null && getFullHMiFragment().IsVisible)
+				{
+					RunOnUiThread(() => RemoveFullFragment());
+				}
+                else
+                {
+					if (getMainFragment() is MainFragmentCallback)
+					{
+						getMainFragment().onRefreshCallback();
+					}
+                }
+            }
+		}
+
+        public void setHmiFragment(int position)
+        {
+            int appId = AppInstanceManager.appList[position].getAppID();
+            AppInstanceManager.Instance.sendActivateAppRequest(appId);
+
+            FullHmiFragment hmiFragment = getFullHMiFragment();
+
+			FragmentManager fragmentManager = FragmentManager;
+
+			if (hmiFragment == null)
+			{
+				hmiFragment = new FullHmiFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.PutInt(FullHmiFragment.sClickedAppID, appId);
+                hmiFragment.Arguments = bundle;
+
+				FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
+				fragmentTransaction.Replace(Resource.Id.frame_container, hmiFragment, HMI_FULL_FRAGMENT_TAG).AddToBackStack(null).Commit();
+				fragmentManager.ExecutePendingTransactions();
+                SetTitle(Resource.String.app_name);
+			}
+        }
+
+		public void setOptionsFragment(int appID)
+		{
+			OptionsMenuFragment optionsMenuFragment = getOptionsMenuFragment();
+
+			FragmentManager fragmentManager = FragmentManager;
+
+			if (optionsMenuFragment == null)
+			{
+				optionsMenuFragment = new OptionsMenuFragment();
+
+				Bundle bundle = new Bundle();
+				bundle.PutInt(FullHmiFragment.sClickedAppID, appID);
+				optionsMenuFragment.Arguments = bundle;
+
+				FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
+				fragmentTransaction.Replace(Resource.Id.frame_container, optionsMenuFragment, HMI_OPTIONS_MENU_FRAGMENT_TAG).AddToBackStack(null).Commit();
+				fragmentManager.ExecutePendingTransactions();
+				SetTitle(Resource.String.app_name);
+			}
+		}
+
+        private void RemoveFullFragment()
+        {
+			FragmentManager fragmentManager = FragmentManager;
+            fragmentManager.PopBackStack();
+		}
+
+        public void refreshOptionsMenu()
+        {
+            if ((getOptionsMenuFragment() != null) && (getOptionsMenuFragment().IsVisible))
+            {
+                getOptionsMenuFragment().onRefreshOptionsMenu();
+            }
+        }
+
+		public void setDownloadedAppIcon()
+		{
+			if ((getMainFragment() != null) && (getMainFragment().IsVisible))
+			{
+				getMainFragment().onRefreshCallback();
+			}
+		}
 	}
 }
-
