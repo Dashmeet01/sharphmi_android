@@ -27,7 +27,7 @@ namespace SharpHmiAndroid
 		public static List<AppItem> appList = new List<AppItem>();
 		AppUiCallback appUiCallback;
         public static Dictionary<int, List<RpcRequest>> menuOptionListUi = new Dictionary<int, List<RpcRequest>>();
-		public static Dictionary<int, List<Dictionary<string, Bitmap>>> appIdPutfileList = new Dictionary<int, List<Dictionary<string, Bitmap>>>();
+		public static Dictionary<int, List<string>> appIdPutfileList = new Dictionary<int, List<string>>();
 		public static Dictionary<int, string> appIdPolicyIdDictionary = new Dictionary<int, string>();
 
 		public static AppInstanceManager Instance
@@ -110,18 +110,26 @@ namespace SharpHmiAndroid
 				{
 					for (int i = 0; i < appIdPutfileList[appId].Count; i++)
 					{
-						if (appIdPutfileList[appId][i].ContainsKey(msg.getAppIcon().getValue()))
+						if (appIdPutfileList[appId].Contains(msg.getAppIcon().getValue()))
 						{
 							for (int j = 0; j < appList.Count; j++)
 							{
 								if ((appList[j].getAppID() == appId) || (appList[j].getAppID() == msg.getAppId()))
-								{ 
-									appList[j].setAppIcon(appIdPutfileList[appId][i][msg.getAppIcon().getValue()]);
+								{
+									Bitmap image = null;
+
+									try
+									{
+										image = BitmapFactory.DecodeStream(getPutfile(msg.getAppIcon().getValue()));
+										appList[j].setAppIcon(image);
+										appUiCallback.setDownloadedAppIcon();
+									}
+									catch (Exception ex)
+									{
+									}
 									break;
 								}
 							}
-
-							appUiCallback.setDownloadedAppIcon();
 							break;
 						}
 					}
@@ -291,20 +299,34 @@ namespace SharpHmiAndroid
 		{
 			base.onBcAppUnRegisteredNotification(msg);
             int appID = msg.getAppId();
-            for (int i = 0; i < appList.Count; i++)
-            {
-                if (appList[i].getAppID() == appID)
+			for (int i = 0; i < appList.Count; i++)
+			{
+				if ((appList[i].getAppID() == appID) || (appList[i].getAppID() == getCorrectAppId(appID)))
 				{
+					int tmpAppId = appID;
+
+					if (appList[i].getAppID() == getCorrectAppId(tmpAppId))
+					{
+						tmpAppId = getCorrectAppId(tmpAppId);
+					}
+
                     appList.RemoveAt(i);
-					appIdPolicyIdDictionary.Remove(appID);
                     i--;
 				}
             }
 
-			if (appIdPutfileList.ContainsKey(appID))
+			if (appIdPutfileList.ContainsKey(appID) || appIdPutfileList.ContainsKey(getCorrectAppId(appID)))
 			{
-				appIdPutfileList[appID].Clear();
-				appIdPutfileList.Remove(appID);
+				int tmpAppId = appID;
+				if (appIdPutfileList.ContainsKey(getCorrectAppId(tmpAppId)))
+				{
+					tmpAppId = getCorrectAppId(tmpAppId);
+				}
+
+				deletePutfileDirectory(appIdPutfileList[tmpAppId][0]);
+				appIdPutfileList[tmpAppId].Clear();
+				appIdPutfileList.Remove(tmpAppId);
+				appIdPolicyIdDictionary.Remove(tmpAppId);
 			}
 
 			if (null != appUiCallback)
@@ -333,52 +355,128 @@ namespace SharpHmiAndroid
 			Dictionary<string, Bitmap> tmpMapping = new Dictionary<string, Bitmap>();
 			string storedFileName = HttpUtility.getStoredFileName(msg.getSyncFileName());
 			int appId = HttpUtility.getAppId(storedFileName);
+			string appStorageDirectoryName = HttpUtility.getAppStorageDirectory(storedFileName);
+			string fileName = HttpUtility.getFileName(storedFileName);
 
-			Stream inputStream = HttpUtility.downloadImage(storedFileName);
-			Bitmap image = null;
+			Stream inputStream = HttpUtility.downloadFile(storedFileName);
 
-			try
+			String state = Android.OS.Environment.ExternalStorageState;
+
+			if (Android.OS.Environment.MediaMounted == state)
 			{
-				image = BitmapFactory.DecodeStream(inputStream);
-			}
-			catch (Exception ex)
-			{				
-			}
-
-			if (image != null)
-			{
-				if (appIdPutfileList.ContainsKey(appId))
+				string appRootDirPath = Android.OS.Environment.ExternalStorageDirectory.Path
+											+ "/Sharp Hmi Android/";
+				Java.IO.File sharpHmiAndroidDir = new Java.IO.File(appRootDirPath);
+				if (!sharpHmiAndroidDir.Exists())
 				{
-					bool elementFound = false;
-					for (int i = 0; i < appIdPutfileList[appId].Count; i++)
+					sharpHmiAndroidDir.Mkdir();
+				}
+
+				Java.IO.File appStorageDir = new Java.IO.File(appRootDirPath + appStorageDirectoryName + "/");
+				if (!appStorageDir.Exists())
+				{
+					appStorageDir.Mkdir();
+				}
+
+				Java.IO.File myFile = new Java.IO.File(appStorageDir, fileName);
+
+				if (!myFile.Exists())
+				{
+					try
 					{
-						if (appIdPutfileList[appId][i].ContainsKey(msg.getSyncFileName()))
+						myFile.CreateNewFile();
+						FileOutputStream fileOutStream = new FileOutputStream(myFile);
+
+						byte[] buffer = new byte[1024];
+						int len = 0;
+						while ((len = inputStream.Read(buffer, 0, buffer.Length)) > 0)
 						{
-							tmpMapping.Add(msg.getSyncFileName(), image);
-							appIdPutfileList[appId][i] = tmpMapping;
-
-							elementFound = true;
-							break;
+							fileOutStream.Write(buffer, 0, len);
 						}
+						fileOutStream.Close();
 					}
-
-					if (!elementFound)
+					catch (Exception ex)
 					{
-						tmpMapping.Add(msg.getSyncFileName(), image);
-						appIdPutfileList[appId].Add(tmpMapping);
 					}
 				}
-				else
-				{
-					List<Dictionary<string, Bitmap>> tmpPutFileList = new List<Dictionary<string, Bitmap>>();
-					tmpMapping.Add(msg.getSyncFileName(), image);
-					tmpPutFileList.Add(tmpMapping);
-					appIdPutfileList.Add(appId, tmpPutFileList);
-				}
+			}
 
+			if (appIdPutfileList.ContainsKey(appId))
+			{
+				if (!appIdPutfileList[appId].Contains(msg.getSyncFileName()))
+				{
+					appIdPutfileList[appId].Add(msg.getSyncFileName());
+				}
+			}
+			else
+			{
+				List<string> tmpPutFileList = new List<string>();
+				tmpPutFileList.Add(msg.getSyncFileName());
+				appIdPutfileList.Add(appId, tmpPutFileList);
 			}
 
 			base.onBcPutfileNotification(msg);
+		}
+
+		public Stream getPutfile(string syncFileName)
+		{
+			Stream inputStreamObj = null;
+			if (Android.OS.Environment.MediaMounted == Android.OS.Environment.ExternalStorageState)
+			{
+				string appRootDirPath = Android.OS.Environment.ExternalStorageDirectory.Path
+											+ "/Sharp Hmi Android/";
+
+				Java.IO.File sharpHmiAndroidDir = new Java.IO.File(appRootDirPath);
+				if (sharpHmiAndroidDir.Exists())
+				{
+					string storedFileName = HttpUtility.getStoredFileName(syncFileName);
+					string appStorageDirectoryName = HttpUtility.getAppStorageDirectory(storedFileName);
+
+					Java.IO.File appStorageDir = new Java.IO.File(appRootDirPath + appStorageDirectoryName + "/");
+					if (appStorageDir.Exists())
+					{
+						string fileName = HttpUtility.getFileName(storedFileName);
+
+						Java.IO.File myFile = new Java.IO.File(appStorageDir, fileName);
+						if (myFile.Exists())
+						{
+							StreamReader inputStream = new StreamReader(appRootDirPath + appStorageDirectoryName + "/" + fileName);
+							inputStreamObj = inputStream.BaseStream;
+						}
+					}
+				}
+			}
+			return inputStreamObj;
+		}
+
+		public void deletePutfileDirectory(string syncFileName)
+		{
+			if (Android.OS.Environment.MediaMounted == Android.OS.Environment.ExternalStorageState)
+			{
+				string appRootDirPath = Android.OS.Environment.ExternalStorageDirectory.Path
+											+ "/Sharp Hmi Android/";
+
+				Java.IO.File sharpHmiAndroidDir = new Java.IO.File(appRootDirPath);
+				if (sharpHmiAndroidDir.Exists())
+				{
+					string storedFileName = HttpUtility.getStoredFileName(syncFileName);
+					string appStorageDirectoryName = HttpUtility.getAppStorageDirectory(storedFileName);
+
+					Java.IO.File appStorageDir = new Java.IO.File(appRootDirPath + appStorageDirectoryName + "/");
+					if (appStorageDir.Exists() && appStorageDir.IsDirectory)
+					{
+						Java.IO.File[] filesInFolder = appStorageDir.ListFiles();
+
+						bool filedeleted = false;
+						for (int i = 0; i < filesInFolder.Length; i++)
+						{
+							Java.IO.File file = filesInFolder[i];
+							filedeleted = file.Delete();
+						}
+						filedeleted = appStorageDir.Delete();
+					}
+				}
+			}
 		}
 
 		public void onOpen()
