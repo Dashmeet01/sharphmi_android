@@ -28,6 +28,7 @@ namespace SharpHmiAndroid
 			else
 			{
 				_msgAdapter = AppInstanceManager.Instance.getMsgAdapter();
+				_msgAdapter.updateActivity(this.Activity);
 			}
 
 			if (SdlService.instance == null)
@@ -44,7 +45,6 @@ namespace SharpHmiAndroid
 
 			_listview = (ListView)rootView.FindViewById(Resource.Id.messageList);
 			_listview.Clickable = true;
-
 
 			_listview.Adapter = _msgAdapter;
 			_listview.TranscriptMode = TranscriptMode.AlwaysScroll;

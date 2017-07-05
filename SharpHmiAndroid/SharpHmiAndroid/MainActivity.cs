@@ -3,23 +3,21 @@ using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
-using Android.Support.V7.Widget;
 using Android.Views;
 using System.Timers;
 using Android.Content;
 using Android.Widget;
 using Android.Text;
-using Android.Content.Res;
 using Android.Support.V7.Preferences;
 using System;
-using HmiApiLib.Manager;
-using HmiApiLib;
-using Android.Graphics;
+using Android;
+using Android.Support.V4.App;
+using Android.Content.PM;
 
 namespace SharpHmiAndroid
 {
 	[Activity(Label = "SharpHmiAndroid", MainLauncher = true)]
-	public class MainActivity : AppCompatActivity, AppUiCallback
+	public class MainActivity : AppCompatActivity, AppUiCallback, ActivityCompat.IOnRequestPermissionsResultCallback
 	{
 		NavigationView navigationView;
 		DrawerLayout drawer;
@@ -28,24 +26,40 @@ namespace SharpHmiAndroid
 		private static string MAIN_FRAGMENT_TAG = "main_frag";
         static string HMI_FULL_FRAGMENT_TAG = "hmi_full_frag";
         static string HMI_OPTIONS_MENU_FRAGMENT_TAG = "hmi_options_menu_frag";
+		public const int REQUEST_STORAGE = 10;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 
+			SetContentView(Resource.Layout.splash_screen);
+
+			if (!AppUtils.checkPermission(ApplicationContext, Manifest.Permission.WriteExternalStorage))
+			{
+				ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.WriteExternalStorage},
+				                                  REQUEST_STORAGE);
+			}
+			else
+			{
+				mainActivityInitialization();
+			}
+		}
+
+		public void mainActivityInitialization()
+		{
 			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Main);
 
 			var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
 			SetSupportActionBar(toolbar);
-//			SupportActionBar.SetHomeButtonEnabled(true);
+			//			SupportActionBar.SetHomeButtonEnabled(true);
 			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu);
 
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
 			drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
-			ActionBarDrawerToggle _actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open,
+			Android.Support.V7.App.ActionBarDrawerToggle _actionBarDrawerToggle = new Android.Support.V7.App.ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open,
 			Resource.String.navigation_drawer_close);
 
 			drawer.SetDrawerListener(_actionBarDrawerToggle);
@@ -67,6 +81,27 @@ namespace SharpHmiAndroid
 			theInstance.setAppUiCallback(this);
 
 			setConsoleFragment();
+		}
+
+		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+		{
+			switch (requestCode)
+			{
+				case REQUEST_STORAGE:
+					{
+						if (grantResults.Length > 0 && (grantResults[0] == (int)Permission.Granted))
+						{
+
+							mainActivityInitialization();
+						}
+						else
+						{
+							Toast.MakeText(this, "Permission Denied.", ToastLength.Long).Show();
+						}
+					}
+					break;
+			}
+			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 
 		public override bool OnCreateOptionsMenu(IMenu menu)
@@ -127,7 +162,7 @@ namespace SharpHmiAndroid
 		/*Method for clearing out all backstack entries for fragments.*/
 		public void clearAllBackStackFragments()
 		{
-			FragmentManager fm = this.FragmentManager;
+			Android.App.FragmentManager fm = this.FragmentManager;
 			fm.PopBackStackImmediate();
 		}
 
@@ -135,12 +170,12 @@ namespace SharpHmiAndroid
 		{
 			MainFragment mainFragment = getMainFragment();
 
-			FragmentManager fragmentManager = this.FragmentManager;
+			Android.App.FragmentManager fragmentManager = this.FragmentManager;
 
 			if (mainFragment == null)
 			{
 				mainFragment = new MainFragment();
-				FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
+				Android.App.FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
 				fragmentTransaction.Replace(Resource.Id.frame_container, mainFragment, MAIN_FRAGMENT_TAG).AddToBackStack(null).Commit();
 				fragmentManager.ExecutePendingTransactions();
 				this.SetTitle(Resource.String.app_name);
@@ -152,7 +187,7 @@ namespace SharpHmiAndroid
 
 			ConsoleFragment consoleFragment = getConsoleFragment();
 
-			FragmentManager fragmentManager = this.FragmentManager;
+			Android.App.FragmentManager fragmentManager = this.FragmentManager;
 
 			if (consoleFragment == null)
 			{
@@ -302,7 +337,7 @@ namespace SharpHmiAndroid
 
             FullHmiFragment hmiFragment = getFullHMiFragment();
 
-			FragmentManager fragmentManager = FragmentManager;
+			Android.App.FragmentManager fragmentManager = FragmentManager;
 
 			if (hmiFragment == null)
 			{
@@ -312,7 +347,7 @@ namespace SharpHmiAndroid
                 bundle.PutInt(FullHmiFragment.sClickedAppID, appId);
                 hmiFragment.Arguments = bundle;
 
-				FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
+				Android.App.FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
 				fragmentTransaction.Replace(Resource.Id.frame_container, hmiFragment, HMI_FULL_FRAGMENT_TAG).AddToBackStack(null).Commit();
 				fragmentManager.ExecutePendingTransactions();
                 SetTitle(Resource.String.app_name);
@@ -323,7 +358,7 @@ namespace SharpHmiAndroid
 		{
 			OptionsMenuFragment optionsMenuFragment = getOptionsMenuFragment();
 
-			FragmentManager fragmentManager = FragmentManager;
+			Android.App.FragmentManager fragmentManager = FragmentManager;
 
 			if (optionsMenuFragment == null)
 			{
@@ -333,7 +368,7 @@ namespace SharpHmiAndroid
 				bundle.PutInt(FullHmiFragment.sClickedAppID, appID);
 				optionsMenuFragment.Arguments = bundle;
 
-				FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
+				Android.App.FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
 				fragmentTransaction.Replace(Resource.Id.frame_container, optionsMenuFragment, HMI_OPTIONS_MENU_FRAGMENT_TAG).AddToBackStack(null).Commit();
 				fragmentManager.ExecutePendingTransactions();
 				SetTitle(Resource.String.app_name);
@@ -342,7 +377,7 @@ namespace SharpHmiAndroid
 
         private void RemoveFullFragment()
         {
-			FragmentManager fragmentManager = FragmentManager;
+			Android.App.FragmentManager fragmentManager = FragmentManager;
             fragmentManager.PopBackStack();
 		}
 

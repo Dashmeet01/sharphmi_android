@@ -1188,6 +1188,7 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs</Link>
     </Compile>
+    <Compile Include="AppUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -1259,6 +1260,7 @@
     <AndroidResource Include="Resources\drawable\submenu_icon.xml" />
     <AndroidResource Include="Resources\menu\full_hmi_menu.xml" />
     <AndroidResource Include="Resources\drawable\options_menu_icon.xml" />
+    <AndroidResource Include="Resources\layout\splash_screen.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

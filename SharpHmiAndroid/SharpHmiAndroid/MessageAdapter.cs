@@ -26,6 +26,11 @@ namespace SharpHmiAndroid
 			this.activity = context;
 		}
 
+		public void updateActivity(Activity context)
+		{
+			this.activity = context;
+		}
+
 		public List<LogMessage> getLogMessageList()
 		{
 			return this.items;
