@@ -5,11 +5,11 @@ using HmiApiLib.Interfaces;
 using HmiApiLib.Proxy;
 using HmiApiLib;
 using System.Collections.Generic;
-using HmiApiLib.Manager;
 using HmiApiLib.Base;
 using Android.Graphics;
 using Java.IO;
 using System.IO;
+using HmiApiLib.Controllers.Buttons.IncomingNotifications;
 
 namespace SharpHmiAndroid
 {
@@ -477,6 +477,11 @@ namespace SharpHmiAndroid
 					}
 				}
 			}
+		}
+
+		public override void OnButtonSubscriptionNotification(OnButtonSubscription msg)
+		{
+			base.OnButtonSubscriptionNotification(msg);
 		}
 
 		public void onOpen()
