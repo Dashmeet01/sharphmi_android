@@ -97,9 +97,9 @@ namespace SharpHmiAndroid
 			{
 				int appId = -1;
 
-				if (appIdPutfileList.ContainsKey(msg.getAppId()))
+				if (appIdPutfileList.ContainsKey((int)msg.getAppId()))
 				{
-					appId = msg.getAppId();
+					appId = (int)msg.getAppId();
 				}
 				else
 				{
@@ -167,18 +167,18 @@ namespace SharpHmiAndroid
 		{
 			base.onUiAddCommandRequest(msg);
             List<RpcRequest> data;
-            if(menuOptionListUi.ContainsKey(msg.getAppId()))
+			if(menuOptionListUi.ContainsKey((int)msg.getAppId()))
             {
-                data = menuOptionListUi[msg.getAppId()];
+				data = menuOptionListUi[(int)msg.getAppId()];
                 data.Add(msg);
-                menuOptionListUi.Remove(msg.getAppId());
+				menuOptionListUi.Remove((int)msg.getAppId());
             }
             else
             {
                 data = new List<RpcRequest>();
                 data.Add(msg);
             }
-            menuOptionListUi.Add(msg.getAppId(), data);
+			menuOptionListUi.Add((int)msg.getAppId(), data);
             appUiCallback.refreshOptionsMenu();
 		}
 
@@ -186,18 +186,18 @@ namespace SharpHmiAndroid
         {
             base.onUiAddSubMenuRequest(msg);
 			List<RpcRequest> data;
-			if (menuOptionListUi.ContainsKey(msg.getAppId()))
+			if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
 			{
-				data = menuOptionListUi[msg.getAppId()];
+				data = menuOptionListUi[(int)msg.getAppId()];
 				data.Add(msg);
-				menuOptionListUi.Remove(msg.getAppId());
+				menuOptionListUi.Remove((int)msg.getAppId());
 			}
 			else
 			{
 				data = new List<RpcRequest>();
 				data.Add(msg);
 			}
-			menuOptionListUi.Add(msg.getAppId(), data);
+			menuOptionListUi.Add((int)msg.getAppId(), data);
 			appUiCallback.refreshOptionsMenu();
         }
 
@@ -298,7 +298,7 @@ namespace SharpHmiAndroid
 		public override void onBcAppUnRegisteredNotification(HmiApiLib.Controllers.BasicCommunication.IncomingNotifications.OnAppUnregistered msg)
 		{
 			base.onBcAppUnRegisteredNotification(msg);
-            int appID = msg.getAppId();
+			int appID = (int)msg.getAppId();
 			for (int i = 0; i < appList.Count; i++)
 			{
 				if ((appList[i].getAppID() == appID) || (appList[i].getAppID() == getCorrectAppId(appID)))

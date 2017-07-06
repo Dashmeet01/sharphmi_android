@@ -120,6 +120,7 @@
     <Compile Include="HmiOptionsFragmentCallback.cs" />
     <Compile Include="OptionsMenuFragment.cs" />
     <Compile Include="OptionsMenuAdapter.cs" />
+    <Compile Include="AppUtils.cs" />
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Base\BaseMessage.cs</Link>
     </Compile>
@@ -1188,7 +1189,6 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs</Link>
     </Compile>
-    <Compile Include="AppUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -1212,6 +1212,9 @@
     </None>
     <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.sln">
       <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.sln</Link>
+    </None>
+    <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\SharedHmiLib.userprefs">
+      <Link>SharpHmiApi\SharedHmiLib\SharedHmiLib.userprefs</Link>
     </None>
     <None Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\libs\readme.txt">
       <Link>SharpHmiApi\SharedHmiLib\libs\readme.txt</Link>
