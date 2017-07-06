@@ -1164,6 +1164,9 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs">
       <Link>SharpHmiApi\SharedHmiLib\Types\InterfaceType.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\HttpUtility.cs">
+      <Link>SharpHmiApi\SharedHmiLib\Utility\HttpUtility.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\LogMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Utility\LogMessage.cs</Link>
     </Compile>

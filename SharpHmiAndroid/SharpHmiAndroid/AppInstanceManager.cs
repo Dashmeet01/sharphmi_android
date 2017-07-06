@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using HmiApiLib.Interfaces;
 using HmiApiLib.Proxy;
 using HmiApiLib;
+using HmiApiLib.Controllers.Buttons.IncomingNotifications;
 
 namespace SharpHmiAndroid
 {
@@ -198,6 +199,11 @@ namespace SharpHmiAndroid
 		public override void onButtonsGetCapabilitiesRequest(HmiApiLib.Controllers.Buttons.IncomingRequests.GetCapabilities msg)
 		{
 			base.onButtonsGetCapabilitiesRequest(msg);
+		}
+
+		public override void OnButtonSubscriptionNotification(OnButtonSubscription msg)
+		{
+			base.OnButtonSubscriptionNotification(msg);
 		}
 
 		public void onOpen()
