@@ -35,26 +35,13 @@ namespace SharpHmiAndroid
 			mRecyclerView.SetAdapter(mAdapter);
 			return rootView;
 		}
-
-		//     public override void OnResume()
-		//     {
-		//         base.OnResume();
-
-		//         //UpdateAdapter();
-		//appList.Clear();
-		//appList.AddRange(AppInstanceManager.appList);
-
-		//mAdapter = new AppListAdapter(appList);
-		//mAdapter.ItemClick += OnItemClick;
-		//mRecyclerView.SetAdapter(mAdapter);
-		//}
-		
+        		
 		public void onRefreshCallback()
 		{
             Activity.RunOnUiThread(() => UpdateAdapter());
 		}
 
-        private void UpdateAdapter()
+        void UpdateAdapter()
         {
 			appList.Clear();
 			appList.AddRange(AppInstanceManager.appList);

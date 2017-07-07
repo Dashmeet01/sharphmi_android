@@ -10,6 +10,7 @@ using Android.Graphics;
 using Java.IO;
 using System.IO;
 using HmiApiLib.Controllers.Buttons.IncomingNotifications;
+using HmiApiLib.Controllers.UI.IncomingRequests;
 
 namespace SharpHmiAndroid
 {
@@ -161,6 +162,7 @@ namespace SharpHmiAndroid
 		public override void onUiShowRequest(HmiApiLib.Controllers.UI.IncomingRequests.Show msg)
 		{
 			base.onUiShowRequest(msg);
+            appUiCallback.onUiShowRequestCallback(msg);
 		}
 
 		public override void onUiAddCommandRequest(HmiApiLib.Controllers.UI.IncomingRequests.AddCommand msg)
@@ -204,12 +206,26 @@ namespace SharpHmiAndroid
 		public override void onUiAlertRequest(HmiApiLib.Controllers.UI.IncomingRequests.Alert msg)
 		{
 			base.onUiAlertRequest(msg);
+            appUiCallback.onUiAlertRequestCallback(msg);
 		}
+
+        public override void onUiScrollableMessageRequest(HmiApiLib.Controllers.UI.IncomingRequests.ScrollableMessage msg)
+        {
+            base.onUiScrollableMessageRequest(msg);
+            appUiCallback.onUiScrollableMessageRequestCallback(msg);
+        }
 
 		public override void onUiPerformInteractionRequest(HmiApiLib.Controllers.UI.IncomingRequests.PerformInteraction msg)
 		{
 			base.onUiPerformInteractionRequest(msg);
+            appUiCallback.onUiPerformInteractionRequestCallback(msg);
 		}
+
+        public override void onUiSetMediaClockTimerRequest(HmiApiLib.Controllers.UI.IncomingRequests.SetMediaClockTimer msg)
+        {
+            base.onUiSetMediaClockTimerRequest(msg);
+            appUiCallback.onUiSetMediaClockTimerRequestCallback(msg);
+        }
 
 		public override void onUiGetLanguageRequest(HmiApiLib.Controllers.UI.IncomingRequests.GetLanguage msg)
 		{
@@ -219,7 +235,50 @@ namespace SharpHmiAndroid
 		public override void onUiDeleteCommandRequest(HmiApiLib.Controllers.UI.IncomingRequests.DeleteCommand msg)
 		{
 			base.onUiDeleteCommandRequest(msg);
+            List<RpcRequest> data = new List<RpcRequest>();
+            if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
+            {
+                data = menuOptionListUi[(int)msg.getAppId()];
+                foreach (RpcRequest req in data)
+                {
+                    if (req is AddCommand)
+                    {
+                        if (((AddCommand)req).getCmdId() == msg.getCmdId())
+                        {
+                            data.Remove(req);
+                            break;
+                        }
+                    }
+                }
+                menuOptionListUi.Remove((int)msg.getAppId());
+            }
+            menuOptionListUi.Add((int)msg.getAppId(), data);
+            appUiCallback.refreshOptionsMenu();
 		}
+
+        public override void onUiDeleteSubMenuRequest(HmiApiLib.Controllers.UI.IncomingRequests.DeleteSubMenu msg)
+        {
+            base.onUiDeleteSubMenuRequest(msg);
+            List<RpcRequest> data = new List<RpcRequest>();
+            if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
+            {
+                data = menuOptionListUi[(int)msg.getAppId()];
+                foreach (RpcRequest req in data)
+                {
+                    if (req is AddSubMenu)
+                    {
+                        if (((AddSubMenu)req).getMenuID() == msg.getMenuID())
+                        {
+                            data.Remove(req);
+                            break;
+                        }
+                    }
+                }
+                menuOptionListUi.Remove((int)msg.getAppId());
+            }
+            menuOptionListUi.Add((int)msg.getAppId(), data);
+            appUiCallback.refreshOptionsMenu();
+        }
 
 		public override void onUiIsReadyRequest(HmiApiLib.Controllers.UI.IncomingRequests.IsReady msg)
 		{

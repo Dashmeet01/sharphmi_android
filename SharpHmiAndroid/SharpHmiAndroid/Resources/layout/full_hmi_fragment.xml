@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dp"
@@ -23,33 +24,42 @@
                     android:id="@+id/show_media_track_timer"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/_12_34_00" />
+                    tools:text="@string/_12_34_00" />
                 <TextView
                     android:id="@+id/show_main_field_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/show_line_1" />
+                    tools:text="@string/show_line_1" />
                 <TextView
                     android:id="@+id/show_main_field_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/show_line_2" />
+                    tools:text="@string/show_line_2" />
                 <TextView
                     android:id="@+id/show_main_field_3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/show_line_3" />
+                    tools:text="@string/show_line_3" />
                 <TextView
                     android:id="@+id/show_main_field_4"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/show_line_4" />
+                    tools:text="@string/show_line_4" />
                 <TextView
                     android:id="@+id/show_media_track__timer_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/media_track" />
+                    tools:text="@string/media_track" />
             </LinearLayout>
+        </ScrollView>
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/full_hmi_linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
         </ScrollView>
         <ImageView
             android:id="@+id/show_image"
@@ -68,7 +78,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="00:00" />
+            tools:text="00:00" />
         <SeekBar
             android:id="@+id/full_hmi_set_media_seekBar"
             android:layout_width="0dp"
@@ -80,7 +90,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:text="00:00" />
+            tools:text="00:00" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -119,21 +129,25 @@
                 android:id="@+id/soft_btn_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_weight="1" />
             <Button
                 android:id="@+id/soft_btn_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_weight="1" />
             <Button
                 android:id="@+id/soft_btn_3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_weight="1" />
             <Button
                 android:id="@+id/soft_btn_4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_weight="1" />
         </LinearLayout>
         <LinearLayout
@@ -144,21 +158,25 @@
                 android:id="@+id/soft_btn_5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_weight="1" />
             <Button
                 android:id="@+id/soft_btn_6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_weight="1" />
             <Button
                 android:id="@+id/soft_btn_7"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_weight="1" />
             <Button
                 android:id="@+id/soft_btn_8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>

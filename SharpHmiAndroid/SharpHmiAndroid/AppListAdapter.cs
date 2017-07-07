@@ -26,8 +26,7 @@ namespace SharpHmiAndroid
 
 		void OnClick(int position)
 		{
-			if (ItemClick != null)
-				ItemClick(this, position);
+			ItemClick?.Invoke(this, position);
 		}
 
 		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)

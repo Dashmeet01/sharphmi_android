@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal|center">
+    <TextView
+        android:id="@+id/alert_text_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Alert text 1" />
+    <TextView
+        android:id="@+id/alert_text_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Alert text 2" />
+    <TextView
+        android:id="@+id/alert_text_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Alert text 3" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
+        <Button
+            android:id="@+id/alert_soft_btn_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/alert_soft_btn_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/alert_soft_btn_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/alert_soft_btn_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

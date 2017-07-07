@@ -10,7 +10,7 @@ namespace SharpHmiAndroid
 {
     public class OptionsMenuAdapter : RecyclerView.Adapter
     {
-        private List<RpcRequest> requestList;
+        List<RpcRequest> requestList;
 		public event EventHandler<int> ItemClick;
 
         public OptionsMenuAdapter(List<RpcRequest> list)
@@ -28,15 +28,14 @@ namespace SharpHmiAndroid
 
 		void OnClick(int position)
 		{
-			if (ItemClick != null)
-				ItemClick(this, position);
+			ItemClick?.Invoke(this, position);
 		}
 
 		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
 		{
 			AppViewHolder appViewHolder = holder as AppViewHolder;
             RpcRequest req = requestList[position];
-            if ((req is AddCommand) && (((AddCommand)req).getMenuParams().getParentID() == 0))
+            if (req is AddCommand)
             {
                 appViewHolder.SubmenuIcon.Visibility = ViewStates.Gone;
                 appViewHolder.CommandText.Text = ((AddCommand)req).getMenuParams().menuName;
