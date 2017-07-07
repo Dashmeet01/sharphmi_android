@@ -1265,6 +1265,10 @@
     <AndroidResource Include="Resources\drawable\options_menu_icon.xml" />
     <AndroidResource Include="Resources\layout\splash_screen.axml" />
     <AndroidResource Include="Resources\layout\custom_alert_dialog.xml" />
+    <AndroidResource Include="Resources\layout\rpclistLayout.axml" />
+    <AndroidResource Include="Resources\layout\alert.xml" />
+    <AndroidResource Include="Resources\layout\show.xml" />
+    <AndroidResource Include="Resources\layout\genericspinner.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

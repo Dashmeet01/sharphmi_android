@@ -19,4 +19,32 @@
     <string name="play_pause_button">Play/Pause Button</string>
     <string name="next_button">Next Button</string>
     <string name="show_image_icon">Show Image Icon</string>
+	<string name="clearSoftButton"> Clear Soft Buttons </string>
+	<string name="secureSession"> Secure Session </string>
+	<string name="show_mainField1"> Main Fieild1 </string>
+    <string name="show_mainField2"> Main Fieild2 </string>
+    <string name="show_mainField3"> Main Fieild3 </string>
+    <string name="show_mainField4"> Main Fieild4 </string>
+    <string name="show_mainField1Default"> Show Line1 </string>
+    <string name="show_mainField2Default"> Show Line2 </string>
+    <string name="show_mainField3Default"> Show Line3 </string>
+    <string name="show_mainField4Default"> Show Line4 </string>
+	<string name="show_textAlignment"> Text Alignment </string>
+    <string name="show_statusBar"> Status Bar </string>
+    <string name="show_statusBarDefault"> Status Bar </string>
+    <string name="show_mediaTrack"> Media Track </string>
+    <string name="show_mediaTrackDefault"> Media Track </string>
+	<string name="show_mediaClock"> Media Clock </string>
+    <string name="show_mediaClockDefault"> 12:34 </string>
+
+    <string name="show_graphic"> Graphic </string>
+    <string name="show_secondaryGraphic"> Secondary Graphic </string>
+    <string name="show_includeSoftButtons"> Include </string>
+    <string name="show_softButtons"> Soft Buttons </string>
+    <string name="clearSoftButton"> Clear Soft Buttons </string>
+    <string name="show_customPresets"> Custom Presets (comma-seperated) </string>
+    <string name="show_customPresetsDefault"> GEN0,GEN1,GEN2,GEN3,GEN4,GEN5 </string>
+	
+	
+	
 </resources>
