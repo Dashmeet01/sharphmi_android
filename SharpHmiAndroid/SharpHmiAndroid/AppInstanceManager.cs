@@ -280,6 +280,12 @@ namespace SharpHmiAndroid
             appUiCallback.refreshOptionsMenu();
         }
 
+        public override void onUiSliderRequest(Slider msg)
+        {
+            base.onUiSliderRequest(msg);
+            appUiCallback.onUiSliderRequestCallback(msg);
+        }
+
 		public override void onUiIsReadyRequest(HmiApiLib.Controllers.UI.IncomingRequests.IsReady msg)
 		{
 			base.onUiIsReadyRequest(msg);
@@ -289,6 +295,7 @@ namespace SharpHmiAndroid
 		public override void onTtsSpeakRequest(HmiApiLib.Controllers.TTS.IncomingRequests.Speak msg)
 		{
 			base.onTtsSpeakRequest(msg);
+            appUiCallback.onTtsSpeakRequestCallback(msg);
 		}
 
 		public override void onTtsStopSpeakingRequest(HmiApiLib.Controllers.TTS.IncomingRequests.StopSpeaking msg)
@@ -541,6 +548,7 @@ namespace SharpHmiAndroid
 		public override void OnButtonSubscriptionNotification(OnButtonSubscription msg)
 		{
 			base.OnButtonSubscriptionNotification(msg);
+            appUiCallback.OnButtonSubscriptionNotificationCallback(msg);
 		}
 
 		public void onOpen()

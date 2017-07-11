@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using HmiApiLib.Common.Enums;
 using HmiApiLib.Common.Structs;
+using HmiApiLib.Controllers.Buttons.IncomingNotifications;
 using HmiApiLib.Controllers.UI.IncomingRequests;
 
 namespace SharpHmiAndroid
@@ -32,12 +34,16 @@ namespace SharpHmiAndroid
         Button softButton8;
 
         ImageView mainGraphic;
+        ImageView previousButton;
+        ImageView playPauseButton;
+        ImageView nextButton;
+
         SeekBar mSeekBar;
         LinearLayout mLinearLayout;
         TextView mediaStartText;
         TextView mediaEndText;
 
-        private Handler mHandler;
+        Handler mHandler;
         Action action;
         long currentTime = 0;
         long totalStartSeconds = 0;
@@ -73,6 +79,9 @@ namespace SharpHmiAndroid
             softButton8 = (Button)rootView.FindViewById(Resource.Id.soft_btn_8);
 
             mainGraphic = (ImageView)rootView.FindViewById(Resource.Id.show_image);
+            previousButton = (ImageView)rootView.FindViewById(Resource.Id.button_hmi_previous);
+            playPauseButton = (ImageView)rootView.FindViewById(Resource.Id.button_hmi_play_pause);
+            nextButton = (ImageView)rootView.FindViewById(Resource.Id.button_hmi_next);
 
             mediaStartText = (TextView)rootView.FindViewById(Resource.Id.full_hmi_set_media_start);
             mSeekBar = (SeekBar)rootView.FindViewById(Resource.Id.full_hmi_set_media_seekBar);
@@ -458,6 +467,67 @@ namespace SharpHmiAndroid
 
             if (null != mHandler)
                 mHandler.PostDelayed(action, 1000);
+        }
+
+        internal void OnButtonSubscriptionNotificationCallback(OnButtonSubscription msg)
+        {
+            Activity.RunOnUiThread(() => UpdateButtonSubscription(msg));
+        }
+
+        void UpdateButtonSubscription(OnButtonSubscription msg)
+        {
+            if (msg.getName() == HmiApiLib.ButtonName.OK)
+			{
+				if ((msg.getSubscribe() != null) && ((bool)msg.getSubscribe()))
+				{
+					playPauseButton.Visibility = ViewStates.Visible;
+				}
+				else
+				{
+					playPauseButton.Visibility = ViewStates.Invisible;
+				}
+			}
+            else if (msg.getName() == HmiApiLib.ButtonName.SEEKLEFT)
+			{
+				if ((msg.getSubscribe() != null) && ((bool)msg.getSubscribe()))
+				{
+					previousButton.Visibility = ViewStates.Visible;
+				}
+				else
+				{
+					previousButton.Visibility = ViewStates.Invisible;
+				}
+			}
+            else if (msg.getName() == HmiApiLib.ButtonName.SEEKRIGHT)
+			{
+				if ((msg.getSubscribe() != null) && ((bool)msg.getSubscribe()))
+				{
+					nextButton.Visibility = ViewStates.Visible;
+				}
+				else
+				{
+					nextButton.Visibility = ViewStates.Invisible;
+				}
+			}
+        }
+
+        internal void onUiSliderRequestCallback(Slider msg)
+        {
+            int numTicks = 0;
+            int currentPosition = 0;
+            String sliderHeader = msg.getSliderHeader();
+            List<String> sliderFooter = msg.getSliderFooter();
+            if (msg.getNumTicks() != null)
+                numTicks = (int)msg.getNumTicks();
+            if (msg.getPosition() != null)
+                currentPosition = (int)msg.getPosition();
+
+            mSeekBar.Visibility = ViewStates.Visible;
+
+            if (numTicks > 0)
+            {
+                
+            }
         }
     }
 }

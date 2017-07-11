@@ -15,11 +15,17 @@ using Android.Support.V4.App;
 using Android.Content.PM;
 using HmiApiLib.Controllers.UI.IncomingRequests;
 using HmiApiLib.Common.Enums;
+using HmiApiLib.Controllers.Buttons.IncomingNotifications;
+using Android.Speech.Tts;
+using HmiApiLib.Controllers.TTS.IncomingRequests;
+using Android.Runtime;
+using System.Collections.Generic;
+using HmiApiLib.Common.Structs;
 
 namespace SharpHmiAndroid
 {
     [Activity(Label = "SharpHmiAndroid", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity, AppUiCallback, ActivityCompat.IOnRequestPermissionsResultCallback
+    public class MainActivity : AppCompatActivity, AppUiCallback, ActivityCompat.IOnRequestPermissionsResultCallback, TextToSpeech.IOnInitListener
     {
         NavigationView navigationView;
         DrawerLayout drawer;
@@ -29,6 +35,11 @@ namespace SharpHmiAndroid
         static string HMI_FULL_FRAGMENT_TAG = "hmi_full_frag";
         static string HMI_OPTIONS_MENU_FRAGMENT_TAG = "hmi_options_menu_frag";
         public const int REQUEST_STORAGE = 10;
+
+		Handler mHandler;
+		Action action;
+        TextToSpeech textToSpeech;
+        List<String> speechList = new List<string>();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -446,7 +457,11 @@ namespace SharpHmiAndroid
             Button softButton3 = (Button)view.FindViewById(Resource.Id.alert_soft_btn_3);
             Button softButton4 = (Button)view.FindViewById(Resource.Id.alert_soft_btn_4);
 
-
+            int totalDuration = 10000;
+            if (msg.getDuration() != null)
+            {
+                totalDuration = (int)msg.getDuration();
+            }
 
             if ((msg.getAlertStrings() != null) && (msg.getAlertStrings().Count > 0))
             {
@@ -503,7 +518,21 @@ namespace SharpHmiAndroid
             });
             Android.Support.V7.App.AlertDialog ad = builder.Create();
             ad.Show();
+
+            mHandler = new Handler(Looper.MainLooper);
+			action = delegate
+			{
+                builder.Dispose();
+                //HandleAction();
+			};
+			if (null != mHandler)
+				mHandler.PostDelayed(action, totalDuration);
         }
+
+        //private void HandleAction()
+        //{
+        //    builder.Dispose();
+        //}
 
         public void onUiScrollableMessageRequestCallback(ScrollableMessage msg)
         {
@@ -526,6 +555,55 @@ namespace SharpHmiAndroid
             if ((getFullHMiFragment() != null) && (getFullHMiFragment().IsVisible))
             {
                 getFullHMiFragment().onUiSetMediaClockTimerRequestCallback(msg);
+            }
+        }
+
+        public void OnButtonSubscriptionNotificationCallback(OnButtonSubscription msg)
+        {
+			if ((getFullHMiFragment() != null) && (getFullHMiFragment().IsVisible))
+			{
+				getFullHMiFragment().OnButtonSubscriptionNotificationCallback(msg);
+			}
+        }
+
+        public void onTtsSpeakRequestCallback(Speak msg)
+        {
+            if ((msg.getTtsChunkList() != null) && (msg.getTtsChunkList().Count > 0))
+            {
+                foreach(TTSChunk item in msg.getTtsChunkList())
+                {
+                    if (item.type == SpeechCapabilities.TEXT)
+                    {
+                        speechList.Add(item.text);
+                    }
+                }
+            }
+            RunOnUiThread(() => HandleSpeakRequest());
+        }
+
+        private void HandleSpeakRequest()
+        {
+			textToSpeech = new TextToSpeech(this, this);
+        }
+
+        public void OnInit([GeneratedEnum] OperationResult status)
+        {
+            if (status != OperationResult.Error)
+            {
+                textToSpeech.SetLanguage(Java.Util.Locale.Us);
+                for (int i = 0; i < speechList.Count; i++)
+                {
+                    textToSpeech.Speak(speechList[i], QueueMode.Add, null, null);
+                }
+                speechList.Clear();
+            }
+        }
+
+        public void onUiSliderRequestCallback(Slider msg)
+        {
+            if ((getFullHMiFragment() != null) && (getFullHMiFragment().IsVisible))
+            {
+                getFullHMiFragment().onUiSliderRequestCallback(msg);
             }
         }
     }
