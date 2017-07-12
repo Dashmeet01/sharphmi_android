@@ -11,7 +11,7 @@ using HmiApiLib.Controllers.UI.IncomingRequests;
 
 namespace SharpHmiAndroid
 {
-    public class FullHmiFragment : Fragment
+    public class FullHmiFragment : Fragment, SeekBar.IOnSeekBarChangeListener
     {
         int appID;
         public static readonly String sClickedAppID = "APP_ID";
@@ -48,6 +48,13 @@ namespace SharpHmiAndroid
         long currentTime = 0;
         long totalStartSeconds = 0;
         long totalEndSeconds = 0;
+        int numTicks = 0;
+
+        TextView sliderHeader;
+        TextView sliderFooter;
+        Button sliderSave;
+        Button sliderCancel;
+        List<String> sliderFooterList;
 
         public FullHmiFragment()
         {
@@ -89,6 +96,10 @@ namespace SharpHmiAndroid
 
             mLinearLayout = (LinearLayout)rootView.FindViewById(Resource.Id.full_hmi_linear_layout);
 
+            sliderSave = (Button)rootView.FindViewById(Resource.Id.full_hmi_slider_save);
+            sliderCancel = (Button)rootView.FindViewById(Resource.Id.full_hmi_slider_cancel);
+            sliderHeader = (TextView)rootView.FindViewById(Resource.Id.full_hmi_slider_header);
+            sliderFooter = (TextView)rootView.FindViewById(Resource.Id.full_hmi_slider_footer);
             return rootView;
         }
 
@@ -118,6 +129,7 @@ namespace SharpHmiAndroid
 
         private void UpdateShowUI(Show msg)
         {
+            HideSliderUI();
             if ((msg.getShowStrings() != null) && (msg.getShowStrings().Count > 0))
             {
                 ClearText();
@@ -203,6 +215,7 @@ namespace SharpHmiAndroid
 
         void UpdateScrollUI(ScrollableMessage msg)
         {
+            HideSliderUI();
             ClearText();
 
             if (msg.getMessageText().fieldName == TextFieldName.scrollableMessageBody)
@@ -288,6 +301,7 @@ namespace SharpHmiAndroid
 
         private void UpdatePerformInteractionUI(PerformInteraction msg)
         {
+            HideSliderUI();
             ClearText();
             invisibleSoftButtons();
             if (msg.getInitialText().fieldName == TextFieldName.initialInteractionText)
@@ -314,7 +328,9 @@ namespace SharpHmiAndroid
 
         private void UpdateSetMediaTimerUI(SetMediaClockTimer msg)
         {
+            HideSliderUI();
             mSeekBar.Visibility = ViewStates.Visible;
+            mSeekBar.Enabled = false;
 
             if ((msg.getUpdateMode() == ClockUpdateMode.COUNTUP) || (msg.getUpdateMode() == ClockUpdateMode.COUNTDOWN))
             {
@@ -476,6 +492,7 @@ namespace SharpHmiAndroid
 
         void UpdateButtonSubscription(OnButtonSubscription msg)
         {
+            HideSliderUI();
             if (msg.getName() == HmiApiLib.ButtonName.OK)
 			{
 				if ((msg.getSubscribe() != null) && ((bool)msg.getSubscribe()))
@@ -513,21 +530,85 @@ namespace SharpHmiAndroid
 
         internal void onUiSliderRequestCallback(Slider msg)
         {
-            int numTicks = 0;
-            int currentPosition = 0;
-            String sliderHeader = msg.getSliderHeader();
-            List<String> sliderFooter = msg.getSliderFooter();
-            if (msg.getNumTicks() != null)
-                numTicks = (int)msg.getNumTicks();
-            if (msg.getPosition() != null)
-                currentPosition = (int)msg.getPosition();
+            Activity.RunOnUiThread(() => UpdateSliderUI(msg));
+        }
 
-            mSeekBar.Visibility = ViewStates.Visible;
+        private void UpdateSliderUI(Slider msg)
+        {
+            ShowSliderUI();
+            //int currentPosition = 0;
+			sliderFooterList = msg.getSliderFooter();
+			if (msg.getNumTicks() != null)
+				numTicks = (int)msg.getNumTicks();
+			//if (msg.getPosition() != null)
+			//currentPosition = (int)msg.getPosition();
 
-            if (numTicks > 0)
+			mSeekBar.Visibility = ViewStates.Visible;
+			mSeekBar.Enabled = true;
+            mSeekBar.SetOnSeekBarChangeListener(this);
+
+            sliderHeader.Text = msg.getSliderHeader();
+
+            if ((sliderFooterList != null) && (sliderFooterList.Count == 1))
             {
-                
+                sliderFooter.Text = sliderFooterList[0];
             }
+            else
+            {
+                sliderFooter.Text = null;
+			}
+		}
+
+        public void OnProgressChanged(SeekBar seekBar, int progress, bool fromUser)
+        {
+
+        }
+
+        public void OnStartTrackingTouch(SeekBar seekBar)
+        {
+
+        }
+
+        public void OnStopTrackingTouch(SeekBar seekBar)
+        {
+            int currentProgres = seekBar.Progress;
+
+            double partitionLenghthInDouble = (double) 100 / numTicks;
+            int actualPartitionLength = (int)Math.Round(partitionLenghthInDouble);
+
+            double nextPosition = (double) currentProgres / actualPartitionLength;
+            int setPos = (int)Math.Round(nextPosition);
+
+            int finalSeekbar = actualPartitionLength * setPos;
+            mSeekBar.SetProgress(finalSeekbar, true);
+
+			if ((sliderFooterList != null) && (sliderFooterList.Count > 1))
+			{
+                if (setPos > 0)
+                {
+                    sliderFooter.Text = sliderFooterList[setPos - 1];
+                }
+                else
+                {
+                    sliderFooter.Text = null;
+				}
+			}
+        }
+
+        void HideSliderUI()
+        {
+            sliderSave.Visibility = ViewStates.Gone;
+            sliderCancel.Visibility = ViewStates.Gone;
+            sliderHeader.Visibility = ViewStates.Gone;
+            sliderFooter.Visibility = ViewStates.Gone;
+        }
+
+        void ShowSliderUI()
+        {
+            sliderSave.Visibility = ViewStates.Visible;
+			sliderCancel.Visibility = ViewStates.Visible;
+			sliderHeader.Visibility = ViewStates.Visible;
+			sliderFooter.Visibility = ViewStates.Visible;
         }
     }
 }
