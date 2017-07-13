@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using HmiApiLib.Interfaces;
@@ -10,6 +10,17 @@ using Android.Graphics;
 using Java.IO;
 using System.IO;
 using HmiApiLib.Controllers.Buttons.IncomingNotifications;
+using HmiApiLib.Controllers.BasicCommunication.IncomingNotifications;
+using HmiApiLib.Controllers.BasicCommunication.IncomingRequests;
+using HmiApiLib.Controllers.Buttons.OutGoingNotifications;
+using HmiApiLib.Controllers.Navigation.IncomingRequests;
+using HmiApiLib.Controllers.TTS.IncomingRequests;
+using HmiApiLib.Controllers.UI.IncomingRequests;
+using HmiApiLib.Controllers.VehicleInfo.IncomingRequests;
+using HmiApiLib.Controllers.UI.OutGoingNotifications;
+using HmiApiLib.Builder;
+using HmiApiLib.Common.Enums;
+using HmiApiLib.Common.Structs;
 
 namespace SharpHmiAndroid
 {
@@ -26,7 +37,7 @@ namespace SharpHmiAndroid
 		private AppSetting appSetting = null;
 		public static List<AppItem> appList = new List<AppItem>();
 		AppUiCallback appUiCallback;
-        public static Dictionary<int, List<RpcRequest>> menuOptionListUi = new Dictionary<int, List<RpcRequest>>();
+		public static Dictionary<int, List<RpcRequest>> menuOptionListUi = new Dictionary<int, List<RpcRequest>>();
 		public static Dictionary<int, List<string>> appIdPutfileList = new Dictionary<int, List<string>>();
 		public static Dictionary<int, string> appIdPolicyIdDictionary = new Dictionary<int, string>();
 
@@ -90,11 +101,56 @@ namespace SharpHmiAndroid
 			initConnectionManager(ipAddr, portNum, this, this, this);
 		}
 
+		public void onOpen()
+		{
+			// Handle logic for Callback triggered when Socket is Opened.
+			//Console.WriteLine("Debug: onOpen()");
+			isConnected = true;
+		}
+
+		public void onClose()
+		{
+			// Handle logic for Callback triggered when Socket is Opened.
+			//Console.WriteLine("Debug: onClose()");
+			isConnected = false;
+		}
+
+		public void onError()
+		{
+			// Handle logic for Callback triggered when Socket is Opened.
+			//Console.WriteLine("Debug: onError()");
+			isConnected = false;
+		}
+
+		private void addMessageToUI(LogMessage message)
+		{
+			if (_msgAdapter == null) return;
+
+			_msgAdapter.addMessage(message);
+		}
+
+		public void dispatch(LogMessage message)
+		{
+			addMessageToUI(message);
+		}
+
+		public void handleDispatchingError(string info, Exception ex)
+		{
+			LogMessage logMessage = new StringLogMessage(info);
+			addMessageToUI(logMessage);
+		}
+
+		public void handleQueueingError(string info, Exception ex)
+		{
+			LogMessage logMessage = new StringLogMessage(info);
+			addMessageToUI(logMessage);		}
+
 		//UI interface callbacks
-		public override void onUiSetAppIconRequest(HmiApiLib.Controllers.UI.IncomingRequests.SetAppIcon msg)
+		public override void onUiSetAppIconRequest(SetAppIcon msg)
 		{
 			if (null != appUiCallback)
 			{
+				int corrId = msg.getId();
 				int appId = -1;
 
 				if (appIdPutfileList.ContainsKey((int)msg.getAppId()))
@@ -123,20 +179,29 @@ namespace SharpHmiAndroid
 										image = BitmapFactory.DecodeStream(getPutfile(msg.getAppIcon().getValue()));
 										appList[j].setAppIcon(image);
 										appUiCallback.setDownloadedAppIcon();
+										sendRpc(BuildRpc.buildUiSetAppIconResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
 									}
 									catch (Exception ex)
 									{
+										sendRpc(BuildRpc.buildUiSetAppIconResponse(corrId, HmiApiLib.Common.Enums.Result.INVALID_DATA));
 									}
-									break;
+									return;
 								}
+
 							}
 							break;
 						}
 					}
 				}
+				else
+				{
+					sendRpc(BuildRpc.buildUiSetAppIconResponse(corrId, HmiApiLib.Common.Enums.Result.INVALID_ID));
+					return;
+				}
+
+				sendRpc(BuildRpc.buildUiSetAppIconResponse(corrId, HmiApiLib.Common.Enums.Result.DATA_NOT_AVAILABLE));
 			}
 
-			base.onUiSetAppIconRequest(msg);
 		}
 
 		public int getCorrectAppId(int? matchValue)
@@ -158,33 +223,15 @@ namespace SharpHmiAndroid
 			return appId;
 		}
 
-		public override void onUiShowRequest(HmiApiLib.Controllers.UI.IncomingRequests.Show msg)
+		public override void onUiShowRequest(Show msg)
 		{
-			base.onUiShowRequest(msg);
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildUiShowResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
 		}
 
-		public override void onUiAddCommandRequest(HmiApiLib.Controllers.UI.IncomingRequests.AddCommand msg)
+		public override void onUiAddCommandRequest(AddCommand msg)
 		{
-			base.onUiAddCommandRequest(msg);
-            List<RpcRequest> data;
-			if(menuOptionListUi.ContainsKey((int)msg.getAppId()))
-            {
-				data = menuOptionListUi[(int)msg.getAppId()];
-                data.Add(msg);
-				menuOptionListUi.Remove((int)msg.getAppId());
-            }
-            else
-            {
-                data = new List<RpcRequest>();
-                data.Add(msg);
-            }
-			menuOptionListUi.Add((int)msg.getAppId(), data);
-            appUiCallback.refreshOptionsMenu();
-		}
-
-        public override void onUiAddSubMenuRequest(HmiApiLib.Controllers.UI.IncomingRequests.AddSubMenu msg)
-        {
-            base.onUiAddSubMenuRequest(msg);
+			int corrId = msg.getId();
 			List<RpcRequest> data;
 			if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
 			{
@@ -199,105 +246,190 @@ namespace SharpHmiAndroid
 			}
 			menuOptionListUi.Add((int)msg.getAppId(), data);
 			appUiCallback.refreshOptionsMenu();
-        }
-
-		public override void onUiAlertRequest(HmiApiLib.Controllers.UI.IncomingRequests.Alert msg)
-		{
-			base.onUiAlertRequest(msg);
+            sendRpc(BuildRpc.buildUiAddCommandResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
 		}
 
-		public override void onUiPerformInteractionRequest(HmiApiLib.Controllers.UI.IncomingRequests.PerformInteraction msg)
+		public override void onUiAlertRequest(Alert msg)
 		{
-			base.onUiPerformInteractionRequest(msg);
+			int corrId = msg.getId();
+			int? appId = msg.getAppId();
+
+			sendRpc(BuildRpc.buildUiOnSystemContext(SystemContext.ALERT, appId));
+
+            sendRpc(BuildRpc.buildUiAlertResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+
+			sendRpc(BuildRpc.buildUiOnSystemContext(SystemContext.MAIN, appId));
+		}
+
+		public override void onUiPerformInteractionRequest(PerformInteraction msg)
+		{
+			int corrId = msg.getId();
+
+			List<Choice> choiceSetList = msg.getChoiceSet();
+			int choiceSelected = -1;
+			string manualTextEntry = null;
+
+			if (choiceSetList != null)
+			{
+				foreach (Choice item in choiceSetList)
+				{
+					choiceSelected = item.choiceID;
+					manualTextEntry = item.menuName;
+				}
+			}
+
+			sendRpc(BuildRpc.buildUiPerformInteractionResponse(corrId, choiceSelected, manualTextEntry, HmiApiLib.Common.Enums.Result.SUCCESS));
 		}
 
 		public override void onUiGetLanguageRequest(HmiApiLib.Controllers.UI.IncomingRequests.GetLanguage msg)
 		{
-			base.onUiGetLanguageRequest(msg);
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiGetLanguageResponse(corrId, Language.EN_US, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
-		public override void onUiDeleteCommandRequest(HmiApiLib.Controllers.UI.IncomingRequests.DeleteCommand msg)
+		public override void onUiDeleteCommandRequest(DeleteCommand msg)
 		{
-			base.onUiDeleteCommandRequest(msg);
+			int corrId = msg.getId();
+			List<RpcRequest> data = new List<RpcRequest>();
+			if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
+			{
+				data = menuOptionListUi[(int)msg.getAppId()];
+				foreach (RpcRequest req in data)
+				{
+					if (req is AddCommand)
+					{
+						if (((AddCommand)req).getCmdId() == msg.getCmdId())
+						{
+							data.Remove(req);
+							break;
+						}
+					}
+				}
+				menuOptionListUi.Remove((int)msg.getAppId());
+			}
+			menuOptionListUi.Add((int)msg.getAppId(), data);
+			appUiCallback.refreshOptionsMenu();
+
+			sendRpc(BuildRpc.buildUiDeleteCommandResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
 		}
 
 		public override void onUiIsReadyRequest(HmiApiLib.Controllers.UI.IncomingRequests.IsReady msg)
 		{
-			base.onUiIsReadyRequest(msg);
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildIsReadyResponse(corrId, HmiApiLib.Types.InterfaceType.UI, true, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		//TTS interface callbacks
-		public override void onTtsSpeakRequest(HmiApiLib.Controllers.TTS.IncomingRequests.Speak msg)
+		public override void onTtsSpeakRequest(Speak msg)
 		{
-			base.onTtsSpeakRequest(msg);
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildTtsSpeakResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
-		public override void onTtsStopSpeakingRequest(HmiApiLib.Controllers.TTS.IncomingRequests.StopSpeaking msg)
+		public override void onTtsStopSpeakingRequest(StopSpeaking msg)
 		{
-			base.onTtsStopSpeakingRequest(msg);
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildTtsStopSpeakingResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		public override void onTtsGetLanguageRequest(HmiApiLib.Controllers.TTS.IncomingRequests.GetLanguage msg)
 		{
-			base.onTtsGetLanguageRequest(msg);
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildTtsGetLanguageResponse(corrId, Language.EN_US ,HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		public override void onTtsIsReadyRequest(HmiApiLib.Controllers.TTS.IncomingRequests.IsReady msg)
 		{
-			base.onTtsIsReadyRequest(msg);
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildIsReadyResponse(corrId, HmiApiLib.Types.InterfaceType.TTS, true, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		//VR interface callbacks
 		public override void onVrAddCommandRequest(HmiApiLib.Controllers.VR.IncomingRequests.AddCommand msg)
 		{
-			base.onVrAddCommandRequest(msg);
+			int corrId = msg.getId();
+			int? cmdId = msg.getCmdId();
+			int? grammerId = msg.getGrammarId();
+
+			if ((vrGrammerAddCommandDictionary != null) && (grammerId != null)
+				&& (cmdId != null) && (grammerId != -1))
+			{
+				vrGrammerAddCommandDictionary.Add((int)grammerId, (int)cmdId);
+			}
+
+            sendRpc(BuildRpc.buildVrAddCommandResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		public override void onVrGetLanguageRequest(HmiApiLib.Controllers.VR.IncomingRequests.GetLanguage msg)
 		{
-			base.onVrGetLanguageRequest(msg);
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildVrGetLanguageResponse(corrId, Language.EN_US, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		public override void onVrDeleteCommandRequest(HmiApiLib.Controllers.VR.IncomingRequests.DeleteCommand msg)
 		{
-			base.onVrDeleteCommandRequest(msg);
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildVrDeleteCommandResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		public override void onVrIsReadyRequest(HmiApiLib.Controllers.VR.IncomingRequests.IsReady msg)
 		{
-			base.onVrIsReadyRequest(msg);
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildIsReadyResponse(corrId, HmiApiLib.Types.InterfaceType.VR, true, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		public override void onVrPerformInteractionRequest(HmiApiLib.Controllers.VR.IncomingRequests.PerformInteraction msg)
 		{
-			base.onVrPerformInteractionRequest(msg);
+			int corrId = msg.getId();
+			int returnVal = getVrAddCommandId(msg.getGrammarID());
+
+			if (returnVal != -1)
+			{
+                sendRpc(BuildRpc.buildVrPerformInteractionResponse(corrId, returnVal, HmiApiLib.Common.Enums.Result.SUCCESS));
+			}
+			else
+			{
+				sendRpc(BuildRpc.buildVrPerformInteractionResponse(corrId, null, HmiApiLib.Common.Enums.Result.GENERIC_ERROR));
+			}
 		}
 
 		//Navigation interface callbacks
 		public override void onNavIsReadyRequest(HmiApiLib.Controllers.Navigation.IncomingRequests.IsReady msg)
 		{
-			base.onNavIsReadyRequest(msg);
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildIsReadyResponse(corrId, HmiApiLib.Types.InterfaceType.Navigation, true, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		//VehicleInfo interface callbacks
 		public override void onVehicleInfoIsReadyRequest(HmiApiLib.Controllers.VehicleInfo.IncomingRequests.IsReady msg)
 		{
-			base.onVehicleInfoIsReadyRequest(msg);
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildIsReadyResponse(corrId, HmiApiLib.Types.InterfaceType.VehicleInfo, true, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
 		//Bc interface callbacks
-		public override void onBcAppRegisteredNotification(HmiApiLib.Controllers.BasicCommunication.IncomingNotifications.OnAppRegistered msg)
+		public override void onBcAppRegisteredNotification(OnAppRegistered msg)
 		{
-			base.onBcAppRegisteredNotification(msg);
-            appList.Add(new AppItem(msg.getApplication().appName, msg.getApplication().appID));
+			appList.Add(new AppItem(msg.getApplication().appName, msg.getApplication().appID));
 			appIdPolicyIdDictionary.Add(msg.getApplication().getAppID(), msg.getApplication().getPolicyAppID());
 			if (null != appUiCallback)
 				appUiCallback.onBcAppRegisteredNotificationCallback(true);
 		}
 
-		public override void onBcAppUnRegisteredNotification(HmiApiLib.Controllers.BasicCommunication.IncomingNotifications.OnAppUnregistered msg)
+		public override void onBcAppUnRegisteredNotification(OnAppUnregistered msg)
 		{
-			base.onBcAppUnRegisteredNotification(msg);
 			int appID = (int)msg.getAppId();
 			for (int i = 0; i < appList.Count; i++)
 			{
@@ -310,10 +442,10 @@ namespace SharpHmiAndroid
 						tmpAppId = getCorrectAppId(tmpAppId);
 					}
 
-                    appList.RemoveAt(i);
-                    i--;
+					appList.RemoveAt(i);
+					i--;
 				}
-            }
+			}
 
 			if (appIdPutfileList.ContainsKey(appID) || appIdPutfileList.ContainsKey(getCorrectAppId(appID)))
 			{
@@ -333,24 +465,312 @@ namespace SharpHmiAndroid
 				appUiCallback.onBcAppRegisteredNotificationCallback(false);
 		}
 
-		public override void onBcMixingAudioSupportedRequest(HmiApiLib.Controllers.BasicCommunication.IncomingRequests.MixingAudioSupported msg)
+		public override void onBcMixingAudioSupportedRequest(MixingAudioSupported msg)
 		{
-			base.onBcMixingAudioSupportedRequest(msg);
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildBasicCommunicationMixingAudioSupportedResponse(corrId, null, HmiApiLib.Common.Enums.Result.SUCCESS));
+
 		}
 
-		public override void onBcActivateAppRequest(HmiApiLib.Controllers.BasicCommunication.IncomingRequests.ActivateApp msg)
+		public override void OnButtonSubscriptionNotification(OnButtonSubscription msg)
 		{
-			base.onBcActivateAppRequest(msg);
 		}
 
-		//Buttons interface callbacks 
-		public override void onButtonsGetCapabilitiesRequest(HmiApiLib.Controllers.Buttons.IncomingRequests.GetCapabilities msg)
+		public override void onUiAddSubMenuRequest(AddSubMenu msg)
 		{
-			base.onButtonsGetCapabilitiesRequest(msg);
+			int corrId = msg.getId();
+			List<RpcRequest> data;
+			if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
+			{
+				data = menuOptionListUi[(int)msg.getAppId()];
+				data.Add(msg);
+				menuOptionListUi.Remove((int)msg.getAppId());
+			}
+			else
+			{
+				data = new List<RpcRequest>();
+				data.Add(msg);
+			}
+			menuOptionListUi.Add((int)msg.getAppId(), data);
+			appUiCallback.refreshOptionsMenu();
+
+			sendRpc(BuildRpc.buildUiAddSubMenuResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
 		}
 
-		//Bc interface callbacks
-		public override void onBcPutfileNotification(HmiApiLib.Controllers.BasicCommunication.IncomingNotifications.OnPutFile msg)
+		public override void onUiChangeRegistrationRequest(HmiApiLib.Controllers.UI.IncomingRequests.ChangeRegistration msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiChangeRegistrationResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onUiClosePopUpRequest(ClosePopUp msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiClosePopUpResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onUiDeleteSubMenuRequest(DeleteSubMenu msg)
+		{
+			int corrId = msg.getId();
+			List<RpcRequest> data = new List<RpcRequest>();
+			if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
+			{
+				data = menuOptionListUi[(int)msg.getAppId()];
+				foreach (RpcRequest req in data)
+				{
+					if (req is AddSubMenu)
+					{
+						if (((AddSubMenu)req).getMenuID() == msg.getMenuID())
+						{
+							data.Remove(req);
+							break;
+						}
+					}
+				}
+				menuOptionListUi.Remove((int)msg.getAppId());
+			}
+			menuOptionListUi.Add((int)msg.getAppId(), data);
+			appUiCallback.refreshOptionsMenu();
+
+            sendRpc(BuildRpc.buildUiDeleteSubMenuResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+		}
+
+		public override void onUiEndAudioPassThruRequest(EndAudioPassThru msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildUiEndAudioPassThruResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+		}
+
+		public override void onUiGetCapabilitiesRequest(HmiApiLib.Controllers.UI.IncomingRequests.GetCapabilities msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildUiGetCapabilitiesResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null, null, HmiZoneCapabilities.BACK, null, null));
+		}
+
+		public override void onUiGetSupportedLanguagesRequest(HmiApiLib.Controllers.UI.IncomingRequests.GetSupportedLanguages msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiGetSupportedLanguagesResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+		}
+
+		public override void onUiPerformAudioPassThruRequest(PerformAudioPassThru msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiPerformAudioPassThruResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onUiScrollableMessageRequest(ScrollableMessage msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiScrollableMessageResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+		}
+
+		public override void onUiSetDisplayLayoutRequest(SetDisplayLayout msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildUiSetDisplayLayoutResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null, null, null, null));
+		}
+
+		public override void onUiSetGlobalPropertiesRequest(HmiApiLib.Controllers.UI.IncomingRequests.SetGlobalProperties msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiSetGlobalPropertiesResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onUiSetMediaClockTimerRequest(SetMediaClockTimer msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiSetMediaClockTimerResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+		}
+
+		public override void onUiShowCustomFormRequest(ShowCustomForm msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildUiShowCustomFormResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+		}
+
+		public override void onUiSliderRequest(Slider msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildUiSliderResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+		}
+
+		public override void onTtsChangeRegistrationRequest(HmiApiLib.Controllers.TTS.IncomingRequests.ChangeRegistration msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildTTSChangeRegistrationResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onTtsGetCapabilitiesRequest(HmiApiLib.Controllers.TTS.IncomingRequests.GetCapabilities msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildTTSGetCapabilitiesResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null, null));
+
+		}
+
+		public override void onTtsGetSupportedLanguagesRequest(HmiApiLib.Controllers.TTS.IncomingRequests.GetSupportedLanguages msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildTTSGetSupportedLanguagesResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+
+		}
+
+		public override void onTtsSetGlobalPropertiesRequest(HmiApiLib.Controllers.TTS.IncomingRequests.SetGlobalProperties msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildTTSSetGlobalPropertiesResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+		}
+
+		public override void onVrChangeRegistrationRequest(HmiApiLib.Controllers.VR.IncomingRequests.ChangeRegistration msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildVrChangeRegistrationResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+		}
+
+		public override void onVrGetCapabilitiesRequest(HmiApiLib.Controllers.VR.IncomingRequests.GetCapabilities msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildVrGetCapabilitiesResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+
+		}
+
+		public override void onVrGetSupportedLanguagesRequest(HmiApiLib.Controllers.VR.IncomingRequests.GetSupportedLanguages msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildVrGetSupportedLanguagesResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+
+		}
+
+		public override void onNavAlertManeuverRequest(AlertManeuver msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildNavAlertManeuverResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+		}
+
+		public override void onNavGetWayPointsRequest(GetWayPoints msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildNavGetWayPointsResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null, null));
+
+		}
+
+		public override void onNavSendLocationRequest(SendLocation msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildNavSendLocationResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onNavShowConstantTBTRequest(ShowConstantTBT msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildNavShowConstantTBTResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onNavStartAudioStreamRequest(StartAudioStream msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildNavStartAudioStreamResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onNavStartStreamRequest(StartStream msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildNavStartStreamResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onNavStopAudioStreamRequest(StopAudioStream msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildNavStopAudioStreamResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onNavStopStreamRequest(StopStream msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildNavStopStreamResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onNavSubscribeWayPointsRequest(SubscribeWayPoints msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildNavSubscribeWayPointsResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+		}
+
+		public override void onNavUnsubscribeWayPointsRequest(UnsubscribeWayPoints msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildNavUnsubscribeWayPointsResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onNavUpdateTurnListRequest(UpdateTurnList msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildNavUpdateTurnListResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onVehicleInfoDiagnosticMessageRequest(DiagnosticMessage msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildVehicleInfoDiagnosticMessageResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+
+		}
+
+		public override void onVehicleInfoGetDTCsRequest(GetDTCs msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildVehicleInfoGetDTCsResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null, null));
+
+		}
+
+		public override void onVehicleInfoGetVehicleDataRequest(GetVehicleData msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildVehicleInfoGetVehicleDataResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onVehicleInfoGetVehicleTypeRequest(GetVehicleType msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildVehicleInfoGetVehicleTypeResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onVehicleInfoReadDIDRequest(ReadDID msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildVehicleInfoReadDIDResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+
+		}
+
+		public override void onVehicleInfoSubscribeVehicleDataRequest(SubscribeVehicleData msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildVehicleInfoSubscribeVehicleDataResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onVehicleInfoUnsubscribeVehicleDataRequest(UnsubscribeVehicleData msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildVehicleInfoUnsubscribeVehicleDataResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onBcPutfileNotification(OnPutFile msg)
 		{
 			Dictionary<string, Bitmap> tmpMapping = new Dictionary<string, Bitmap>();
 			string storedFileName = HttpUtility.getStoredFileName(msg.getSyncFileName());
@@ -415,7 +835,79 @@ namespace SharpHmiAndroid
 				appIdPutfileList.Add(appId, tmpPutFileList);
 			}
 
-			base.onBcPutfileNotification(msg);
+		}
+
+		public override void onBcAllowDeviceToConnectRequest(AllowDeviceToConnect msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildBasicCommunicationAllowDeviceToConnectResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+
+		}
+
+		public override void onBcDialNumberRequest(DialNumber msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildBasicCommunicationDialNumberResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onBcGetSystemInfoRequest(GetSystemInfo msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildBasicCommunicationGetSystemInfoResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null, Language.EN_US, null));
+
+		}
+
+		public override void onBcPolicyUpdateRequest(PolicyUpdate msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildBasicCommunicationPolicyUpdateResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onBcSystemRequestRequest(SystemRequest msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildBasicCommunicationSystemRequestResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onBcUpdateAppListRequest(UpdateAppList msg)
+		{
+			int corrId = msg.getId();
+            sendRpc(BuildRpc.buildBasicCommunicationUpdateAppListResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void onBcUpdateDeviceListRequest(UpdateDeviceList msg)
+		{
+			int corrId = msg.getId();
+			sendRpc(BuildRpc.buildBasicCommunicationUpdateDeviceListResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+
+		}
+
+		public override void OnUiCommandNotification(OnCommand msg)
+		{
+
+		}
+
+		public override void OnVrCommandNotification(HmiApiLib.Controllers.VR.OutGoingNotifications.OnCommand msg)
+		{
+
+		}
+
+		public override void onButtonPressNotification(OnButtonPress msg)
+		{
+
+		}
+
+		public override void onButtonEventNotification(OnButtonEvent msg)
+		{
+
+		}
+
+		public override void onUiSystemContextNotification(OnSystemContext msg)
+		{
 		}
 
 		public Stream getPutfile(string syncFileName)
@@ -477,56 +969,6 @@ namespace SharpHmiAndroid
 					}
 				}
 			}
-		}
-
-		public override void OnButtonSubscriptionNotification(OnButtonSubscription msg)
-		{
-			base.OnButtonSubscriptionNotification(msg);
-		}
-
-		public void onOpen()
-		{
-			// Handle logic for Callback triggered when Socket is Opened.
-			//Console.WriteLine("Debug: onOpen()");
-			isConnected = true;
-		}
-
-		public void onClose()
-		{
-			// Handle logic for Callback triggered when Socket is Opened.
-			//Console.WriteLine("Debug: onClose()");
-			isConnected = false;
-		}
-
-		public void onError()
-		{
-			// Handle logic for Callback triggered when Socket is Opened.
-			//Console.WriteLine("Debug: onError()");
-			isConnected = false;
-		}
-
-		private void addMessageToUI(LogMessage message)
-		{
-			if (_msgAdapter == null) return;
-
-			_msgAdapter.addMessage(message);
-		}
-
-		public void dispatch(LogMessage message)
-		{
-			addMessageToUI(message);
-		}
-
-		public void handleDispatchingError(string info, Exception ex)
-		{
-			LogMessage logMessage = new StringLogMessage(info);
-            addMessageToUI(logMessage);
-		}
-
-		public void handleQueueingError(string info, Exception ex)
-		{
-			LogMessage logMessage = new StringLogMessage(info);
-			addMessageToUI(logMessage);
 		}
 	}
 }
