@@ -349,7 +349,7 @@ namespace SharpHmiAndroid
         public void setHmiFragment(int position)
         {
             int appId = AppInstanceManager.appList[position].getAppID();
-            AppInstanceManager.Instance.sendActivateAppRequest(appId);
+            AppInstanceManager.Instance.sendOnAppActivatedNotification(appId);
 
             FullHmiFragment hmiFragment = getFullHMiFragment();
 
