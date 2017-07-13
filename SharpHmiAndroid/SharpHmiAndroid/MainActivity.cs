@@ -443,10 +443,10 @@ namespace SharpHmiAndroid
 
         private void UpdateAlertUI(Alert msg)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this);
+            Android.Support.V7.App.AlertDialog.Builder alertBuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
             LayoutInflater inflater = LayoutInflater;
             View view = inflater.Inflate(Resource.Layout.custom_alert_dialog, null);
-            builder.SetView(view);
+            alertBuilder.SetView(view);
 
             TextView alertText1 = (TextView)view.FindViewById(Resource.Id.alert_text_1);
             TextView alertText2 = (TextView)view.FindViewById(Resource.Id.alert_text_2);
@@ -456,12 +456,6 @@ namespace SharpHmiAndroid
             Button softButton2 = (Button)view.FindViewById(Resource.Id.alert_soft_btn_2);
             Button softButton3 = (Button)view.FindViewById(Resource.Id.alert_soft_btn_3);
             Button softButton4 = (Button)view.FindViewById(Resource.Id.alert_soft_btn_4);
-
-            int totalDuration = 10000;
-            if (msg.getDuration() != null)
-            {
-                totalDuration = (int)msg.getDuration();
-            }
 
             if ((msg.getAlertStrings() != null) && (msg.getAlertStrings().Count > 0))
             {
@@ -512,27 +506,25 @@ namespace SharpHmiAndroid
                 }
             }
 
-            builder.SetPositiveButton("ok", (senderAlert, args) =>
+            alertBuilder.SetPositiveButton("ok", (senderAlert, args) =>
             {
-                builder.Dispose();
+                alertBuilder.Dispose();
             });
-            Android.Support.V7.App.AlertDialog ad = builder.Create();
+            Android.Support.V7.App.AlertDialog ad = alertBuilder.Create();
             ad.Show();
 
-            mHandler = new Handler(Looper.MainLooper);
-			action = delegate
-			{
-                builder.Dispose();
-                //HandleAction();
-			};
-			if (null != mHandler)
-				mHandler.PostDelayed(action, totalDuration);
+			int? totalDuration = (int)msg.getDuration();
+            if (totalDuration != null)
+            {
+				mHandler = new Handler(Looper.MainLooper);
+				action = delegate
+				{
+					ad.Cancel();
+				};
+				if (null != mHandler)
+					mHandler.PostDelayed(action, (long)totalDuration);
+            }
         }
-
-        //private void HandleAction()
-        //{
-        //    builder.Dispose();
-        //}
 
         public void onUiScrollableMessageRequestCallback(ScrollableMessage msg)
         {

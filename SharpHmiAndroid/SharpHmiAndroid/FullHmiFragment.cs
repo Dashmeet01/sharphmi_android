@@ -39,7 +39,7 @@ namespace SharpHmiAndroid
         ImageView nextButton;
 
         SeekBar mSeekBar;
-        LinearLayout mLinearLayout;
+        LinearLayout mChoiceListLayout;
         TextView mediaStartText;
         TextView mediaEndText;
 
@@ -94,7 +94,7 @@ namespace SharpHmiAndroid
             mSeekBar = (SeekBar)rootView.FindViewById(Resource.Id.full_hmi_set_media_seekBar);
             mediaEndText = (TextView)rootView.FindViewById(Resource.Id.full_hmi_set_media_end);
 
-            mLinearLayout = (LinearLayout)rootView.FindViewById(Resource.Id.full_hmi_linear_layout);
+            mChoiceListLayout = (LinearLayout)rootView.FindViewById(Resource.Id.full_hmi_linear_layout);
 
             sliderSave = (Button)rootView.FindViewById(Resource.Id.full_hmi_slider_save);
             sliderCancel = (Button)rootView.FindViewById(Resource.Id.full_hmi_slider_cancel);
@@ -269,6 +269,18 @@ namespace SharpHmiAndroid
                     }
                 }
             }
+
+			int? totalDuration = msg.getTimeout();
+			if (totalDuration != null)
+			{
+				Handler handler = new Handler(Looper.MainLooper);
+				action = delegate
+				{
+					ClearText();
+                    invisibleSoftButtons();
+				};
+				handler.PostDelayed(action, (long)totalDuration);
+			}
         }
 
         void invisibleSoftButtons()
@@ -291,7 +303,7 @@ namespace SharpHmiAndroid
             mainField4.Text = null;
             mediaClockTimer.Text = null;
             mediaTrackText.Text = null;
-            mLinearLayout.RemoveViews(0, mLinearLayout.ChildCount);
+            mChoiceListLayout.RemoveViews(0, mChoiceListLayout.ChildCount);
         }
 
         internal void onUiPerformInteractionRequestCallback(PerformInteraction msg)
@@ -301,6 +313,13 @@ namespace SharpHmiAndroid
 
         private void UpdatePerformInteractionUI(PerformInteraction msg)
         {
+            msg.getInitialText();
+            msg.getChoiceSet();
+            msg.getVrHelpTitle();
+            msg.getVrHelp();
+            msg.getTimeout();
+            msg.getInteractionLayout();
+
             HideSliderUI();
             ClearText();
             invisibleSoftButtons();
@@ -316,8 +335,18 @@ namespace SharpHmiAndroid
                     Choice choice = msg.getChoiceSet()[i];
                     Button button = new Button(Activity);
                     button.Text = choice.getMenuName();
-                    mLinearLayout.AddView(button);
+                    mChoiceListLayout.AddView(button);
                 }
+            }
+			int? totalDuration = msg.getTimeout();
+            if (totalDuration != null)
+            {
+				Handler handler = new Handler(Looper.MainLooper);
+				action = delegate
+				{
+                    ClearText();
+				};
+				handler.PostDelayed(action, (long)totalDuration);
             }
         }
 
@@ -557,6 +586,20 @@ namespace SharpHmiAndroid
             {
                 sliderFooter.Text = null;
 			}
+
+			int totalDuration = 1000;
+			if (msg.getTimeout() != null)
+			{
+				totalDuration = (int)msg.getTimeout();
+			}
+
+			Handler handler = new Handler(Looper.MainLooper);
+			action = delegate
+			{
+                HideSliderUI();
+			};
+			if (null != handler)
+				handler.PostDelayed(action, totalDuration);
 		}
 
         public void OnProgressChanged(SeekBar seekBar, int progress, bool fromUser)
