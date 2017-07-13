@@ -1266,9 +1266,19 @@
     <AndroidResource Include="Resources\layout\splash_screen.axml" />
     <AndroidResource Include="Resources\layout\custom_alert_dialog.xml" />
     <AndroidResource Include="Resources\layout\rpclistLayout.axml" />
-    <AndroidResource Include="Resources\layout\alert.xml" />
     <AndroidResource Include="Resources\layout\show.xml" />
     <AndroidResource Include="Resources\layout\genericspinner.xml" />
+    <AndroidResource Include="Resources\layout\allow_device_to_Connect.axml" />
+    <AndroidResource Include="Resources\layout\get_system_info.axml" />
+    <AndroidResource Include="Resources\layout\on_app_activated.axml" />
+    <AndroidResource Include="Resources\layout\on_deactivate_HMI.axml" />
+    <AndroidResource Include="Resources\layout\on_device_chosen.axml" />
+    <AndroidResource Include="Resources\layout\on_exit_application.axml" />
+    <AndroidResource Include="Resources\layout\on_system_request.axml" />
+    <AndroidResource Include="Resources\layout\ui_with_only_send_request.axml" />
+    <AndroidResource Include="Resources\layout\get_capabilities_response.axml" />
+    <AndroidResource Include="Resources\layout\on_button.axml" />
+    <AndroidResource Include="Resources\layout\get_way_points.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
