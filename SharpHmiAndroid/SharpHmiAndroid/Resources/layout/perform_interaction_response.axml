@@ -13,27 +13,40 @@
         android:paddingLeft="20dip"
         android:paddingRight="20dip">
         <TextView
-            android:id="@+id/appplication_id_tv"
+            android:id="@+id/choice_id_tv"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dip"
-            android:text="App Id" />
+            android:text="ChoiceID" />
         <EditText
             android:text=""
-            android:id="@+id/appplication_id_et"
+            android:id="@+id/choice_id_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            android:freezesText="true"
-            android:inputType="number" />
+            android:inputType="number"
+            android:freezesText="true" />
         <TextView
-            android:id="@+id/app_exit_reason_tv"
+            android:id="@+id/manual_text_entry_tv"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dip"
-            android:text="App Exit Reason" />
+            android:text="ManualTextEntry" />
+        <EditText
+            android:text=""
+            android:id="@+id/manual_text_entry_et"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:freezesText="true" />
+        <TextView
+            android:id="@+id/result_code_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dip"
+            android:text="ResultCode" />
         <Spinner
-            android:id="@+id/app_exit_reason"
+            android:id="@+id/perform_interaction_result_code_spn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible" />

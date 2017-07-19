@@ -1276,9 +1276,12 @@
     <AndroidResource Include="Resources\layout\on_exit_application.axml" />
     <AndroidResource Include="Resources\layout\on_system_request.axml" />
     <AndroidResource Include="Resources\layout\ui_with_only_send_request.axml" />
-    <AndroidResource Include="Resources\layout\get_capabilities_response.axml" />
+    <AndroidResource Include="Resources\layout\button_get_capabilities_response.axml" />
     <AndroidResource Include="Resources\layout\on_button.axml" />
     <AndroidResource Include="Resources\layout\get_way_points.axml" />
+    <AndroidResource Include="Resources\layout\reset_button.axml" />
+    <AndroidResource Include="Resources\layout\alert_response.axml" />
+    <AndroidResource Include="Resources\layout\perform_interaction_response.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
