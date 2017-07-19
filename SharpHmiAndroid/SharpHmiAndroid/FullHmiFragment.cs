@@ -46,16 +46,18 @@ namespace SharpHmiAndroid
 
         Handler mHandler;
         Action action;
-        long currentTime = 0;
+        long currentTime = -1;
         long totalStartSeconds = 0;
         long totalEndSeconds = 0;
         int numTicks = 0;
+        bool isMediaTimerStarted = true;
 
         TextView sliderHeader;
         TextView sliderFooter;
         Button sliderSave;
         Button sliderCancel;
         List<String> sliderFooterList;
+        int sliderCurrentPosition = 0;
 
 		LayoutInflater layoutIinflater;
 
@@ -105,6 +107,7 @@ namespace SharpHmiAndroid
             sliderCancel = (Button)rootView.FindViewById(Resource.Id.full_hmi_slider_cancel);
             sliderHeader = (TextView)rootView.FindViewById(Resource.Id.full_hmi_slider_header);
             sliderFooter = (TextView)rootView.FindViewById(Resource.Id.full_hmi_slider_footer);
+
             return rootView;
         }
 
@@ -121,8 +124,11 @@ namespace SharpHmiAndroid
                 case Resource.Id.full_hmi_options:
                     ((MainActivity)Activity).setOptionsFragment(appID);
                     return true;
-				case Resource.Id.rpc_list:
+				case Resource.Id.full_hmi_rpc_list:
 					showRPCListDialog();
+					return true;
+				case Resource.Id.full_hmi_choice:
+					//((MainActivity)Activity).setOptionsFragment(appID);
 					return true;
 
                 default:
@@ -314,50 +320,6 @@ namespace SharpHmiAndroid
             mChoiceListLayout.RemoveViews(0, mChoiceListLayout.ChildCount);
         }
 
-        internal void onUiPerformInteractionRequestCallback(PerformInteraction msg)
-        {
-            Activity.RunOnUiThread(() => UpdatePerformInteractionUI(msg));
-        }
-
-        private void UpdatePerformInteractionUI(PerformInteraction msg)
-        {
-            msg.getInitialText();
-            msg.getChoiceSet();
-            msg.getVrHelpTitle();
-            msg.getVrHelp();
-            msg.getTimeout();
-            msg.getInteractionLayout();
-
-            HideSliderUI();
-            ClearText();
-            invisibleSoftButtons();
-            if (msg.getInitialText().fieldName == TextFieldName.initialInteractionText)
-            {
-                mainField1.Text = msg.getInitialText().fieldText;
-            }
-            int choiceListCount = msg.getChoiceSet().Count;
-            if (choiceListCount > 0)
-            {
-                for (int i = 0; i < choiceListCount; i++)
-                {
-                    Choice choice = msg.getChoiceSet()[i];
-                    Button button = new Button(Activity);
-                    button.Text = choice.getMenuName();
-                    mChoiceListLayout.AddView(button);
-                }
-            }
-			int? totalDuration = msg.getTimeout();
-            if (totalDuration != null)
-            {
-				Handler handler = new Handler(Looper.MainLooper);
-				action = delegate
-				{
-                    ClearText();
-				};
-				handler.PostDelayed(action, (long)totalDuration);
-            }
-        }
-
         internal void onUiSetMediaClockTimerRequestCallback(SetMediaClockTimer msg)
         {
             Activity.RunOnUiThread(() => UpdateSetMediaTimerUI(msg));
@@ -369,9 +331,14 @@ namespace SharpHmiAndroid
             mSeekBar.Visibility = ViewStates.Visible;
             mSeekBar.Enabled = false;
 
+			if ((mHandler != null) && (action != null))
+			{
+				mHandler.RemoveCallbacks(action);
+			}
+			mHandler = new Handler();
+				
             if ((msg.getUpdateMode() == ClockUpdateMode.COUNTUP) || (msg.getUpdateMode() == ClockUpdateMode.COUNTDOWN))
             {
-
                 string startText = msg.getStartTime().getHours().ToString();
                 startText = startText + ":" + msg.getStartTime().getMinutes().ToString();
                 startText = startText + ":" + msg.getStartTime().getSeconds().ToString();
@@ -380,24 +347,21 @@ namespace SharpHmiAndroid
                                             + (msg.getStartTime().getMinutes() * 60)
                                             + (msg.getStartTime().getSeconds());
 
-                string endText = msg.getEndTime().getHours().ToString();
-                endText = endText + ":" + msg.getEndTime().getMinutes().ToString();
-                endText = endText + ":" + msg.getEndTime().getSeconds().ToString();
-
-                totalEndSeconds = (msg.getEndTime().getHours() * 3600)
-                                            + (msg.getEndTime().getMinutes() * 60)
-                                            + (msg.getEndTime().getSeconds());
-
-                mediaStartText.Text = startText;
-                mediaEndText.Text = endText;
-
-                if ((mHandler != null) && (action != null))
+                if ((msg.getEndTime() != null))
                 {
-                    mHandler.RemoveCallbacks(action);
-                }
-                mHandler = new Handler();
+					string endText = msg.getEndTime().getHours().ToString();
+					endText = endText + ":" + msg.getEndTime().getMinutes().ToString();
+					endText = endText + ":" + msg.getEndTime().getSeconds().ToString();
 
-                if (msg.getUpdateMode() == ClockUpdateMode.COUNTUP)
+					totalEndSeconds = (msg.getEndTime().getHours() * 3600)
+												+ (msg.getEndTime().getMinutes() * 60)
+												+ (msg.getEndTime().getSeconds());
+
+					mediaStartText.Text = startText;
+					mediaEndText.Text = endText;
+                }
+
+                if ((msg.getUpdateMode() == ClockUpdateMode.COUNTUP) && (msg.getEndTime() != null))
                 {
                     if (totalEndSeconds < totalStartSeconds)
                         return;
@@ -407,12 +371,24 @@ namespace SharpHmiAndroid
                     currentTime = 0;
                     mSeekBar.SetProgress(initialProgress, false);
                 }
-                else if (msg.getUpdateMode() == ClockUpdateMode.COUNTDOWN)
+				else if ((msg.getUpdateMode() == ClockUpdateMode.COUNTUP) && (msg.getEndTime() == null))
+				{
+					currentTime = 0;
+                    mSeekBar.Visibility = ViewStates.Invisible;
+                    mediaEndText.Visibility = ViewStates.Invisible;
+				}
+                else if ((msg.getUpdateMode() == ClockUpdateMode.COUNTDOWN) && (msg.getEndTime() != null))
                 {
                     if (totalEndSeconds > totalStartSeconds)
                         return;
                     mSeekBar.SetProgress(100, false);
                 }
+				else if ((msg.getUpdateMode() == ClockUpdateMode.COUNTDOWN) && (msg.getEndTime() == null))
+				{
+                    currentTime = totalStartSeconds;
+					mSeekBar.Visibility = ViewStates.Invisible;
+					mediaEndText.Visibility = ViewStates.Invisible;
+				}
             }
             else if (msg.getUpdateMode() == ClockUpdateMode.PAUSE)
             {
@@ -453,70 +429,79 @@ namespace SharpHmiAndroid
 
             action = delegate
             {
-                HandleAction(totalStartSeconds, totalEndSeconds);
+                HandleAction(totalStartSeconds, totalEndSeconds, msg);
             };
             if (null != mHandler)
                 mHandler.PostDelayed(action, 100);
         }
 
-        void HandleAction(long startTime, long endTime)
+        void HandleAction(long startTime, long endTime, SetMediaClockTimer msg)
         {
-            if (startTime < endTime)
+            if(msg.getUpdateMode() == ClockUpdateMode.COUNTUP)
             {
-                if (endTime == 0)
-                    return;
-                if (currentTime == 0)
+				if (currentTime == 0)
+				{
+					currentTime = startTime;
+				}
+				int hours = (int)(currentTime / 3600);
+				int minutes = (int)(currentTime % 3600) / 60;
+				int seconds = (int)((currentTime % 3600) % 60);
+
+				string currentTimeText = hours + ":" + minutes + ":" + seconds;
+				mediaStartText.Text = currentTimeText;
+
+				currentTime++;
+            }
+            else if (msg.getUpdateMode() == ClockUpdateMode.COUNTDOWN)
+            {
+                if (isMediaTimerStarted)
                 {
                     currentTime = startTime;
+                    isMediaTimerStarted = false;
                 }
-                double initProgress = (((double)currentTime) / endTime) * 100;
-                int initialProgress = Convert.ToInt32(initProgress);
-                mSeekBar.SetProgress(initialProgress, false);
+				int hours = (int)(currentTime / 3600);
+				int minutes = (int)(currentTime % 3600) / 60;
+				int seconds = (int)((currentTime % 3600) % 60);
 
-                int hours = (int)(currentTime / 3600);
-                int minutes = (int)(currentTime % 3600) / 60;
-                int seconds = (int)((currentTime % 3600) % 60);
+				string currentTimeText = hours + ":" + minutes + ":" + seconds;
+				mediaStartText.Text = currentTimeText;
 
-                string currentTimeText = hours + ":" + minutes + ":" + seconds;
-                mediaStartText.Text = currentTimeText;
-
-                currentTime++;
-
-                if (initialProgress >= 100)
-                {
-                    if (null != mHandler)
-                        mHandler.RemoveCallbacks(action);
-                    currentTime = 0;
-                    return;
-                }
+				currentTime--;
             }
-            else
+            if (msg.getEndTime() != null)
             {
-                if (currentTime == 0)
-                {
-                    currentTime = startTime;
-                }
-                double initProgress = (((double)currentTime) / startTime) * 100;
-                int initialProgress = Convert.ToInt32(initProgress);
-                mSeekBar.SetProgress(initialProgress, false);
+				if (startTime < endTime)
+				{
+					if (endTime == 0)
+						return;
 
-                int hours = (int)(currentTime / 3600);
-                int minutes = (int)(currentTime % 3600) / 60;
-                int seconds = (int)((currentTime % 3600) % 60);
+					double initProgress = (((double)currentTime) / endTime) * 100;
+					int initialProgress = Convert.ToInt32(initProgress);
+					mSeekBar.SetProgress(initialProgress, false);
 
-                string currentTimeText = hours + ":" + minutes + ":" + seconds;
-                mediaStartText.Text = currentTimeText;
+					if (initialProgress >= 100)
+					{
+						if (null != mHandler)
+							mHandler.RemoveCallbacks(action);
+						currentTime = 0;
+						return;
+					}
+				}
+				else
+				{
+					double initProgress = (((double)currentTime) / startTime) * 100;
+					int initialProgress = Convert.ToInt32(initProgress);
+					mSeekBar.SetProgress(initialProgress, false);
 
-                if (currentTime <= endTime)
-                {
-                    if (null != mHandler)
-                        mHandler.RemoveCallbacks(action);
-                    currentTime = 0;
-                    return;
-                }
-                currentTime--;
+					if (currentTime <= endTime)
+					{
+						if (null != mHandler)
+							mHandler.RemoveCallbacks(action);
+						currentTime = 0;
+						return;
+					}
+				}
             }
-
 
             if (null != mHandler)
                 mHandler.PostDelayed(action, 1000);
@@ -573,12 +558,20 @@ namespace SharpHmiAndroid
         private void UpdateSliderUI(Slider msg)
         {
             ShowSliderUI();
-            //int currentPosition = 0;
+            int currentPosition = 0;
 			sliderFooterList = msg.getSliderFooter();
 			if (msg.getNumTicks() != null)
 				numTicks = (int)msg.getNumTicks();
-			//if (msg.getPosition() != null)
-			//currentPosition = (int)msg.getPosition();
+			if (msg.getPosition() != null)
+			    currentPosition = (int)msg.getPosition();
+
+			double partitionLenghthInDouble = (double)100 / numTicks;
+			int actualPartitionLength = (int)Math.Round(partitionLenghthInDouble);
+
+            int actualSeekbarPosition = actualPartitionLength * currentPosition;
+			mSeekBar.SetProgress(actualSeekbarPosition, true);
+
+            sliderCurrentPosition = currentPosition;
 
 			mSeekBar.Visibility = ViewStates.Visible;
 			mSeekBar.Enabled = true;
@@ -589,6 +582,17 @@ namespace SharpHmiAndroid
             if ((sliderFooterList != null) && (sliderFooterList.Count == 1))
             {
                 sliderFooter.Text = sliderFooterList[0];
+            }
+            else if ((sliderFooterList != null) && (sliderFooterList.Count > 1))
+            {
+				if (currentPosition > 0)
+				{
+					sliderFooter.Text = sliderFooterList[currentPosition - 1];
+				}
+				else
+				{
+					sliderFooter.Text = null;
+				}
             }
             else
             {
@@ -608,6 +612,18 @@ namespace SharpHmiAndroid
 			};
 			if (null != handler)
 				handler.PostDelayed(action, totalDuration);
+
+			sliderSave.Click += (sender, e) =>
+			{
+                AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiSliderResponse(msg.getId(), HmiApiLib.Common.Enums.Result.SUCCESS, sliderCurrentPosition));
+                HideSliderUI();
+			};
+
+            sliderCancel.Click += (sender, e) =>
+			{
+                AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiSliderResponse(msg.getId(), HmiApiLib.Common.Enums.Result.ABORTED, sliderCurrentPosition));
+                HideSliderUI();
+			};
 		}
 
         public void OnProgressChanged(SeekBar seekBar, int progress, bool fromUser)
@@ -644,6 +660,7 @@ namespace SharpHmiAndroid
                     sliderFooter.Text = null;
 				}
 			}
+            sliderCurrentPosition = setPos;
         }
 
         void HideSliderUI()
@@ -652,6 +669,7 @@ namespace SharpHmiAndroid
             sliderCancel.Visibility = ViewStates.Gone;
             sliderHeader.Visibility = ViewStates.Gone;
             sliderFooter.Visibility = ViewStates.Gone;
+            mSeekBar.Visibility = ViewStates.Gone;
         }
 
         void ShowSliderUI()
@@ -660,6 +678,7 @@ namespace SharpHmiAndroid
 			sliderCancel.Visibility = ViewStates.Visible;
 			sliderHeader.Visibility = ViewStates.Visible;
 			sliderFooter.Visibility = ViewStates.Visible;
+            mSeekBar.Visibility = ViewStates.Visible;
         }
 
         public void showRPCListDialog()

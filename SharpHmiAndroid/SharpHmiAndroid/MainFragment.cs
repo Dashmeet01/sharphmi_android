@@ -51,7 +51,7 @@ namespace SharpHmiAndroid
 		void OnItemClick(object sender, int position)
 		{
             int appId = AppInstanceManager.appList[position].getAppID();
-            ((MainActivity)Activity).setHmiFragment(position);
+            ((MainActivity)Activity).setHmiFragment(appId);
 		}
 	}
 }

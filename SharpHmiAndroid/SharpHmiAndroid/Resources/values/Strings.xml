@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">SharpHmi</string>
+	<string name="console_view">Console View</string>
+	<string name="sample_hmi">Sample Hmi</string>
+	<string name="exit_app">Exit App</string>
 	<string name="connect">Connect</string>
 	<string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -45,6 +48,7 @@
     <string name="show_customPresets"> Custom Presets (comma-seperated) </string>
     <string name="show_customPresetsDefault"> GEN0,GEN1,GEN2,GEN3,GEN4,GEN5 </string>
 	
-	
+	<string name="choice_set_image"> Choice Set Image </string>
+	<string name="initial_text"> Initial Text </string>
 	
 </resources>

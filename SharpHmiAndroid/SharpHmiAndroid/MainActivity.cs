@@ -34,6 +34,7 @@ namespace SharpHmiAndroid
         private static string MAIN_FRAGMENT_TAG = "main_frag";
         static string HMI_FULL_FRAGMENT_TAG = "hmi_full_frag";
         static string HMI_OPTIONS_MENU_FRAGMENT_TAG = "hmi_options_menu_frag";
+        static string PERFORM_INTERACTION_FRAGMENT_TAG = "perfrom_interaction_frag";
         public const int REQUEST_STORAGE = 10;
 
 		Handler mHandler;
@@ -321,6 +322,11 @@ namespace SharpHmiAndroid
             return (OptionsMenuFragment)this.FragmentManager.FindFragmentByTag(HMI_OPTIONS_MENU_FRAGMENT_TAG);
         }
 
+        public ChoiceListFragment getChoiceListFragment()
+		{
+			return (ChoiceListFragment)this.FragmentManager.FindFragmentByTag(PERFORM_INTERACTION_FRAGMENT_TAG);
+		}
+
         public void onBcAppRegisteredNotificationCallback(Boolean isNewAppRegistered)
         {
             if (isNewAppRegistered)
@@ -346,17 +352,16 @@ namespace SharpHmiAndroid
             }
         }
 
-        public void setHmiFragment(int position)
+        public void setHmiFragment(int appId)
         {
-            int appId = AppInstanceManager.appList[position].getAppID();
             AppInstanceManager.Instance.sendOnAppActivatedNotification(appId);
 
             FullHmiFragment hmiFragment = getFullHMiFragment();
 
             Android.App.FragmentManager fragmentManager = FragmentManager;
 
-            if (hmiFragment == null)
-            {
+            //if (hmiFragment == null)
+            //{
                 hmiFragment = new FullHmiFragment();
 
                 Bundle bundle = new Bundle();
@@ -367,7 +372,7 @@ namespace SharpHmiAndroid
                 fragmentTransaction.Replace(Resource.Id.frame_container, hmiFragment, HMI_FULL_FRAGMENT_TAG).AddToBackStack(null).Commit();
                 fragmentManager.ExecutePendingTransactions();
                 SetTitle(Resource.String.app_name);
-            }
+            //}
         }
 
         public void setOptionsFragment(int appID)
@@ -536,9 +541,22 @@ namespace SharpHmiAndroid
 
         public void onUiPerformInteractionRequestCallback(PerformInteraction msg)
         {
-            if ((getFullHMiFragment() != null) && (getFullHMiFragment().IsVisible))
+            if ((getChoiceListFragment() != null) && (getChoiceListFragment().IsVisible))
             {
-                getFullHMiFragment().onUiPerformInteractionRequestCallback(msg);
+                getChoiceListFragment().onUiPerformInteractionRequestCallback(msg);
+            }
+            else
+            {
+                ChoiceListFragment choiceListFrag = getChoiceListFragment();
+
+				Android.App.FragmentManager fragmentManager = FragmentManager;
+
+				choiceListFrag = new ChoiceListFragment(msg);
+
+				Android.App.FragmentTransaction fragmentTransaction = fragmentManager.BeginTransaction();
+				fragmentTransaction.Replace(Resource.Id.frame_container, choiceListFrag, PERFORM_INTERACTION_FRAGMENT_TAG).AddToBackStack(null).Commit();
+				fragmentManager.ExecutePendingTransactions();
+				SetTitle(Resource.String.app_name);
             }
         }
 

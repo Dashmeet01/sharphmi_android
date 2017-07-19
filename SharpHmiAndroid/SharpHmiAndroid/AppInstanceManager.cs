@@ -267,22 +267,6 @@ namespace SharpHmiAndroid
 
 		public override void onUiPerformInteractionRequest(PerformInteraction msg)
 		{
-			int corrId = msg.getId();
-
-			List<Choice> choiceSetList = msg.getChoiceSet();
-			int choiceSelected = -1;
-			string manualTextEntry = null;
-
-			if (choiceSetList != null)
-			{
-				foreach (Choice item in choiceSetList)
-				{
-					choiceSelected = item.choiceID;
-					manualTextEntry = item.menuName;
-				}
-			}
-
-			sendRpc(BuildRpc.buildUiPerformInteractionResponse(corrId, choiceSelected, manualTextEntry, HmiApiLib.Common.Enums.Result.SUCCESS));
             appUiCallback.onUiPerformInteractionRequestCallback(msg);
 		}
 
@@ -604,8 +588,6 @@ namespace SharpHmiAndroid
 
 		public override void onUiSliderRequest(Slider msg)
 		{
-			int corrId = msg.getId();
-			sendRpc(BuildRpc.buildUiSliderResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
             appUiCallback.onUiSliderRequestCallback(msg);
 		}
 
@@ -898,7 +880,7 @@ namespace SharpHmiAndroid
 
 		public override void OnUiCommandNotification(OnCommand msg)
 		{
-
+            sendRpc(msg);
 		}
 
 		public override void OnVrCommandNotification(HmiApiLib.Controllers.VR.OutGoingNotifications.OnCommand msg)

@@ -6,6 +6,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using HmiApiLib.Base;
 using HmiApiLib.Controllers.UI.IncomingRequests;
+using HmiApiLib.Controllers.UI.OutGoingNotifications;
 
 namespace SharpHmiAndroid
 {
@@ -62,6 +63,16 @@ namespace SharpHmiAndroid
                 }
                 mAdapter.NotifyDataSetChanged();
                 isMainScreenDisplayed = false;
+            }
+            else if (request is AddCommand)
+            {
+                OnCommand msg = new OnCommand();
+                msg.setAppId(appID);
+                msg.setCmdID(((AddCommand)request).getCmdId());
+                AppInstanceManager.Instance.OnUiCommandNotification(msg);
+
+                isMainScreenDisplayed = true;
+                ((MainActivity)Activity).OnBackPressed();
             }
         }
 
