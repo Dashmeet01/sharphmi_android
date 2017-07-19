@@ -50,5 +50,8 @@
 	
 	<string name="choice_set_image"> Choice Set Image </string>
 	<string name="initial_text"> Initial Text </string>
-	
+	<string name="slider_position">Slider Position</string>
+    <string name="result_code">Result Code</string>
+	<string name="command_id">Command Id</string>
+    <string name="app_id">App Id</string>
 </resources>

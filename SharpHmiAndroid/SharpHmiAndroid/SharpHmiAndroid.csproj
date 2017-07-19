@@ -1285,6 +1285,8 @@
     <AndroidResource Include="Resources\layout\alert_response.axml" />
     <AndroidResource Include="Resources\layout\perform_interaction_response.axml" />
     <AndroidResource Include="Resources\layout\choice_set_layout.xml" />
+    <AndroidResource Include="Resources\layout\slider_response.xml" />
+    <AndroidResource Include="Resources\layout\on_command_notification.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

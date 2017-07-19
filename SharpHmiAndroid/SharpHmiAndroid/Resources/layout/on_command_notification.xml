@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="16dp">
+    <CheckBox
+        android:id="@+id/on_command_cmd_id_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/command_id" />
+    <Spinner
+        android:id="@+id/on_command_cmd_id_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
+    <CheckBox
+        android:id="@+id/on_command_app_id_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_id" />
+    <Spinner
+        android:id="@+id/on_command_app_id_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
+</LinearLayout>

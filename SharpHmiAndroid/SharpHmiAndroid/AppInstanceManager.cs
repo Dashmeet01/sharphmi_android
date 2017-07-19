@@ -40,6 +40,7 @@ namespace SharpHmiAndroid
 		public static Dictionary<int, List<RpcRequest>> menuOptionListUi = new Dictionary<int, List<RpcRequest>>();
 		public static Dictionary<int, List<string>> appIdPutfileList = new Dictionary<int, List<string>>();
 		public static Dictionary<int, string> appIdPolicyIdDictionary = new Dictionary<int, string>();
+        public static Dictionary<int, List<int?>> commandIdList = new Dictionary<int, List<int?>>();
 
 		public static AppInstanceManager Instance
 		{
@@ -235,6 +236,7 @@ namespace SharpHmiAndroid
 		{
 			int corrId = msg.getId();
 			List<RpcRequest> data;
+            List<int?> cmdIdList;
 			if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
 			{
 				data = menuOptionListUi[(int)msg.getAppId()];
@@ -247,6 +249,20 @@ namespace SharpHmiAndroid
 				data.Add(msg);
 			}
 			menuOptionListUi.Add((int)msg.getAppId(), data);
+
+			if (commandIdList.ContainsKey((int)msg.getAppId()))
+			{
+				cmdIdList = commandIdList[(int)msg.getAppId()];
+                cmdIdList.Add(msg.getCmdId());
+				commandIdList.Remove((int)msg.getAppId());
+			}
+			else
+			{
+				cmdIdList = new List<int?>();
+				cmdIdList.Add(msg.getCmdId());
+			}
+            commandIdList.Add((int)msg.getAppId(), cmdIdList);
+
 			appUiCallback.refreshOptionsMenu();
 			sendRpc(BuildRpc.buildUiAddCommandResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
 		}
