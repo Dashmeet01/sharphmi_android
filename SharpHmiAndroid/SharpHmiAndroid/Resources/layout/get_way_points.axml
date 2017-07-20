@@ -76,7 +76,6 @@
             android:id="@+id/get_way_points_location_name_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -90,7 +89,6 @@
             android:id="@+id/get_way_points_address_line1_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <EditText
@@ -98,7 +96,6 @@
             android:id="@+id/get_way_points_address_line2_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <EditText
@@ -106,7 +103,6 @@
             android:id="@+id/get_way_points_address_line3_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -120,7 +116,6 @@
             android:id="@+id/get_way_points_location_description_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -134,7 +129,6 @@
             android:id="@+id/get_way_points_phone_number_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -148,7 +142,6 @@
             android:id="@+id/get_way_points_image_value_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -173,7 +166,6 @@
             android:id="@+id/get_way_points_country_name_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -187,7 +179,6 @@
             android:id="@+id/get_way_points_country_code_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -201,7 +192,6 @@
             android:id="@+id/get_way_points_postal_code_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -215,7 +205,6 @@
             android:id="@+id/get_way_points_administrative_area_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -229,7 +218,6 @@
             android:id="@+id/get_way_points_sub_administrative_area_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -243,7 +231,6 @@
             android:id="@+id/get_way_points_locality_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -257,7 +244,6 @@
             android:id="@+id/get_way_points_sub_locality_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -271,7 +257,6 @@
             android:id="@+id/get_way_points_thorough_fare_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
         <TextView
@@ -285,7 +270,6 @@
             android:id="@+id/get_way_points_sub_thorough_fare_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
     </LinearLayout>

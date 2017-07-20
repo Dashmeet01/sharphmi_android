@@ -1,4 +1,4 @@
-﻿﻿﻿using System;
+﻿﻿﻿﻿using System;
 using System.Collections.Generic;
 using Android.App;
 using Android.OS;
@@ -691,14 +691,12 @@ namespace SharpHmiAndroid
                 "SendLocationResponse", "ShowConstantTBTResponse", "StartAudioStreamResponse", "StartStreamResponse", "StopAudioStreamResponse", "StopStreamResponse", "SubscribeWayPointsResponse",
                 "UnsubscribeWayPointsResponse", "UpdateTurnListResponse", "OnTBTClientStateNotification", "ActivateAppRequest", "GetListOfPermissionsRequest", "GetStatusUpdateRequest", "GetURLSRequest",
                 "GetUserFriendlyMessageRequest", "UpdateSDLRequest", "OnAllowSDLFunctionalityNotification", "OnAppPermissionConsentNotification", "OnPolicyUpdateNotification", "OnReceivedPolicyUpdateNotification",
-                "ChangeRegistrationResponse", "GetLanguageResponse", "GetSupportedLangusgesResponse", "SetGlobalPropertiesResponse", "SpeakResponse", "StopSpeakingResponse",
-                "OnLanguageChangeNotification", "OnResetTimeoutNotification", "StartedNotification", "StoppedNotification", "AddCommandResponse","AddSubMenuResponse", "AlertResponse",
-                "ClosePopUpResponse", "DeleteCommandResponse", "DeleteSubMenuResponse", "EndAudioPassThruResponse",
-                "GetSupportedLanguagesResponse", "PerformAudioPassThruResponse", "PerformInteractionResponse", "ScrollableMessageResponse", "SetAppIconResponse",
-                "SetDisplayLayoutResponse", "SetMediaClockTimerResponse", "ShowResponse", "ShowCustomFormResponse", "SliderResponse",
-                "OnCommandNotification", "OnDriverDistrationNotification", "OnKeyboardInputNotification", "OnRecordStartNotification", "OnSystemContextNotification",
-                "OnTouchEventNotification", "DiagnosticMessageResponse", "GetDTCsResponse","GetVehicleDataResponse", "GetVehicleTypeResponse", "ReadDidResponse", "SubscribeVehicleDataResponse",
-                "UnsubscribeVehicleDataResponse", "GetSupportedLanguageResponse"};
+                "ChangeRegistrationResponse", "GetLanguageResponse", "GetSupportedLangusgesResponse", "SetGlobalPropertiesResponse", "SpeakResponse", "StopSpeakingResponse", "OnLanguageChangeNotification", 
+                "OnResetTimeoutNotification", "StartedNotification", "StoppedNotification", "AddCommandResponse","AddSubMenuResponse", "AlertResponse","ClosePopUpResponse", "DeleteCommandResponse", 
+                "DeleteSubMenuResponse", "EndAudioPassThruResponse", "GetSupportedLanguagesResponse", "PerformAudioPassThruResponse", "PerformInteractionResponse", "ScrollableMessageResponse",
+                "SetAppIconResponse", "SetDisplayLayoutResponse", "SetMediaClockTimerResponse", "ShowResponse", "ShowCustomFormResponse", "SliderResponse", "OnCommandNotification", 
+                "OnDriverDistrationNotification", "OnKeyboardInputNotification", "OnRecordStartNotification", "OnSystemContextNotification", "OnTouchEventNotification", "DiagnosticMessageResponse", 
+                "GetDTCsResponse","GetVehicleDataResponse", "GetVehicleTypeResponse", "ReadDidResponse", "SubscribeVehicleDataResponse", "UnsubscribeVehicleDataResponse", "GetSupportedLanguageResponse"};
 
             AlertDialog.Builder rpcListAlertDialog = new AlertDialog.Builder(this.Context);
             //LayoutInflater inflaterr = Context.GetSystemService("nm");
@@ -1237,92 +1235,89 @@ namespace SharpHmiAndroid
                  }
 
 
-                 //:::::::::::::::::::::::::::::::::::::::::::
-                 //BuildRpc.buildButtonsGetCapabilitiesResponse method call is returning String but we need return type RPCResponse:::::::::::::::::::::::::::::::::::::::
-                 //:::::::::::::::::::::::::::::::::::::::::::
+                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ButtonGetCapabilitiesResponse"))
+                 {
+                  AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+                  View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.button_get_capabilities_response, null);
+                  rpcAlertDialog.SetView(rpcView);
+                  rpcAlertDialog.SetTitle("GetCapabilities");
 
 
-                 //else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ButtonGetCapabilitiesResponse"))
-                 //{
-                 // AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-                 // View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.button_get_capabilities_response, null);
-                 // rpcAlertDialog.SetView(rpcView);
-                 // rpcAlertDialog.SetTitle("GetCapabilities");
+                  TextView textViewButtonName = (TextView)rpcView.FindViewById(Resource.Id.get_capabilities_button_name_tv);
+                  Spinner spnButtonName = (Spinner)rpcView.FindViewById(Resource.Id.get_capabilities_button_name_spn);
+
+                  CheckBox checkBoxShortPressAvailable = (CheckBox)rpcView.FindViewById(Resource.Id.short_press_available_cb);
+
+                  CheckBox checkBoxLongPressAvailable = (CheckBox)rpcView.FindViewById(Resource.Id.long_press_available_cb);
+
+                  CheckBox checkBoxUpDownAvailable = (CheckBox)rpcView.FindViewById(Resource.Id.up_down_available_cb);
+
+                  CheckBox checkBoxOnScreenPresetsAvailable = (CheckBox)rpcView.FindViewById(Resource.Id.on_screen_presets_available);
 
 
-                 // TextView textViewButtonName = (TextView)rpcView.FindViewById(Resource.Id.get_capabilities_button_name_tv);
-                 // Spinner spnButtonName = (Spinner)rpcView.FindViewById(Resource.Id.get_capabilities_button_name_spn);
+                  TextView textViewResultCode = (TextView)rpcView.FindViewById(Resource.Id.get_capabilities_result_code_tv);
+                  Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.get_capabilities_result_code_spn);
 
-                 // CheckBox checkBoxShortPressAvailable = (CheckBox)rpcView.FindViewById(Resource.Id.short_press_available_cb);
+                  var nameAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, buttonNames);
+                  // adapter1.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                  spnButtonName.Adapter = nameAdapter;
 
-                 // CheckBox checkBoxLongPressAvailable = (CheckBox)rpcView.FindViewById(Resource.Id.long_press_available_cb);
-
-                 // CheckBox checkBoxUpDownAvailable = (CheckBox)rpcView.FindViewById(Resource.Id.up_down_available_cb);
-
-                 // CheckBox checkBoxOnScreenPresetsAvailable = (CheckBox)rpcView.FindViewById(Resource.Id.on_screen_presets_available);
-
-
-                 // TextView textViewResultCode = (TextView)rpcView.FindViewById(Resource.Id.get_capabilities_result_code_tv);
-                 // Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.get_capabilities_result_code_spn);
-
-                 // var nameAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, buttonNames);
-                 // // adapter1.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                 // spnButtonName.Adapter = nameAdapter;
-
-                 // var resultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-                 // // adapter1.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                 // spnResultCode.Adapter = resultCodeAdapter;
+                  var resultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+                  // adapter1.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                  spnResultCode.Adapter = resultCodeAdapter;
 
 
-                 //                List < ButtonCapabilities > btnCap = new List<ButtonCapabilities>();
-                 //                ButtonCapabilities btn = new ButtonCapabilities();
-                 //                btn.name = (HmiApiLib.ButtonName)spnButtonName.SelectedItemPosition;
+                 List < ButtonCapabilities > btnCap = new List<ButtonCapabilities>();
 
-                 //                if (checkBoxShortPressAvailable.Checked)
-                 //                    btn.shortPressAvailable = true;
-                 //                else
-                 //                    btn.shortPressAvailable = false;
+                 ButtonCapabilities btn = new ButtonCapabilities();
+                 btn.name = (HmiApiLib.ButtonName)spnButtonName.SelectedItemPosition;
 
-                 // if (checkBoxLongPressAvailable.Checked)
-                 //                   btn.longPressAvailable = true;
-                 // else
-                 //	 btn.longPressAvailable = false;
+                 if (checkBoxShortPressAvailable.Checked)
+                        btn.shortPressAvailable = true;
+                 else
+                        btn.shortPressAvailable = false;
 
-                 // if (checkBoxUpDownAvailable.Checked)
-                 //                   btn.upDownAvailable = true;
-                 // else
-                 //	 btn.upDownAvailable = false;
+                  if (checkBoxLongPressAvailable.Checked)
+                        btn.longPressAvailable = true;
+                  else
+                 	    btn.longPressAvailable = false;
 
-                 //               btnCap.Add(btn);
+                  if (checkBoxUpDownAvailable.Checked)
+                        btn.upDownAvailable = true;
+                  else
+                    	btn.upDownAvailable = false;
 
-
-
-                 //                PresetBankCapabilities prstCap = new PresetBankCapabilities();
-
-                 // if (checkBoxOnScreenPresetsAvailable.Checked)
-                 //	 prstCap.onScreenPresetsAvailable = true;
-                 // else
-                 //	 prstCap.onScreenPresetsAvailable = false;
+                  btnCap.Add(btn);
 
 
+                  PresetBankCapabilities prstCap = new PresetBankCapabilities();
 
-                 // rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-                 // {
-                 //	 rpcAlertDialog.Dispose();
-                 // });
+                  if (checkBoxOnScreenPresetsAvailable.Checked)
+                 	 prstCap.onScreenPresetsAvailable = true;
+                  else
+                 	 prstCap.onScreenPresetsAvailable = false;
 
-                 // rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-                 // {
-                 //                     AppInstanceManager.Instance.sendRpc(BuildRpc.buildButtonsGetCapabilitiesResponse(BuildRpc.getNextId(), btnCap, prstCap, (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition ));
-                 // });
 
-                 // rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-                 //  {
+                  rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+                  {
+                 	 rpcAlertDialog.Dispose();
+                  });
 
-                 //  });
-                 // rpcAlertDialog.Show();
+                  rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+                  {
+                        //BuildRpc.buildButtonsGetCapabilitiesResponse method call is returning String but we need return type RPCResponse:::::::::::::::::::::
 
-                 //}
+
+                        // AppInstanceManager.Instance.sendRpc(BuildRpc.buildButtonsGetCapabilitiesResponse(BuildRpc.getNextId(), btnCap, prstCap, (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition ));
+                  });
+
+                  rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+                   {
+
+                   });
+                  rpcAlertDialog.Show();
+
+                 }
 
 
 
@@ -1586,98 +1581,7 @@ namespace SharpHmiAndroid
 
                  }
 
-
-                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetWayPointsResponse"))
-                 {
-                     AlertDialog.Builder getSystemInfoRpcAlertDialog = new AlertDialog.Builder(this.Context);
-                     View getSystemInfoRpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_way_points, null);
-                     getSystemInfoRpcAlertDialog.SetView(getSystemInfoRpcView);
-                     getSystemInfoRpcAlertDialog.SetTitle("GetWayPoints");
-
-                     TextView textViewAppID = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_app_id_tv);
-                     EditText editTextAppID = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_app_id_et);
-
-                     TextView textViewResultCode = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_result_code_tv);
-                     Spinner spnResultCode = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_result_code_spn);
-
-                     TextView textViewLatitudeDegree = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_latitude_degree_tv);
-                     EditText editTextLatitudeDegree = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_latitude_degree_et);
-
-                     TextView textViewLongitudeDegree = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_longitude_degree_tv);
-                     EditText editTextLongitudeDegree = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_longitude_degree_et);
-
-                     TextView textViewLocationName = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_location_name_tv);
-                     EditText editTextLocationName = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_location_name_et);
-
-                     TextView textViewAddress = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_address_tv);
-                     EditText editTextAddressLine1 = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_address_line1_et);
-                     EditText editTextAddressLine2 = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_address_line2_et);
-                     EditText editTextAddressLine3 = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_address_line3_et);
-
-                     TextView textViewLocationDescription = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_location_description_tv);
-                     EditText editTextLocationDescription = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_location_description_et);
-
-                     TextView textViewPhoneNumber = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_phone_number_tv);
-                     EditText editTextPhoneNumber = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_phone_number_et);
-
-                     TextView textViewImageValue = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_image_value_tv);
-                     EditText editTextImageValue = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_image_value_et);
-
-                     TextView textViewImageType = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_image_type_tv);
-                     Spinner spnImageType = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_image_type_spn);
-
-                     TextView textViewCountryName = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_country_name_tv);
-                     EditText editTextCountryName = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_country_name_et);
-
-                     TextView textViewCountryCode = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_country_code_tv);
-                     EditText editTextCountryCode = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_country_code_et);
-
-                     TextView textViewPostalCode = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_postal_code_tv);
-                     EditText editTextPostalCode = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_postal_code_et);
-
-                     TextView textViewAdministrativeArea = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_administrative_area_tv);
-                     EditText editTextAdministrativeArea = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_administrative_area_et);
-
-                     TextView textViewSubAdministrativeArea = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_administrative_area_tv);
-                     EditText editTextSubAdministrativeArea = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_administrative_area_et);
-
-                     TextView textViewLocality = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_locality_tv);
-                     EditText editTextLocality = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_locality_et);
-
-                     TextView textViewSubLocality = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_locality_tv);
-                     EditText editTextSubLocality = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_locality_et);
-
-                     TextView textViewThoruoghFare = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_thorough_fare_tv);
-                     EditText editTextThoruoghFare = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_thorough_fare_et);
-
-                     TextView textViewSubThoruoghFare = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_thorough_fare_tv);
-                     EditText editTextSubThoruoghFare = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_thorough_fare_et);
-
-
-                     var imageTypeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, imageType);
-                     spnImageType.Adapter = imageTypeAdapter;
-
-                     getSystemInfoRpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-                     {
-                         getSystemInfoRpcAlertDialog.Dispose();
-                     });
-
-                     getSystemInfoRpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-                     {
-                         //TO DO::::::::::::::::
-                         //Location Details List To be added as parameter
-                         //AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavGetWayPointsResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition, Java.Lang.Integer.ParseInt(editTextAppID.Text), ));
-
-                     });
-
-                     getSystemInfoRpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-                     {
-
-                     });
-
-                     getSystemInfoRpcAlertDialog.Show();
-
-                 }
+                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetWayPointsResponse"))               {                   AlertDialog.Builder getSystemInfoRpcAlertDialog = new AlertDialog.Builder(this.Context);                    View getSystemInfoRpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_way_points, null);                    getSystemInfoRpcAlertDialog.SetView(getSystemInfoRpcView);                      getSystemInfoRpcAlertDialog.SetTitle("GetWayPoints");                       TextView textViewAppID = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_app_id_tv);                     EditText editTextAppID = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_app_id_et);                     TextView textViewResultCode = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_result_code_tv);                   Spinner spnResultCode = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_result_code_spn);                     TextView textViewLatitudeDegree = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_latitude_degree_tv);                   EditText editTextLatitudeDegree = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_latitude_degree_et);                       TextView textViewLongitudeDegree = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_longitude_degree_tv);                     EditText editTextLongitudeDegree = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_longitude_degree_et);                     TextView textViewLocationName = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_location_name_tv);                   EditText editTextLocationName = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_location_name_et);                       TextView textViewAddress = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_address_tv);                      EditText editTextAddressLine1 = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_address_line1_et);                   EditText editTextAddressLine2 = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_address_line2_et);                   EditText editTextAddressLine3 = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_address_line3_et);                       TextView textViewLocationDescription = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_location_description_tv);                     EditText editTextLocationDescription = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_location_description_et);                     TextView textViewPhoneNumber = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_phone_number_tv);                     EditText editTextPhoneNumber = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_phone_number_et);                     TextView textViewImageValue = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_image_value_tv);                   EditText editTextImageValue = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_image_value_et);                       TextView textViewImageType = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_image_type_tv);                     Spinner spnImageType = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_image_type_spn);                       TextView textViewCountryName = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_country_name_tv);                     EditText editTextCountryName = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_country_name_et);                     TextView textViewCountryCode = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_country_code_tv);                     EditText editTextCountryCode = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_country_code_et);                     TextView textViewPostalCode = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_postal_code_tv);                   EditText editTextPostalCode = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_postal_code_et);                       TextView textViewAdministrativeArea = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_administrative_area_tv);                   EditText editTextAdministrativeArea = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_administrative_area_et);                       TextView textViewSubAdministrativeArea = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_administrative_area_tv);                    EditText editTextSubAdministrativeArea = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_administrative_area_et);                    TextView textViewLocality = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_locality_tv);                    EditText editTextLocality = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_locality_et);                    TextView textViewSubLocality = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_locality_tv);                     EditText editTextSubLocality = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_locality_et);                     TextView textViewThoruoghFare = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_thorough_fare_tv);                   EditText editTextThoruoghFare = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_thorough_fare_et);                       TextView textViewSubThoruoghFare = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_thorough_fare_tv);                    EditText editTextSubThoruoghFare = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.get_way_points_sub_thorough_fare_et);                        var resultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);                      spnResultCode.Adapter = resultCodeAdapter;                      var imageTypeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, imageType);                    spnImageType.Adapter = imageTypeAdapter;                    getSystemInfoRpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>                   {                       getSystemInfoRpcAlertDialog.Dispose();                      });                       List<LocationDetails> wayPoints = new List<LocationDetails>();                       Coordinate coordinate = new Coordinate();                    if (editTextLatitudeDegree.Text.Equals(""))                         coordinate.latitudeDegrees = 0;                      else                         coordinate.latitudeDegrees = Java.Lang.Float.ParseFloat(editTextLatitudeDegree.Text);                     if (editTextLongitudeDegree.Text.Equals(""))                        coordinate.longitudeDegrees = 0;                    else                          coordinate.longitudeDegrees = Java.Lang.Float.ParseFloat(editTextLongitudeDegree.Text);                       List<string> addressLines = new List<string>();                      addressLines.Add(editTextAddressLine1.Text);                      addressLines.Add(editTextAddressLine2.Text);                      addressLines.Add(editTextAddressLine3.Text);                       Image locationImage = new Image();                      locationImage.value = editTextImageValue.Text;                      locationImage.imageType = (HmiApiLib.Common.Enums.ImageType)spnResultCode.SelectedItemPosition;                       OASISAddress searchAddress = new OASISAddress();                      searchAddress.countryName = editTextCountryName.Text;                      searchAddress.countryCode = editTextCountryName.Text;                      searchAddress.postalCode = editTextPostalCode.Text;                      searchAddress.administrativeArea = editTextAdministrativeArea.Text;                      searchAddress.subAdministrativeArea = editTextSubAdministrativeArea.Text;                      searchAddress.locality = editTextLocality.Text;                      searchAddress.subLocality = editTextSubLocality.Text;                      searchAddress.thoroughfare = editTextThoruoghFare.Text;                      searchAddress.subThoroughfare = editTextSubThoruoghFare.Text;                        LocationDetails lctnDetails = new LocationDetails();                      lctnDetails.coordinate = coordinate;                      lctnDetails.locationName = editTextLocationName.Text;                      lctnDetails.addressLines = addressLines;                      lctnDetails.locationDescription = editTextLocationDescription.Text;                      lctnDetails.phoneNumber = editTextPhoneNumber.Text;                      lctnDetails.locationImage = locationImage;                      lctnDetails.searchAddress = searchAddress;                       wayPoints.Add(lctnDetails);                                                  //               ButtonCapabilities btnCapabilities = new ButtonCapabilities();       //              btnCapabilities                     ////                btn.name = (HmiApiLib.ButtonName)spnButtonName.SelectedItemPosition;                        getSystemInfoRpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>                   {                       if (editTextAppID.Text.Equals(""))                          AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavGetWayPointsResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition, 0, wayPoints));                      else                             AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavGetWayPointsResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition, Java.Lang.Integer.ParseInt(editTextAppID.Text), wayPoints));                    } );                     getSystemInfoRpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>                   {                       });                     getSystemInfoRpcAlertDialog.Show();                                     }
 
 
                  else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("PerformInteractionResponse"))
@@ -1724,9 +1628,6 @@ namespace SharpHmiAndroid
                      rpcAlertDialog.Show();
 
                  }
-
-
-
 
 
                  //::::::::::::::::For Empty UI:::::::::::::::::::::::::::
@@ -1926,8 +1827,714 @@ namespace SharpHmiAndroid
 
 					 rpcAlertDialog.Show();
 				 }
+
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SendLocationResponse"))
+				 {
+					 SendLocationResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ShowConstantTBTResponse"))
+				 {
+					 ShowConstantTBTResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SubscribeWayPointsResponse"))
+				 {
+					 SubscribeWayPointsResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UnsubscribeWayPointsResponse"))
+				 {
+					 UnsubscribeWayPointsResponse();
+
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UpdateTurnListResponse"))
+				 {
+					 UpdateTurnListResponse();
+
+                }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ChangeRegistrationResponse"))
+				 {
+					 ChangeRegistrationResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SetGlobalPropertiesResponse"))
+				 {
+					 SetGlobalPropertiesResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SpeakResponse"))
+				 {
+					 SpeakResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("AddCommandResponse"))
+				 {
+					 AddCommandResponse();
+
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("AddSubMenuResponse"))
+				 {
+					 AddSubMenuResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("DeleteCommandResponse"))
+				 {
+					 DeleteCommandResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("DeleteSubMenuResponse"))
+				 {
+					 DeleteSubMenuResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("EndAudioPassThruResponse"))
+				 {
+					 EndAudioPassThruResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("PerformAudioPassThruResponse"))
+				 {
+					 PerformAudioPassThruResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ScrollableMessageResponse"))
+				 {
+					 ScrollableMessageResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SetMediaClockTimerResponse"))
+				 {
+					 SetMediaClockTimerResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ShowResponse"))
+				 {
+					 ShowResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SetDisplayLayoutResponse"))
+				 {
+					// SetDisplayLayoutResponse();
+
+				 }
+
+				
              };
+
             rpcListAlertDialog.Show();
         }
+
+        private void ShowResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiShowResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void SetMediaClockTimerResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("SetMediaClockTimer");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiSetMediaClockTimerResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void ScrollableMessageResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiScrollableMessageResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void PerformAudioPassThruResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiPerformAudioPassThruResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void EndAudioPassThruResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+            var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+            spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiEndAudioPassThruResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void DeleteSubMenuResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiDeleteSubMenuResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void DeleteCommandResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiDeleteCommandResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void AddSubMenuResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiAddSubMenuResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void AddCommandResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiAddCommandResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void SpeakResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+            var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+            spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTtsSpeakResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void SetGlobalPropertiesResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTTSSetGlobalPropertiesResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void ChangeRegistrationResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+            var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+            spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTTSChangeRegistrationResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void UpdateTurnListResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UpdateTurnList");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+            var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+            spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavUpdateTurnListResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+		private void SubscribeWayPointsResponse()
+		{
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("SubscribeWayPoints");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+            var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+            spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavSubscribeWayPointsResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+		}
+
+        private void UnsubscribeWayPointsResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("UnsubscribeWayPoints");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavUnsubscribeWayPointsResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void SendLocationResponse()
+        {
+
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("SendLocation");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavSendLocationResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+
+		}
+
+		private void ShowConstantTBTResponse()
+		{
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("ShowConstantTBT");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+            var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+            spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavShowConstantTBTResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+		}
     }
 }
