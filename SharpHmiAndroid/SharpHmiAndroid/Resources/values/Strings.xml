@@ -54,4 +54,14 @@
     <string name="result_code">Result Code</string>
 	<string name="command_id">Command Id</string>
     <string name="app_id">App Id</string>
+
+	<string name="touch_type">Touch Type</string>
+    <string name="add_touch_event">Add Touch Event</string>
+    <string name="id">ID</string>
+    <string name="ts">TS</string>
+    <string name="ts_hint">Enter value separated by comma</string>
+    <string name="touch_cord">Touch Cord</string>
+    <string name="create_touch_cord">Create Touch Cord</string>
+    <string name="touch_cord_x">X</string>
+    <string name="touch_cord_y">Y</string>
 </resources>

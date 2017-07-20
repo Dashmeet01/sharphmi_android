@@ -1,4 +1,4 @@
-﻿﻿﻿﻿using System;
+﻿﻿﻿﻿﻿using System;
 using System.Collections.Generic;
 using Android.App;
 using Android.OS;
@@ -1934,8 +1934,46 @@ namespace SharpHmiAndroid
 					// SetDisplayLayoutResponse();
 
 				 }
-
-				
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnSystemContextNotification"))
+				 {
+					 CreateOnSystemContextNotification();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnTouchEventNotification"))
+				 {
+					 CreateOnTouchEventNotification();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("DiagnosticMessageResponse"))
+				 {
+					 CreateDiagnosticMessageResponse();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetDTCsResponse"))
+				 {
+					 CreateGetDTCsResponse();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetVehicleDataResponse"))
+				 {
+					 CreateGetVehicleDataResponse();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetVehicleTypeResponse"))
+				 {
+					 CreateGetVehicleTypeResponse();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ReadDidResponse"))
+				 {
+					 CreateReadDidResponse();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SubscribeVehicleDataResponse"))
+				 {
+					 CreateSubscribeVehicleDataResponse();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UnsubscribeVehicleDataResponse"))
+				 {
+					 CreateUnsubscribeVehicleDataResponse();
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetSupportedLanguageResponse"))
+				 {
+					 CreateGetSupportedLanguageResponse();
+                }
              };
 
             rpcListAlertDialog.Show();
@@ -2529,6 +2567,228 @@ namespace SharpHmiAndroid
 				AppInstanceManager.Instance.sendRpc(BuildRpc.buildNavShowConstantTBTResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
 
 			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+		}
+
+		private void CreateGetSupportedLanguageResponse()
+		{
+
+		}
+
+		private void CreateUnsubscribeVehicleDataResponse()
+		{
+
+		}
+
+		private void CreateSubscribeVehicleDataResponse()
+		{
+
+		}
+
+		private void CreateReadDidResponse()
+		{
+
+		}
+
+		private void CreateGetVehicleTypeResponse()
+		{
+
+		}
+
+		private void CreateGetVehicleDataResponse()
+		{
+
+		}
+
+		private void CreateGetDTCsResponse()
+		{
+
+		}
+
+		private void CreateDiagnosticMessageResponse()
+		{
+
+		}
+
+		private void CreateOnSystemContextNotification()
+		{
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = layoutIinflater.Inflate(Resource.Layout.on_command_notification, null);
+			rpcAlertDialog.SetView(rpcView);
+			rpcAlertDialog.SetTitle("OnSystemContext Notification");
+
+			CheckBox appIdCheck = (CheckBox)rpcView.FindViewById(Resource.Id.on_command_app_id_check);
+			Spinner spnAppId = (Spinner)rpcView.FindViewById(Resource.Id.on_command_app_id_spinner);
+
+			CheckBox cmdIdCheck = (CheckBox)rpcView.FindViewById(Resource.Id.on_command_cmd_id_check);
+			Spinner spnSystemContext = (Spinner)rpcView.FindViewById(Resource.Id.on_command_cmd_id_spinner);
+			cmdIdCheck.Text = "System Context";
+
+			string[] systemContext = Enum.GetNames(typeof(SystemContext));
+			var systemContextAdapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, systemContext);
+			spnSystemContext.Adapter = systemContextAdapter;
+
+			List<int> appIdList = new List<int>();
+			foreach (AppItem item in AppInstanceManager.appList)
+			{
+				appIdList.Add(item.getAppID());
+			}
+			var appIdAdapter = new ArrayAdapter<int>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, appIdList);
+			spnAppId.Adapter = appIdAdapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+		}
+
+		void CreateOnTouchEventNotification()
+		{
+			List<TouchEvent> touchEvents = new List<TouchEvent>();
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = layoutIinflater.Inflate(Resource.Layout.on_touch_event_notification, null);
+			rpcAlertDialog.SetView(rpcView);
+			rpcAlertDialog.SetTitle("OnTouchEvent Notification");
+			rpcAlertDialog.SetCancelable(false);
+
+
+			CheckBox touchTypeCheck = (CheckBox)rpcView.FindViewById(Resource.Id.on_touch_event_touch_type_checkbox);
+			Spinner spnTouchType = (Spinner)rpcView.FindViewById(Resource.Id.on_touch_event_touch_type_spinner);
+
+			string[] touchType = Enum.GetNames(typeof(TouchType));
+			var touchTypeAdapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, touchType);
+			spnTouchType.Adapter = touchTypeAdapter;
+
+			ListView listViewTouchEvent = (ListView)rpcView.FindViewById(Resource.Id.touch_event_listview);
+
+			var touchEventAdapter = new ArrayAdapter<TouchEvent>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, touchEvents);
+			listViewTouchEvent.Adapter = touchEventAdapter;
+
+			Button createTouchEvent = (Button)rpcView.FindViewById(Resource.Id.on_touch_event_create_touch_event);
+			createTouchEvent.Click += (sender, e) =>
+			{
+				List<TouchCoord> touchCoordList = new List<TouchCoord>();
+				AlertDialog.Builder touchEventAlertDialog = new AlertDialog.Builder(rpcAlertDialog.Context);
+				View touchEventView = layoutIinflater.Inflate(Resource.Layout.touch_event, null);
+				touchEventAlertDialog.SetView(touchEventView);
+				touchEventAlertDialog.SetTitle("Touch Event");
+
+				CheckBox touchEventIdCheckbox = (CheckBox)touchEventView.FindViewById(Resource.Id.touch_event_id_checkbox);
+				EditText touchEventIdEditText = (EditText)touchEventView.FindViewById(Resource.Id.touch_event_id_edit_text);
+				CheckBox touchEventTsCheckbox = (CheckBox)touchEventView.FindViewById(Resource.Id.touch_event_ts_checkbox);
+				EditText touchEventTsEditText = (EditText)touchEventView.FindViewById(Resource.Id.touch_event_ts_edittext);
+				CheckBox touchEventCordCheckbox = (CheckBox)touchEventView.FindViewById(Resource.Id.touch_event_cord_checkbox);
+				ListView touchCordListView = (ListView)touchEventView.FindViewById(Resource.Id.touch_cord_list_view);
+				Button createTouchCordButton = (Button)touchEventView.FindViewById(Resource.Id.create_touch_cord_button);
+
+				var touchCoordAdapter = new ArrayAdapter<TouchCoord>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, touchCoordList);
+				touchCordListView.Adapter = touchCoordAdapter;
+
+				createTouchCordButton.Click += (sender1, e1) =>
+				{
+					AlertDialog.Builder touchCoordAlertDialog = new AlertDialog.Builder(rpcAlertDialog.Context);
+					View touchCoordView = layoutIinflater.Inflate(Resource.Layout.touch_cord, null);
+					touchCoordAlertDialog.SetView(touchCoordView);
+					touchCoordAlertDialog.SetTitle("Touch Coord");
+
+					CheckBox xCheckBox = (CheckBox)touchCoordView.FindViewById(Resource.Id.touch_cord_x_checkbox);
+					EditText xEditText = (EditText)touchCoordView.FindViewById(Resource.Id.touch_cord_x_edittext);
+					CheckBox yCheckBox = (CheckBox)touchCoordView.FindViewById(Resource.Id.touch_cord_y_checkbox);
+					EditText yEditText = (EditText)touchCoordView.FindViewById(Resource.Id.touch_cord_y_edittext);
+
+
+					touchCoordAlertDialog.SetNegativeButton("Cancel", (senderAlert, args) =>
+					{
+						touchCoordAlertDialog.Dispose();
+					});
+
+					touchCoordAlertDialog.SetPositiveButton("Add", (senderAlert, args) =>
+					{
+						TouchCoord coord = new TouchCoord();
+						try
+						{
+							coord.x = Int32.Parse(xEditText.Text.ToString());
+							coord.y = Int32.Parse(yEditText.Text.ToString());
+						}
+						catch (Exception e11)
+						{
+
+						}
+						touchCoordList.Add(coord);
+						touchCoordAdapter.NotifyDataSetChanged();
+					});
+
+					touchCoordAlertDialog.Show();
+				};
+
+
+				touchEventAlertDialog.SetNegativeButton("Cancel", (senderAlert, args) =>
+				{
+					touchEventAlertDialog.Dispose();
+				});
+
+				touchEventAlertDialog.SetPositiveButton("Add", (senderAlert, args) =>
+				{
+					TouchEvent touchEvent = new TouchEvent();
+					try
+					{
+						touchEvent.id = Int32.Parse(touchEventIdEditText.Text.ToString());
+					}
+					catch (Exception e2)
+					{
+						touchEvent.id = 0;
+					}
+					List<int> tsList = new List<int>();
+					string[] t = touchEventTsEditText.Text.Split(',');
+					foreach (string ts in t)
+					{
+						try
+						{
+							tsList.Add(Int32.Parse(ts));
+						}
+						catch (Exception e3)
+						{
+
+						}
+					}
+
+					touchEvent.ts = tsList;
+					touchEvent.c = touchCoordList;
+
+					touchEvents.Add(touchEvent);
+					touchEventAdapter.NotifyDataSetChanged();
+				});
+
+				touchEventAlertDialog.Show();
+			};
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			 {
+
+			 });
+
 			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
 			{
 

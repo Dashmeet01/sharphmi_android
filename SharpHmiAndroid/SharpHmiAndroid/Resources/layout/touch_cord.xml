@@ -5,23 +5,25 @@
     android:orientation="vertical"
     android:padding="16dp">
     <CheckBox
-        android:id="@+id/on_command_cmd_id_check"
+        android:id="@+id/touch_cord_x_checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/command_id" />
-    <Spinner
-        android:id="@+id/on_command_cmd_id_spinner"
+        android:checked="true"
+        android:text="@string/touch_cord_x" />
+    <EditText
+        android:id="@+id/touch_cord_x_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp" />
+        android:inputType="number" />
     <CheckBox
-        android:id="@+id/on_command_app_id_check"
+        android:id="@+id/touch_cord_y_checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_id" />
-    <Spinner
-        android:id="@+id/on_command_app_id_spinner"
+        android:checked="true"
+        android:text="@string/touch_cord_y" />
+    <EditText
+        android:id="@+id/touch_cord_y_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp" />
+        android:inputType="number" />
 </LinearLayout>
