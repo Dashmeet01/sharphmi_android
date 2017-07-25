@@ -13,41 +13,40 @@
         android:paddingLeft="20dip"
         android:paddingRight="20dip">
         <TextView
-            android:id="@+id/get_way_points_app_id_tv"
+            android:id="@+id/app_id_sdl_tv"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dip"
-            android:text="AppId" />
+            android:text="AppID" />
         <EditText
             android:text=""
-            android:id="@+id/get_way_points_app_id_et"
+            android:id="@+id/app_id_sdl_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:visibility="visible"
             android:freezesText="true" />
-        <TextView
-            android:id="@+id/get_way_points_result_code_tv"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dip"
-            android:text="ResultCode" />
-        <Spinner
-            android:id="@+id/get_way_points_result_code_spn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible" />
         <ListView
-            android:id="@+id/location_listview"
+            android:id="@+id/consented_functions_sdl_lv"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:visibility="gone" />
         <Button
-            android:id="@+id/add_location_details"
+            android:id="@+id/consented_functions_sdl_btn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:layout_gravity="center"
-            android:text="Add Location Details" />
+            android:text="Add Permission Item" />
+        <TextView
+            android:id="@+id/consented_source__sdl_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dip"
+            android:text="Source" />
+        <Spinner
+            android:id="@+id/consented_source_sdl_spn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
     </LinearLayout>
 </ScrollView>

@@ -1290,6 +1290,15 @@
     <AndroidResource Include="Resources\layout\on_touch_event_notification.xml" />
     <AndroidResource Include="Resources\layout\touch_event.xml" />
     <AndroidResource Include="Resources\layout\touch_cord.xml" />
+    <AndroidResource Include="Resources\layout\button_capabilities.axml" />
+    <AndroidResource Include="Resources\layout\location_details.axml" />
+    <AndroidResource Include="Resources\layout\location_details_list_items.axml" />
+    <AndroidResource Include="Resources\layout\on_allow_sdl_functionality.axml" />
+    <AndroidResource Include="Resources\layout\on_app_permission_consent.axml" />
+    <AndroidResource Include="Resources\layout\permissison_item.axml" />
+    <AndroidResource Include="Resources\layout\get_support_languages.axml" />
+    <AndroidResource Include="Resources\layout\get_language.axml" />
+    <AndroidResource Include="Resources\layout\tts_get_capabilities.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
