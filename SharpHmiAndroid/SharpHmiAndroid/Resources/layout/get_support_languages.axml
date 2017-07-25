@@ -31,7 +31,7 @@
             android:paddingTop="20dip"
             android:text="Result Code" />
         <Spinner
-            android:id="@+id/genericspinner_Spinner"
+            android:id="@+id/get_supported_language_result_code_spn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:layout_gravity="center"
-            android:text="Add Location Details" />
+            android:text="Speech Capabilities" />
         <ListView
             android:id="@+id/prerecorded_speech_lv"
             android:layout_width="fill_parent"
@@ -35,6 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:layout_gravity="center"
-            android:text="Add Location Details" />
+            android:text="Prerecorded Speech" />
     </LinearLayout>
 </ScrollView>

@@ -2320,6 +2320,10 @@ namespace SharpHmiAndroid
 			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spn);
 			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.result_Code);
 
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = adapter;
+
 			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
 			{
 				rpcAlertDialog.Dispose();
@@ -2347,19 +2351,19 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.SetTitle("GetSupportedLanguages");
 
 			TextView textViewConsentSource = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.result_code_tv);
-			Spinner spnResultCode = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+			Spinner spnResultCode = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.get_supported_language_result_code_spn);
 
 			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
 			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
 			spnResultCode.Adapter = adapter;
 
 
-			ListView languagesListView = (Android.Widget.ListView)getSystemInfoRpcView.FindViewById(Resource.Id.consented_functions_sdl_lv);
+			ListView languagesListView = (Android.Widget.ListView)getSystemInfoRpcView.FindViewById(Resource.Id.tts_language_listview);
 
 
             List<Language> languagesList = new List<Language>();
 
-			Button languagesButton = (Button)getSystemInfoRpcView.FindViewById(Resource.Id.consented_functions_sdl_btn);
+			Button languagesButton = (Button)getSystemInfoRpcView.FindViewById(Resource.Id.add_tts_language_listview_btn);
 			languagesButton.Click += delegate
 			{
 				AlertDialog.Builder languagesAlertDialog = new AlertDialog.Builder(this.Context);
@@ -2367,8 +2371,9 @@ namespace SharpHmiAndroid
 				languagesAlertDialog.SetView(languagesView);
 				languagesAlertDialog.SetTitle("Language");
 
-				TextView textViewLanguages = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.result_code_spinner);
-				Spinner spnLanguages = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+				TextView textViewLanguages = (TextView)languagesView.FindViewById(Resource.Id.result_code_spinner);
+                textViewLanguages.Text = "SelectLanguage";
+				Spinner spnLanguages = (Spinner)languagesView.FindViewById(Resource.Id.genericspinner_Spinner);
 
                 string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
 				var languageAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
@@ -2412,9 +2417,11 @@ namespace SharpHmiAndroid
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
             View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_language, null);
 			rpcAlertDialog.SetView(rpcView);
-			rpcAlertDialog.SetTitle("Language");
+			rpcAlertDialog.SetTitle("GetLanguage");
 
 			TextView textViewLanguage = (TextView)rpcView.FindViewById(Resource.Id.tts_language_tv);
+            textViewLanguage.Text = "Language";
+
 			Spinner spnLanguage = (Spinner)rpcView.FindViewById(Resource.Id.tts_language_spn);
 
 			TextView textViewResultCode = (TextView)rpcView.FindViewById(Resource.Id.tts_result_code_tv);
@@ -2471,9 +2478,10 @@ namespace SharpHmiAndroid
 
 
 				TextView textViewSpeechCapabilities = (TextView)speechCapabilitiesView.FindViewById(Resource.Id.result_code_spinner);
+                textViewSpeechCapabilities.Text = "SpeechCapabilities";
 				Spinner spnSpeechCapabilities = (Spinner)speechCapabilitiesView.FindViewById(Resource.Id.genericspinner_Spinner);
 
-				string[] speechCapabilities = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+                string[] speechCapabilities = Enum.GetNames(typeof(HmiApiLib.Common.Enums.SpeechCapabilities));
 				var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, speechCapabilities);
 				spnSpeechCapabilities.Adapter = adapter;
 
@@ -2504,14 +2512,15 @@ namespace SharpHmiAndroid
 			prerecordedSpeechButton.Click += delegate
 			{
 				AlertDialog.Builder prerecordedSpeechAlertDialog = new AlertDialog.Builder(this.Context);
-				View prerecordedSpeechView = (View)layoutIinflater.Inflate(Resource.Layout.location_details, null);
+				View prerecordedSpeechView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
 				prerecordedSpeechAlertDialog.SetView(prerecordedSpeechView);
 				prerecordedSpeechAlertDialog.SetTitle("PrerecordedSpeech");
 
-				TextView textViewConsentSource = (TextView)prerecordedSpeechView.FindViewById(Resource.Id.result_code_tv);
+				TextView textViewConsentSource = (TextView)prerecordedSpeechView.FindViewById(Resource.Id.result_code_spinner);
+                textViewConsentSource.Text = "PrerecordedSpeech";
 				Spinner spnPrerecordedSpeech = (Spinner)prerecordedSpeechView.FindViewById(Resource.Id.genericspinner_Spinner);
 
-				string[] prerecordedSpeech = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+				string[] prerecordedSpeech = Enum.GetNames(typeof(HmiApiLib.Common.Enums.PrerecordedSpeech));
 				var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, prerecordedSpeech);
 				spnPrerecordedSpeech.Adapter = adapter;
 
@@ -2561,6 +2570,7 @@ namespace SharpHmiAndroid
 			textView.Text = "policyfile";
 
 			EditText editTextService = (EditText)rpcView.FindViewById(Resource.Id.app_id);
+            editTextService.InputType = Android.Text.InputTypes.ClassText;
 
 			rpcAlertDialog.SetTitle("OnReceivedPolicyUpdate");
 
@@ -2610,31 +2620,31 @@ namespace SharpHmiAndroid
         private void OnAppPermissionConsentNotification()
         {
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View getSystemInfoRpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_way_points, null);
-			rpcAlertDialog.SetView(getSystemInfoRpcView);
+            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_permission_consent, null);
+			rpcAlertDialog.SetView(rpcView);
 			rpcAlertDialog.SetTitle("OnAppPermissionConsent");
 
-			TextView textViewAppID = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.app_id_sdl_tv);
-			EditText editTextAppID = (EditText)getSystemInfoRpcView.FindViewById(Resource.Id.app_id_sdl_et);
+			TextView textViewAppID = (TextView)rpcView.FindViewById(Resource.Id.app_id_sdl_tv);
+			EditText editTextAppID = (EditText)rpcView.FindViewById(Resource.Id.app_id_sdl_et);
 
-			TextView textViewConsentSource = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.consented_source__sdl_tv);
-			Spinner spnConsentSource = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.consented_source_sdl_spn);
+			TextView textViewConsentSource = (TextView)rpcView.FindViewById(Resource.Id.consented_source__sdl_tv);
+			Spinner spnConsentSource = (Spinner)rpcView.FindViewById(Resource.Id.consented_source_sdl_spn);
 
 			string[] consentSource = Enum.GetNames(typeof(HmiApiLib.Common.Enums.ConsentSource));
 			var consentSourceAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, consentSource);
 			spnConsentSource.Adapter = consentSourceAdapter;
 
 
-			ListView ListViewConsentedFunctions= (ListView)getSystemInfoRpcView.FindViewById(Resource.Id.consented_functions_sdl_lv);
+			ListView ListViewConsentedFunctions= (ListView)rpcView.FindViewById(Resource.Id.consented_functions_sdl_lv);
 
 
 			List<PermissionItem> consentedFunctions = new List<PermissionItem>();
 
-			Button consentFunctionsButton = (Button)getSystemInfoRpcView.FindViewById(Resource.Id.consented_functions_sdl_btn);
+			Button consentFunctionsButton = (Button)rpcView.FindViewById(Resource.Id.consented_functions_sdl_btn);
 			consentFunctionsButton.Click += delegate
 			{
 				AlertDialog.Builder consentFunctionsAlertDialog = new AlertDialog.Builder(this.Context);
-				View consentFunctionsView= (View)layoutIinflater.Inflate(Resource.Layout.location_details, null);
+                View consentFunctionsView= (View)layoutIinflater.Inflate(Resource.Layout.permissison_item, null);
 				consentFunctionsAlertDialog.SetView(consentFunctionsView);
 				consentFunctionsAlertDialog.SetTitle("PermissionItem");
 
@@ -2694,7 +2704,7 @@ namespace SharpHmiAndroid
         {
 
             AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_system_request, null);
+            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_allow_sdl_functionality, null);
             rpcAlertDialog.SetView(rpcView);
             rpcAlertDialog.SetTitle("OnAllowSDLFunctionality");
 
@@ -2780,10 +2790,13 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.SetView(rpcView);
 
 
-			TextView textViewApplicationId = (TextView)rpcView.FindViewById(Resource.Id.appplication_id_tv);
+			TextView textViewMessageCode = (TextView)rpcView.FindViewById(Resource.Id.appplication_id_tv);
+            textViewMessageCode.Text = "MessageCode";
 			EditText editTextdApplicationId = (EditText)rpcView.FindViewById(Resource.Id.appplication_id_et);
+            editTextdApplicationId.InputType= Android.Text.InputTypes.ClassText;
 
 			TextView textViewlanguage = (TextView)rpcView.FindViewById(Resource.Id.app_exit_reason_tv);
+            textViewlanguage.Text = "Language";
 
 			Spinner spnlanguage = (Spinner)rpcView.FindViewById(Resource.Id.app_exit_reason);
             string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
@@ -2792,11 +2805,6 @@ namespace SharpHmiAndroid
 
 			rpcAlertDialog.SetTitle("GetUserFriendlyMessage");
 
-
-            List<String> messageCodes = new List<string>();
-            messageCodes.AddRange(editTextdApplicationId.Text.Split(','));
-
-
 			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
 			{
 				rpcAlertDialog.Dispose();
@@ -2804,6 +2812,8 @@ namespace SharpHmiAndroid
 
 			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
 			{
+				List<String> messageCodes = new List<string>();
+				messageCodes.AddRange(editTextdApplicationId.Text.Split(','));
 				//Method currently not available in BuildRPC.cs
 
 			});
@@ -3084,6 +3094,10 @@ namespace SharpHmiAndroid
 
 			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spn);
 			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.result_Code);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = adapter;
 
 			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
 			{
