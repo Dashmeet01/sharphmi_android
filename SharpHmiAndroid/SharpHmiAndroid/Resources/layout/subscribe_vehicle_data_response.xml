@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_gps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gps" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_gps_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_gps_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_gps_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_gps_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/speed" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_speed_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_speed_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_speed_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_speed_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_rpm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rpm" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_rpm_date_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_rpm_date_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_rpm_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_rpm_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_fuel_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fuel_level" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_fuel_level_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_fuel_level_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_fuel_level_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_fuel_level_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_fuel_level_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fuel_level_state" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_fuel_level_state_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_fuel_level_state_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_fuel_level_state_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_fuel_level_state_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_instant_fuel_consumption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/instant_fuel_consumption" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_instant_fuel_consumption_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_instant_fuel_consumption_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_instant_fuel_consumption_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_instant_fuel_consumption_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_external_temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/exrernal_temperature" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_external_temperature_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_external_temperature_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_external_temperature_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_external_temperature_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_prndl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/prndl" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_prndl_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_prndl_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_prndl_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_prndl_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_tire_pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tire_pressure" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_tire_pressure_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_tire_pressure_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_tire_pressure_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_tire_pressure_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_odometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/odometer" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_odometer_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_odometer_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_odometer_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_odometer_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_belt_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/belt_status" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_belt_status_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_belt_status_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_belt_status_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_belt_status_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_body_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/body_information" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_body_info_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_body_info_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_body_info_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_body_info_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_device_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_status" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_device_status_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_device_status_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_device_status_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_device_status_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_driver_braking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/driver_braking" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_driver_braking_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_driver_braking_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_driver_braking_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_driver_braking_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_wiper_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wiper_status" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_wiper_status_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_wiper_status_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_wiper_status_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_wiper_status_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_head_lamp_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/head_lamp_status" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_head_lamp_status_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_head_lamp_status_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_head_lamp_status_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_head_lamp_status_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_engine_torque"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/engine_torque" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_engine_torque_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_engine_torque_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_engine_torque_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_engine_torque_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_acc_pedal_pos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/acc_padel_position" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_acc_pedal_pos_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_acc_pedal_pos_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_acc_pedal_pos_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_acc_pedal_pos_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_steering_whel_angle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/steering_wheel_angle" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_steering_whel_angle_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_steering_whel_angle_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_steering_whel_angle_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_steering_whel_angle_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_ecall_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ecall_info" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_ecall_info_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_ecall_info_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_ecall_info_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_ecall_info_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_airbag_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/airbag_status" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_airbag_status_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_airbag_status_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_airbag_status_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_airbag_status_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_emergency_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/emergency_event" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_emergency_event_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_emergency_event_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_emergency_event_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_emergency_event_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_cluster_modes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cluster_modes" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_cluster_modes_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_cluster_modes_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_cluster_modes_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_cluster_modes_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/subscribe_vehicle_my_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/my_key" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_my_key_data_type_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_type" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_my_key_data_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp">
+            <CheckBox
+                android:id="@+id/subscribe_vehicle_my_key_result_code_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_code" />
+            <Spinner
+                android:id="@+id/subscribe_vehicle_my_key_result_code_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

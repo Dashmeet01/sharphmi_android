@@ -5,30 +5,38 @@
     android:orientation="vertical"
     android:padding="16dp">
     <CheckBox
-        android:id="@+id/slider_position_checkbox"
-        android:layout_width="wrap_content"
+        android:id="@+id/dtc_ecu_header_checkbox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/slider_position" />
+        android:text="@string/ecu_header" />
     <EditText
-        android:id="@+id/slider_position_et"
+        android:id="@+id/dtc_ecu_header_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number" />
+    <CheckBox
+        android:id="@+id/dtc_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dtc" />
+    <EditText
+        android:id="@+id/dtc_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
     <TextView
-        android:id="@+id/diagnostic_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/ts_hint"
-        android:visibility="gone"
-        android:textSize="12sp"
-        android:layout_marginBottom="16dp" />
+        android:textSize="12sp" />
     <CheckBox
-        android:id="@+id/slider_result_code_checkbox"
-        android:layout_width="wrap_content"
+        android:id="@+id/dtc_result_code_checkbox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/result_code" />
     <Spinner
-        android:id="@+id/slider_result_code_spinner"
+        android:id="@+id/dtc_result_code_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

@@ -62,6 +62,10 @@ namespace SharpHmiAndroid
 
 		LayoutInflater layoutIinflater;
 
+		string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+		string[] vehicleDataType = Enum.GetNames(typeof(VehicleDataType));
+		string[] languages = Enum.GetNames(typeof(Language));
+
 		public FullHmiFragment()
         {
             SetHasOptionsMenu(true);
@@ -2228,43 +2232,36 @@ namespace SharpHmiAndroid
 				 }
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UnsubscribeVehicleDataResponse"))
 				 {
-					 CreateUnsubscribeVehicleDataResponse();
+					 CreateSubscribeVehicleDataResponse();
 				 }
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetSupportedLanguageResponse"))
 				 {
 					 CreateGetSupportedLanguageResponse();
                 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ActivateAppRequestSDL"))
 				 {
 					 ActivateAppRequestSDL();
 				 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetListOfPermissionsRequest"))
 				 {
 					 GetListOfPermissionsRequest();
 				 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetStatusUpdateRequest"))
 				 {
 					 GetStatusUpdateRequest();
 				 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetURLSRequest"))
 				 {
 					 GetURLSRequest();
 				 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetUserFriendlyMessageRequest"))
 				 {
 					 GetUserFriendlyMessageRequest();
 				 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UpdateSDLRequest"))
 				 {
 					 UpdateSDLRequest();
 				 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnAllowSDLFunctionalityNotification"))
 				 {
 					 OnAllowSDLFunctionalityNotification();
@@ -2279,7 +2276,6 @@ namespace SharpHmiAndroid
 				 {
 					 OnPolicyUpdateNotification();
 				 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnReceivedPolicyUpdateNotification"))
 				 {
 					 OnReceivedPolicyUpdateNotification();
@@ -3767,27 +3763,354 @@ namespace SharpHmiAndroid
 
 		private void CreateGetSupportedLanguageResponse()
 		{
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = layoutIinflater.Inflate(Resource.Layout.on_touch_event_notification, null);
+			rpcAlertDialog.SetView(rpcView);
+			rpcAlertDialog.SetTitle("Get Supported Language Response");
 
-		}
+			CheckBox resultCodeCheck = (CheckBox)rpcView.FindViewById(Resource.Id.on_touch_event_touch_type_checkbox);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.on_touch_event_touch_type_spinner);
 
-		private void CreateUnsubscribeVehicleDataResponse()
-		{
+			resultCodeCheck.Text = "Result Code";
 
+			var resultCodeAdapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = resultCodeAdapter;
+
+			rpcView.FindViewById<ListView>(Resource.Id.touch_event_listview).Visibility = ViewStates.Gone;
+			bool[] langBoolArray = new bool[languages.Length];
+
+			Button createTouchEvent = (Button)rpcView.FindViewById(Resource.Id.on_touch_event_create_touch_event);
+			createTouchEvent.Text = "Add Languages";
+			createTouchEvent.Click += (sender, e1) =>
+			{
+				AlertDialog.Builder languageAlertDialog = new AlertDialog.Builder(rpcAlertDialog.Context);
+				languageAlertDialog.SetTitle("Languages");
+
+				languageAlertDialog.SetMultiChoiceItems(languages, langBoolArray, (object sender1, Android.Content.DialogMultiChoiceClickEventArgs e) => langBoolArray[e.Which] = e.IsChecked);
+
+				languageAlertDialog.SetNegativeButton("Cancel", (senderAlert, args) =>
+				{
+					languageAlertDialog.Dispose();
+				});
+
+				languageAlertDialog.SetPositiveButton("Add", (senderAlert, args) =>
+				{
+
+				});
+
+				languageAlertDialog.Show();
+			};
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			 {
+				 List<Language> languageList = new List<Language>();
+				 for (int i = 0; i < languages.Length; i++)
+				 {
+					 if (langBoolArray[i])
+					 {
+						 languageList.Add(((Language)typeof(Language).GetEnumValues().GetValue(i)));
+					 }
+				 }
+			 });
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
 		}
 
 		private void CreateSubscribeVehicleDataResponse()
 		{
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.subscribe_vehicle_data_response, null);
+			rpcAlertDialog.SetView(rpcView);
+			rpcAlertDialog.SetTitle("Subscribe Vehicle Data");
 
+			var gps_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_gps);
+			var speed_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_speed);
+			var rpm_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_rpm);
+			var fuelLevel_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_fuel_level);
+			var fuelLevel_State_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_fuel_level_state);
+			var instantFuelConsumption_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_instant_fuel_consumption);
+			var externalTemperature_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_external_temperature);
+			var prndl_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_prndl);
+			var tirePressure_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_tire_pressure);
+			var odometer_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_odometer);
+			var beltStatus_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_belt_status);
+			var bodyInformation_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_body_info);
+			var deviceStatus_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_device_status);
+			var driverBraking_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_driver_braking);
+			var wiperStatus_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_wiper_status);
+			var headLampStatus_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_head_lamp_status);
+			var engineTorque_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_engine_torque);
+			var accPedalPosition_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_acc_pedal_pos);
+			var steeringWheelAngle_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_steering_whel_angle);
+			var eCallInfo_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_ecall_info);
+			var airbagStatus_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_airbag_status);
+			var emergencyEvent_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_emergency_event);
+			var clusterModes_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_cluster_modes);
+			var myKey_chk = rpcView.FindViewById<CheckBox>(Resource.Id.subscribe_vehicle_my_key);
+
+			var gps_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_gps_data_type_spinner);
+			var speed_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_speed_data_type_spinner);
+			var rpm_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_rpm_date_type_spinner);
+			var fuelLevel_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_fuel_level_data_type_spinner);
+			var fuelLevel_State_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_fuel_level_state_data_type_spinner);
+			var instantFuelConsumption_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_instant_fuel_consumption_data_type_spinner);
+			var externalTemperature_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_external_temperature_data_type_spinner);
+			var prndl_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_prndl_data_type_spinner);
+			var tirePressure_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_tire_pressure_data_type_spinner);
+			var odometer_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_odometer_data_type_spinner);
+			var beltStatus_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_belt_status_data_type_spinner);
+			var bodyInformation_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_body_info_data_type_spinner);
+			var deviceStatus_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_device_status_data_type_spinner);
+			var driverBraking_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_driver_braking_data_type_spinner);
+			var wiperStatus_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_wiper_status_data_type_spinner);
+			var headLampStatus_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_head_lamp_status_data_type_spinner);
+			var engineTorque_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_engine_torque_data_type_spinner);
+			var accPedalPosition_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_acc_pedal_pos_data_type_spinner);
+			var steeringWheelAngle_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_steering_whel_angle_data_type_spinner);
+			var eCallInfo_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_ecall_info_data_type_spinner);
+			var airbagStatus_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_airbag_status_data_type_spinner);
+			var emergencyEvent_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_emergency_event_data_type_spinner);
+			var clusterModes_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_cluster_modes_data_type_spinner);
+			var myKey_data_type_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_my_key_data_type_spinner);
+
+			var result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_result_code_spinner);
+			var gps_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_gps_result_code_spinner);
+			var speed_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_speed_result_code_spinner);
+			var rpm_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_rpm_result_code_spinner);
+			var fuelLevel_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_fuel_level_result_code_spinner);
+			var fuelLevel_State_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_fuel_level_state_result_code_spinner);
+			var instantFuelConsumption_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_instant_fuel_consumption_result_code_spinner);
+			var externalTemperature_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_external_temperature_result_code_spinner);
+			var prndl_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_prndl_result_code_spinner);
+			var tirePressure_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_tire_pressure_result_code_spinner);
+			var odometer_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_odometer_result_code_spinner);
+			var beltStatus_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_belt_status_result_code_spinner);
+			var bodyInformation_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_body_info_result_code_spinner);
+			var deviceStatus_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_device_status_result_code_spinner);
+			var driverBraking_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_driver_braking_result_code_spinner);
+			var wiperStatus_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_wiper_status_result_code_spinner);
+			var headLampStatus_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_head_lamp_status_result_code_spinner);
+			var engineTorque_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_engine_torque_result_code_spinner);
+			var accPedalPosition_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_acc_pedal_pos_result_code_spinner);
+			var steeringWheelAngle_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_steering_whel_angle_result_code_spinner);
+			var eCallInfo_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_ecall_info_result_code_spinner);
+			var airbagStatus_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_airbag_status_result_code_spinner);
+			var emergencyEvent_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_emergency_event_result_code_spinner);
+			var clusterModes_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_cluster_modes_result_code_spinner);
+			var myKey_result_code_spinner = rpcView.FindViewById<Spinner>(Resource.Id.subscribe_vehicle_my_key_result_code_spinner);
+
+
+			var vehicleDataTypeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, vehicleDataType);
+			gps_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			speed_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			rpm_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			fuelLevel_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			fuelLevel_State_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			instantFuelConsumption_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			externalTemperature_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			prndl_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			tirePressure_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			odometer_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			beltStatus_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			bodyInformation_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			deviceStatus_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			driverBraking_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			wiperStatus_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			headLampStatus_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			engineTorque_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			accPedalPosition_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			steeringWheelAngle_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			eCallInfo_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			airbagStatus_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			emergencyEvent_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			clusterModes_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+			myKey_data_type_spinner.Adapter = vehicleDataTypeAdapter;
+
+
+			var resultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			result_code_spinner.Adapter = resultCodeAdapter;
+			gps_result_code_spinner.Adapter = resultCodeAdapter;
+			speed_result_code_spinner.Adapter = resultCodeAdapter;
+			rpm_result_code_spinner.Adapter = resultCodeAdapter;
+			fuelLevel_result_code_spinner.Adapter = resultCodeAdapter;
+			fuelLevel_State_result_code_spinner.Adapter = resultCodeAdapter;
+			instantFuelConsumption_result_code_spinner.Adapter = resultCodeAdapter;
+			externalTemperature_result_code_spinner.Adapter = resultCodeAdapter;
+			prndl_result_code_spinner.Adapter = resultCodeAdapter;
+			tirePressure_result_code_spinner.Adapter = resultCodeAdapter;
+			odometer_result_code_spinner.Adapter = resultCodeAdapter;
+			beltStatus_result_code_spinner.Adapter = resultCodeAdapter;
+			bodyInformation_result_code_spinner.Adapter = resultCodeAdapter;
+			deviceStatus_result_code_spinner.Adapter = resultCodeAdapter;
+			driverBraking_result_code_spinner.Adapter = resultCodeAdapter;
+			wiperStatus_result_code_spinner.Adapter = resultCodeAdapter;
+			headLampStatus_result_code_spinner.Adapter = resultCodeAdapter;
+			engineTorque_result_code_spinner.Adapter = resultCodeAdapter;
+			accPedalPosition_result_code_spinner.Adapter = resultCodeAdapter;
+			steeringWheelAngle_result_code_spinner.Adapter = resultCodeAdapter;
+			eCallInfo_result_code_spinner.Adapter = resultCodeAdapter;
+			airbagStatus_result_code_spinner.Adapter = resultCodeAdapter;
+			emergencyEvent_result_code_spinner.Adapter = resultCodeAdapter;
+			clusterModes_result_code_spinner.Adapter = resultCodeAdapter;
+			myKey_result_code_spinner.Adapter = resultCodeAdapter;
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.Show();
 		}
 
 		private void CreateReadDidResponse()
 		{
+			List<DIDResult> didResultList = new List<DIDResult>();
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.read_did_response, null);
+			rpcAlertDialog.SetView(rpcView);
 
+			CheckBox did_result_cb = (CheckBox)rpcView.FindViewById(Resource.Id.read_did_result_cb);
+			Button createDidResultBtn = (Button)rpcView.FindViewById(Resource.Id.create_did_result_button);
+			ListView didResultListView = (ListView)rpcView.FindViewById(Resource.Id.read_did_result_listview);
+
+			var didResultAdapter = new DIDResultAdapter(Activity, didResultList);
+			didResultListView.Adapter = didResultAdapter;
+
+			CheckBox result_code_spinner = (CheckBox)rpcView.FindViewById(Resource.Id.read_did_result_code_cb);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.read_did_result_code_spinner);
+
+			rpcAlertDialog.SetTitle("Read DID");
+			var resultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = resultCodeAdapter;
+
+			createDidResultBtn.Click += (sender, e) =>
+			{
+				AlertDialog.Builder didResultAlertDialog = new AlertDialog.Builder(rpcAlertDialog.Context);
+				View didResultView = layoutIinflater.Inflate(Resource.Layout.did_result_response, null);
+				didResultAlertDialog.SetView(didResultView);
+				didResultAlertDialog.SetTitle("DID Result");
+
+				CheckBox vehicleDataResultCodeCB = (CheckBox)didResultView.FindViewById(Resource.Id.vehicle_data_result_code_cb);
+				Spinner vehicleDataResultCodeSpinner = (Spinner)didResultView.FindViewById(Resource.Id.vehicle_data_result_code_spinner);
+				CheckBox didLocationCB = (CheckBox)didResultView.FindViewById(Resource.Id.did_location_cb);
+				EditText didLocationET = (EditText)didResultView.FindViewById(Resource.Id.did_location_et);
+				CheckBox dataCB = (CheckBox)didResultView.FindViewById(Resource.Id.data_cb);
+				EditText dataET = (EditText)didResultView.FindViewById(Resource.Id.data_et);
+
+				string[] vehicleDataResultCodeEnum = Enum.GetNames(typeof(VehicleDataResultCode));
+				var vehicleDataResultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, vehicleDataResultCodeEnum);
+				vehicleDataResultCodeSpinner.Adapter = vehicleDataResultCodeAdapter;
+
+
+				didResultAlertDialog.SetNegativeButton("Cancel", (senderAlert, args) =>
+				{
+					didResultAlertDialog.Dispose();
+				});
+
+				didResultAlertDialog.SetPositiveButton("Add", (senderAlert, args) =>
+				{
+					DIDResult dIDResult = new DIDResult();
+					dIDResult.data = dataET.Text;
+					dIDResult.resultCode = (VehicleDataResultCode)vehicleDataResultCodeSpinner.SelectedItemPosition;
+					try
+					{
+						dIDResult.didLocation = Int32.Parse(didLocationET.Text.ToString());
+					}
+					catch (Exception e1)
+					{
+
+					}
+					didResultList.Add(dIDResult);
+					didResultAdapter.NotifyDataSetChanged();
+				});
+
+				didResultAlertDialog.Show();
+			};
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.Show();
 		}
 
 		private void CreateGetVehicleTypeResponse()
 		{
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_vehicle_type, null);
+			rpcAlertDialog.SetView(rpcView);
 
+			CheckBox make_checkbox = (CheckBox)rpcView.FindViewById(Resource.Id.vehicle_type_make_cb);
+			EditText make_edittext = (EditText)rpcView.FindViewById(Resource.Id.vehicle_type_make_et);
+
+			CheckBox model_checkbox = (CheckBox)rpcView.FindViewById(Resource.Id.vehicle_type_model_cb);
+			EditText model_edittext = (EditText)rpcView.FindViewById(Resource.Id.vehicle_type_model_et);
+
+			CheckBox model_year_checkbox = (CheckBox)rpcView.FindViewById(Resource.Id.vehicle_type_model_year_cb);
+			EditText model_year_edittext = (EditText)rpcView.FindViewById(Resource.Id.vehicle_type_model_year_et);
+
+			CheckBox trim_checkbox = (CheckBox)rpcView.FindViewById(Resource.Id.vehicle_type_trim_cb);
+			EditText trim_edittext = (EditText)rpcView.FindViewById(Resource.Id.vehicle_type_trim_et);
+
+			CheckBox result_code_spinner = (CheckBox)rpcView.FindViewById(Resource.Id.vehicle_type_result_cb);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.vehicle_type_result_code_spinner);
+
+			rpcAlertDialog.SetTitle("Get Vehicle Type");
+			var resultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = resultCodeAdapter;
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+				string make = make_edittext.Text;
+				string model = model_edittext.Text;
+				string modelYear = model_year_edittext.Text;
+				string trim = trim_edittext.Text;
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.Show();
 		}
 
 		private void CreateGetVehicleDataResponse()
@@ -3797,12 +4120,93 @@ namespace SharpHmiAndroid
 
 		private void CreateGetDTCsResponse()
 		{
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_dtc_response, null);
+			rpcAlertDialog.SetView(rpcView);
 
+			CheckBox ecu_header_checkbox = (CheckBox)rpcView.FindViewById(Resource.Id.dtc_ecu_header_checkbox);
+			EditText ecu_header_edittext = (EditText)rpcView.FindViewById(Resource.Id.dtc_ecu_header_edittext);
+
+			CheckBox dtc_checkbox = (CheckBox)rpcView.FindViewById(Resource.Id.dtc_checkbox);
+			EditText dtc_edittext = (EditText)rpcView.FindViewById(Resource.Id.dtc_edittext);
+
+			CheckBox result_code_spinner = (CheckBox)rpcView.FindViewById(Resource.Id.dtc_result_code_checkbox);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.dtc_result_code_spinner);
+
+			rpcAlertDialog.SetTitle("Diagnostic Message");
+			var resultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = resultCodeAdapter;
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+				string[] t = dtc_edittext.Text.Split(',');
+				List<string> messageDataResultList = new List<string>(t);
+
+				int? ecuHeader = Int32.Parse(ecu_header_edittext.Text);
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.Show();
 		}
 
 		private void CreateDiagnosticMessageResponse()
 		{
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.slider_response, null);
+			rpcAlertDialog.SetView(rpcView);
 
+			CheckBox message_data_checkbox = (CheckBox)rpcView.FindViewById(Resource.Id.slider_position_checkbox);
+			EditText message_data_edittext = (EditText)rpcView.FindViewById(Resource.Id.slider_position_et);
+
+			CheckBox result_code_spinner = (CheckBox)rpcView.FindViewById(Resource.Id.slider_result_code_checkbox);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.slider_result_code_spinner);
+
+			rpcView.FindViewById(Resource.Id.diagnostic_hint).Visibility = ViewStates.Visible;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetTitle("Diagnostic Message");
+			message_data_checkbox.Text = "Message Data Result";
+			var resultCodeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = resultCodeAdapter;
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+				List<int> messageDataResultList = new List<int>();
+				string[] t = message_data_edittext.Text.Split(',');
+				foreach (string ts in t)
+				{
+					try
+					{
+						messageDataResultList.Add(Int32.Parse(ts));
+					}
+					catch (Exception e)
+					{
+
+					}
+				}
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
 		}
 
 		private void CreateOnSystemContextNotification()
@@ -3868,7 +4272,7 @@ namespace SharpHmiAndroid
 
 			ListView listViewTouchEvent = (ListView)rpcView.FindViewById(Resource.Id.touch_event_listview);
 
-			var touchEventAdapter = new ArrayAdapter<TouchEvent>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, touchEvents);
+            var touchEventAdapter = new TouchEventAdapter(Activity, touchEvents);
 			listViewTouchEvent.Adapter = touchEventAdapter;
 
 			Button createTouchEvent = (Button)rpcView.FindViewById(Resource.Id.on_touch_event_create_touch_event);
@@ -3888,7 +4292,7 @@ namespace SharpHmiAndroid
 				ListView touchCordListView = (ListView)touchEventView.FindViewById(Resource.Id.touch_cord_list_view);
 				Button createTouchCordButton = (Button)touchEventView.FindViewById(Resource.Id.create_touch_cord_button);
 
-				var touchCoordAdapter = new ArrayAdapter<TouchCoord>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, touchCoordList);
+                var touchCoordAdapter = new TouchCoordAdapter(Activity, touchCoordList);
 				touchCordListView.Adapter = touchCoordAdapter;
 
 				createTouchCordButton.Click += (sender1, e1) =>
