@@ -4,6 +4,7 @@ using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using HmiApiLib.Base;
 using HmiApiLib.Builder;
 using HmiApiLib.Common.Enums;
 using HmiApiLib.Common.Structs;
@@ -1481,22 +1482,39 @@ namespace SharpHmiAndroid
                          var appExitReasonAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
                          spnAppExitReason.Adapter = appExitReasonAdapter;
 
+                         HmiApiLib.Controllers.UI.OutgoingResponses.Alert tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.Alert();
+
+                         tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Alert)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Alert>(adapter.Context, tmpObj.getMethod());
+
+                        if(tmpObj != null) {
+                            spnAppExitReason.SetSelection((int)tmpObj.getResultCode());
+    
+                            if(tmpObj.getTryAgainTime() != null)
+                                editTextdApplicationId.Text = tmpObj.getTryAgainTime().ToString();
+                        }
+
                          rpcAlertDialog.SetTitle("Alert");
                          textViewApplicationId.Text = "TryAgainTime";
                          textViewAppExitReason.Text = "ResultCode";
 
+                         RpcMessage rpcMessage = null;
+
                          rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
                          {
-                             if (editTextdApplicationId.Text.Equals(""))
-                                 AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, 0));
-                             else
-                                 AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, Java.Lang.Integer.ParseInt(editTextdApplicationId.Text)));
+                            if (editTextdApplicationId.Text.Equals("")) {
+								 rpcMessage = BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, 0);  
+                            } else {
+								 rpcMessage = BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, Java.Lang.Integer.ParseInt(editTextdApplicationId.Text));                                
+                            }
+
+                            AppUtils.savePreferenceValueForRpc(adapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage);
+                            AppInstanceManager.Instance.sendRpc(rpcMessage);
 
                          });
 
                          rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
                          {
-
+                             AppUtils.removeSavedPreferenceValueForRpc(adapter.Context, tmpObj.getMethod());
                          });
 
                      }
