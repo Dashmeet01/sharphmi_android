@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿using System;
+﻿﻿﻿﻿﻿﻿﻿using System;
 using System.Collections.Generic;
 using Android.App;
 using Android.OS;
@@ -1484,7 +1484,7 @@ namespace SharpHmiAndroid
 
                          HmiApiLib.Controllers.UI.OutgoingResponses.Alert tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.Alert();
 
-                         tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Alert)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Alert>(adapter.Context, tmpObj.getMethod());
+                        tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Alert)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Alert>(adapter.Context, tmpObj.getMethod(), appID);
 
                         if(tmpObj != null) {
                             spnAppExitReason.SetSelection((int)tmpObj.getResultCode());
@@ -1507,14 +1507,14 @@ namespace SharpHmiAndroid
 								 rpcMessage = BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, Java.Lang.Integer.ParseInt(editTextdApplicationId.Text));                                
                             }
 
-                            AppUtils.savePreferenceValueForRpc(adapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage);
+                            AppUtils.savePreferenceValueForRpc(adapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage, appID);
                             AppInstanceManager.Instance.sendRpc(rpcMessage);
 
                          });
 
                          rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
                          {
-                             AppUtils.removeSavedPreferenceValueForRpc(adapter.Context, tmpObj.getMethod());
+                             AppUtils.removeSavedPreferenceValueForRpc(adapter.Context, tmpObj.getMethod(), appID);
                          });
 
                      }
