@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:orientation="vertical">
+    <CheckBox
+        android:id="@+id/vehicle_data_result_code_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vehicle_data_result_code" />
+    <Spinner
+        android:id="@+id/vehicle_data_result_code_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <CheckBox
+        android:id="@+id/did_location_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/did_location" />
+    <EditText
+        android:id="@+id/did_location_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number" />
+    <CheckBox
+        android:id="@+id/data_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/data" />
+    <EditText
+        android:id="@+id/data_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number" />
+</LinearLayout>

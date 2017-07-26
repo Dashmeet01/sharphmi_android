@@ -1197,6 +1197,9 @@
     <Compile Include="..\..\..\sharphmi_lib\SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs">
       <Link>SharpHmiApi\SharedHmiLib\Utility\StringLogMessage.cs</Link>
     </Compile>
+    <Compile Include="TouchEventAdapter.cs" />
+    <Compile Include="TouchCoordAdapter.cs" />
+    <Compile Include="DIDResultAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -1306,6 +1309,12 @@
     <AndroidResource Include="Resources\layout\get_language.axml" />
     <AndroidResource Include="Resources\layout\tts_get_capabilities.axml" />
     <AndroidResource Include="Resources\layout\on_reset_timeout.axml" />
+    <AndroidResource Include="Resources\layout\get_dtc_response.xml" />
+    <AndroidResource Include="Resources\layout\get_vehicle_type.xml" />
+    <AndroidResource Include="Resources\layout\read_did_response.xml" />
+    <AndroidResource Include="Resources\layout\did_result_response.xml" />
+    <AndroidResource Include="Resources\layout\touch_event_item_adapter.xml" />
+    <AndroidResource Include="Resources\layout\subscribe_vehicle_data_response.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

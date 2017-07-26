@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <CheckBox
+        android:id="@+id/vehicle_type_make_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/make" />
+    <EditText
+        android:id="@+id/vehicle_type_make_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    <CheckBox
+        android:id="@+id/vehicle_type_model_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/model" />
+    <EditText
+        android:id="@+id/vehicle_type_model_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    <CheckBox
+        android:id="@+id/vehicle_type_model_year_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/model_year" />
+    <EditText
+        android:id="@+id/vehicle_type_model_year_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    <CheckBox
+        android:id="@+id/vehicle_type_trim_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/make" />
+    <EditText
+        android:id="@+id/vehicle_type_trim_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    <CheckBox
+        android:id="@+id/vehicle_type_result_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/result_code" />
+    <Spinner
+        android:id="@+id/vehicle_type_result_code_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

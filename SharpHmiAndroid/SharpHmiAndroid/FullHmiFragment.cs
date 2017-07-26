@@ -2375,37 +2375,7 @@ namespace SharpHmiAndroid
 
         private void ClosePopUpResponse()
         {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("ClosePopUp");
-
-			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
-			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
-
-			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-			spnGeneric.Adapter = adapter;
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiClosePopUpResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
-
-			});
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			{
-
-			});
-
-			rpcAlertDialog.Show();
+            throw new NotImplementedException();
         }
 
         private void UIChangeRegistrationResponse()
@@ -2442,10 +2412,6 @@ namespace SharpHmiAndroid
 
 			rpcAlertDialog.Show();
         }
-
-
-
-
 
 
 
