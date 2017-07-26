@@ -97,6 +97,12 @@
     <Reference Include="Xamarin.Android.Support.v7.GridLayout">
       <HintPath>packages\Xamarin.Android.Support.v7.GridLayout.25.3.1\lib\MonoAndroid70\Xamarin.Android.Support.v7.GridLayout.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>..\..\..\websocket-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -1299,6 +1305,7 @@
     <AndroidResource Include="Resources\layout\get_support_languages.axml" />
     <AndroidResource Include="Resources\layout\get_language.axml" />
     <AndroidResource Include="Resources\layout\tts_get_capabilities.axml" />
+    <AndroidResource Include="Resources\layout\on_reset_timeout.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

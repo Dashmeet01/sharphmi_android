@@ -691,12 +691,12 @@ namespace SharpHmiAndroid
                 "SendLocationResponse", "ShowConstantTBTResponse", "StartAudioStreamResponse", "StartStreamResponse", "StopAudioStreamResponse", "StopStreamResponse", "SubscribeWayPointsResponse",
                 "UnsubscribeWayPointsResponse", "UpdateTurnListResponse", "OnTBTClientStateNotification", "ActivateAppRequestSDL", "GetListOfPermissionsRequest", "GetStatusUpdateRequest", "GetURLSRequest",
                 "GetUserFriendlyMessageRequest", "UpdateSDLRequest", "OnAllowSDLFunctionalityNotification", "OnAppPermissionConsentNotification", "OnPolicyUpdateNotification", "OnReceivedPolicyUpdateNotification",
-                "ChangeRegistrationResponse", "TTSGetCapabilitiesResponse", "GetLanguageResponse", "GetSupportedLanguagesResponse", "TTSIsReadyResponse", "SetGlobalPropertiesResponse", "SpeakResponse", "StopSpeakingResponse",  
-                "OnLanguageChangeNotification", "OnResetTimeoutNotification", "StartedNotification", "StoppedNotification", "AddCommandResponse","AddSubMenuResponse", "AlertResponse","ClosePopUpResponse", "DeleteCommandResponse", 
-                "DeleteSubMenuResponse", "EndAudioPassThruResponse", "GetSupportedLanguagesResponse", "PerformAudioPassThruResponse", "PerformInteractionResponse", "ScrollableMessageResponse",
-                "SetAppIconResponse", "SetDisplayLayoutResponse", "SetMediaClockTimerResponse", "ShowResponse", "ShowCustomFormResponse", "SliderResponse", "OnCommandNotification", 
-                "OnDriverDistrationNotification", "OnKeyboardInputNotification", "OnRecordStartNotification", "OnSystemContextNotification", "OnTouchEventNotification", "DiagnosticMessageResponse", 
-                "GetDTCsResponse","GetVehicleDataResponse", "GetVehicleTypeResponse", "ReadDidResponse", "SubscribeVehicleDataResponse", "UnsubscribeVehicleDataResponse", "GetSupportedLanguageResponse"};
+                "TTSChangeRegistrationResponse", "TTSGetCapabilitiesResponse", "TTSGetLanguageResponse", "TTSGetSupportedLanguagesResponse", "TTSIsReadyResponse", "TTSSetGlobalPropertiesResponse", "SpeakResponse", "StopSpeakingResponse",  
+                "TTSOnLanguageChangeNotification", "TTSOnResetTimeoutNotification", "TTSStartedNotification", "TTSStoppedNotification", "AddCommandResponse","AddSubMenuResponse", "AlertResponse", "UIChangeRegistrationResponse", "ClosePopUpResponse", "DeleteCommandResponse", 
+                "DeleteSubMenuResponse", "EndAudioPassThruResponse", "UIGetCapabilitiesResponse", "UIGetLanguageResponse", "UIGetSupportedLanguagesResponse", "UIIsReadyResponse", "PerformAudioPassThruResponse", "PerformInteractionResponse",
+                "ScrollableMessageResponse", "SetAppIconResponse", "SetDisplayLayoutResponse", "TTSSetGlobalPropertiesResponse", "SetMediaClockTimerResponse", "ShowResponse", "ShowCustomFormResponse", "SliderResponse", "OnCommandNotification", 
+                "OnDriverDistrationNotification", "OnKeyboardInputNotification", "UIOnLanguageChangeNotification", "OnRecordStartNotification", "TTSOnResetTimeoutNotification", "OnSystemContextNotification", "OnTouchEventNotification",  
+                "DiagnosticMessageResponse", "GetDTCsResponse","GetVehicleDataResponse", "GetVehicleTypeResponse", "ReadDidResponse", "SubscribeVehicleDataResponse", "UnsubscribeVehicleDataResponse", "GetSupportedLanguageResponse"};
 
             AlertDialog.Builder rpcListAlertDialog = new AlertDialog.Builder(this.Context);
             //LayoutInflater inflaterr = Context.GetSystemService("nm");
@@ -2079,23 +2079,23 @@ namespace SharpHmiAndroid
                     OnTBTClientStateNotification();
 
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ChangeRegistrationResponse"))
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSChangeRegistrationResponse"))
 				 {
-					 ChangeRegistrationResponse();
+					 TTSChangeRegistrationResponse();
 				 }
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSGetCapabilitiesResponse"))
 				 {
 					 TTSGetCapabilitiesResponse();
 				 }
 
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetLanguageResponse"))
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSGetLanguageResponse"))
 				 {
-					 GetLanguageResponse();
+					 TTSGetLanguageResponse();
 				 }
 
-                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetSupportedLanguagesResponse"))
+                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSGetSupportedLanguagesResponse"))
                  {
-                     GetSupportedLanguagesResponse();
+                     TTSGetSupportedLanguagesResponse();
                  }
 
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSIsReadyResponse"))
@@ -2103,9 +2103,9 @@ namespace SharpHmiAndroid
 					 TTSIsReadyResponse();
 				 }
 
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SetGlobalPropertiesResponse"))
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSSetGlobalPropertiesResponse"))
 				 {
-					 SetGlobalPropertiesResponse();
+					 TTSSetGlobalPropertiesResponse();
 				 }
 
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SpeakResponse"))
@@ -2113,11 +2113,30 @@ namespace SharpHmiAndroid
 					 SpeakResponse();
 				 }
 
-                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("StopSpeakingResponse"))
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("StopSpeakingResponse"))
+				 {
+					 StopSpeakingResponse();
+				 }
+
+                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSOnLanguageChangeNotification"))
                  {
-                     StopSpeakingResponse();
+                     TTSOnLanguageChangeNotification();
                  }
-                 
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnResetTimeoutNotification"))
+				 {
+					 OnResetTimeoutNotification();
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSStartedNotification"))
+				 {
+					 TTSStartedNotification();
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSStoppedNotification"))
+				 {
+					 TTSStoppedNotification();
+				 }
 
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("AddCommandResponse"))
 				 {
@@ -2127,6 +2146,18 @@ namespace SharpHmiAndroid
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("AddSubMenuResponse"))
 				 {
 					 AddSubMenuResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UIChangeRegistrationResponse"))
+				 {
+					 UIChangeRegistrationResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ClosePopUpResponse"))
+				 {
+					 ClosePopUpResponse();
 
 				 }
 
@@ -2148,6 +2179,30 @@ namespace SharpHmiAndroid
 
 				 }
 
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UIGetCapabilitiesResponse"))
+				 {
+					 UIGetCapabilitiesResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UIGetLanguageResponse"))
+				 {
+					 UIGetLanguageResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UIGetSupportedLanguagesResponse"))
+				 {
+					 UIGetSupportedLanguagesResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UIIsReadyResponse"))
+				 {
+					 UIIsReadyResponse();
+
+				 }
+
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("PerformAudioPassThruResponse"))
 				 {
 					 PerformAudioPassThruResponse();
@@ -2160,10 +2215,26 @@ namespace SharpHmiAndroid
 
 				 }
 
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SetAppIconResponse"))
+				 {
+					 SetAppIconResponse();
+
+				 }
+
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SetDisplayLayoutResponse"))
+				 {
+					 SetDisplayLayoutResponse();
+
+				 }
+
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SetMediaClockTimerResponse"))
 				 {
 					 SetMediaClockTimerResponse();
 
+				 }
+				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ShowCustomFormResponse"))
+				 {
+					 ShowCustomFormResponse();
 				 }
 
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ShowResponse"))
@@ -2171,11 +2242,6 @@ namespace SharpHmiAndroid
 					 ShowResponse();
 				 }
 
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SetDisplayLayoutResponse"))
-				 {
-					// SetDisplayLayoutResponse();
-
-				 }
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnSystemContextNotification"))
 				 {
 					 CreateOnSystemContextNotification();
@@ -2272,6 +2338,254 @@ namespace SharpHmiAndroid
             rpcListAlertDialog.Show();
         }
 
+        private void ShowCustomFormResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SetDisplayLayoutResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SetAppIconResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UIIsReadyResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UIGetSupportedLanguagesResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UIGetLanguageResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UIGetCapabilitiesResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ClosePopUpResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("ClosePopUp");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiClosePopUpResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void UIChangeRegistrationResponse()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("ChangeRegistration");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiChangeRegistrationResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void TTSStartedNotification()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("Started");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not present in buildRpc
+			 });
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void TTSStoppedNotification()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("Stopped");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not present in buildRpc
+			 });
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void OnResetTimeoutNotification()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_reset_timeout, null);
+			rpcAlertDialog.SetView(rpcView);
+
+
+			TextView textViewAppID = (TextView)rpcView.FindViewById(Resource.Id.tts_notification_app_id_tv);
+			EditText editTextAppID = (EditText)rpcView.FindViewById(Resource.Id.tts_notification_app_id_et);
+
+			TextView textViewMethodName = (TextView)rpcView.FindViewById(Resource.Id.tts_notification_method_name_tv);
+			EditText editTextMethodName = (EditText)rpcView.FindViewById(Resource.Id.tts_notification_method_name_et);
+
+
+			rpcAlertDialog.SetTitle("OnResetTimeout");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not available in BuildRPC.cs
+			 });
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void TTSOnLanguageChangeNotification()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_language, null);
+			rpcAlertDialog.SetView(rpcView);
+			rpcAlertDialog.SetTitle("OnLanguageChange");
+
+			TextView textViewLanguage = (TextView)rpcView.FindViewById(Resource.Id.tts_language_tv);
+			textViewLanguage.Text = "Language";
+
+			Spinner spnLanguage = (Spinner)rpcView.FindViewById(Resource.Id.tts_language_spn);
+
+			TextView textViewResultCode = (TextView)rpcView.FindViewById(Resource.Id.tts_result_code_tv);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.tts_result_code_spn);
+
+
+			string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
+			var languageAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
+			spnLanguage.Adapter = languageAdapter;
+
+
+			string[] result = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var resultAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, result);
+			spnResultCode.Adapter = resultAdapter;
+
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+			    //Method not available in Build RPC
+            });
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+		   {
+
+		   });
+
+			rpcAlertDialog.Show();
+        }
+
         private void StopSpeakingResponse()
         {
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
@@ -2343,7 +2657,7 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
         }
 
-        private void GetSupportedLanguagesResponse()
+        private void TTSGetSupportedLanguagesResponse()
         {
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
             View getSystemInfoRpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_support_languages, null);
@@ -2412,7 +2726,7 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
         }
 
-        private void GetLanguageResponse()
+        private void TTSGetLanguageResponse()
         {
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
             View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_language, null);
@@ -3467,7 +3781,7 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
         }
 
-        private void SetGlobalPropertiesResponse()
+        private void TTSSetGlobalPropertiesResponse()
         {
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
 			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
@@ -3502,7 +3816,7 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
         }
 
-        private void ChangeRegistrationResponse()
+        private void TTSChangeRegistrationResponse()
         {
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
 			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
