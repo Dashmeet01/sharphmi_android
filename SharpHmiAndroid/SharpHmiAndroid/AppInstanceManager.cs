@@ -21,6 +21,7 @@ using HmiApiLib.Controllers.UI.OutGoingNotifications;
 using HmiApiLib.Builder;
 using HmiApiLib.Common.Enums;
 using HmiApiLib.Common.Structs;
+using Android.App;
 
 namespace SharpHmiAndroid
 {
@@ -227,44 +228,67 @@ namespace SharpHmiAndroid
 
 		public override void onUiShowRequest(Show msg)
 		{
+            int appID = (int)msg.getAppId();
 			int corrId = msg.getId();
-			sendRpc(BuildRpc.buildUiShowResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
-            appUiCallback.onUiShowRequestCallback(msg);
+            HmiApiLib.Controllers.UI.OutgoingResponses.Show tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.Show();
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Show)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Show>(((MainActivity)appUiCallback), tmpObj.getMethod(), appID);
+            if (null == tmpObj)
+            {
+				sendRpc(BuildRpc.buildUiShowResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+				appUiCallback.onUiShowRequestCallback(msg);
+            }
+            else
+            {
+                tmpObj.setId(corrId);
+                sendRpc(tmpObj);
+            }
 		}
 
 		public override void onUiAddCommandRequest(AddCommand msg)
 		{
-			int corrId = msg.getId();
-			List<RpcRequest> data;
-            List<int?> cmdIdList;
-			if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
-			{
-				data = menuOptionListUi[(int)msg.getAppId()];
-				data.Add(msg);
-				menuOptionListUi.Remove((int)msg.getAppId());
-			}
-			else
-			{
-				data = new List<RpcRequest>();
-				data.Add(msg);
-			}
-			menuOptionListUi.Add((int)msg.getAppId(), data);
+            int appID = (int)msg.getAppId();
+            int corrId = msg.getId();
 
-			if (commandIdList.ContainsKey((int)msg.getAppId()))
-			{
-				cmdIdList = commandIdList[(int)msg.getAppId()];
-                cmdIdList.Add(msg.getCmdId());
-				commandIdList.Remove((int)msg.getAppId());
-			}
-			else
-			{
-				cmdIdList = new List<int?>();
-				cmdIdList.Add(msg.getCmdId());
-			}
-            commandIdList.Add((int)msg.getAppId(), cmdIdList);
+            HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand();
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand>(((MainActivity)appUiCallback), tmpObj.getMethod(), appID);
+            if (null == tmpObj)
+            {
+				List<RpcRequest> data;
+				List<int?> cmdIdList;
+				if (menuOptionListUi.ContainsKey(appID))
+				{
+					data = menuOptionListUi[appID];
+					data.Add(msg);
+					menuOptionListUi.Remove(appID);
+				}
+				else
+				{
+					data = new List<RpcRequest>();
+					data.Add(msg);
+				}
+				menuOptionListUi.Add(appID, data);
 
-			appUiCallback.refreshOptionsMenu();
-			sendRpc(BuildRpc.buildUiAddCommandResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+				if (commandIdList.ContainsKey(appID))
+				{
+					cmdIdList = commandIdList[appID];
+					cmdIdList.Add(msg.getCmdId());
+					commandIdList.Remove(appID);
+				}
+				else
+				{
+					cmdIdList = new List<int?>();
+					cmdIdList.Add(msg.getCmdId());
+				}
+				commandIdList.Add(appID, cmdIdList);
+
+				appUiCallback.refreshOptionsMenu();
+				sendRpc(BuildRpc.buildUiAddCommandResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+            }
+            else
+            {
+				tmpObj.setId(corrId);
+				sendRpc(tmpObj);
+            }
 		}
 
 		public override void onUiAlertRequest(Alert msg)
@@ -274,11 +298,19 @@ namespace SharpHmiAndroid
 
 			sendRpc(BuildRpc.buildUiOnSystemContext(SystemContext.ALERT, appId));
 
-			sendRpc(BuildRpc.buildUiAlertResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
-
-			sendRpc(BuildRpc.buildUiOnSystemContext(SystemContext.MAIN, appId));
-
-            appUiCallback.onUiAlertRequestCallback(msg);
+            HmiApiLib.Controllers.UI.OutgoingResponses.Alert tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.Alert();
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Alert)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Alert>(((MainActivity)appUiCallback), tmpObj.getMethod(), (int)appId);
+            if (null == tmpObj)
+            {
+                appUiCallback.onUiAlertRequestCallback(msg);
+                sendRpc(BuildRpc.buildUiAlertResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS, null));
+            }
+            else
+            {
+                tmpObj.setId(corrId);
+                sendRpc(tmpObj);
+            }
+            sendRpc(BuildRpc.buildUiOnSystemContext(SystemContext.MAIN, appId));
 		}
 
 		public override void onUiPerformInteractionRequest(PerformInteraction msg)
@@ -486,22 +518,33 @@ namespace SharpHmiAndroid
 		public override void onUiAddSubMenuRequest(AddSubMenu msg)
 		{
 			int corrId = msg.getId();
-			List<RpcRequest> data;
-			if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
-			{
-				data = menuOptionListUi[(int)msg.getAppId()];
-				data.Add(msg);
-				menuOptionListUi.Remove((int)msg.getAppId());
-			}
-			else
-			{
-				data = new List<RpcRequest>();
-				data.Add(msg);
-			}
-			menuOptionListUi.Add((int)msg.getAppId(), data);
-			appUiCallback.refreshOptionsMenu();
+            int appID = (int)msg.getAppId();
+            HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu();
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu>(((MainActivity)appUiCallback), tmpObj.getMethod(), appID);
+            if (null == tmpObj)
+            {
+				List<RpcRequest> data;
+				if (menuOptionListUi.ContainsKey((int)msg.getAppId()))
+				{
+					data = menuOptionListUi[(int)msg.getAppId()];
+					data.Add(msg);
+					menuOptionListUi.Remove((int)msg.getAppId());
+				}
+				else
+				{
+					data = new List<RpcRequest>();
+					data.Add(msg);
+				}
+				menuOptionListUi.Add((int)msg.getAppId(), data);
+				appUiCallback.refreshOptionsMenu();
 
-			sendRpc(BuildRpc.buildUiAddSubMenuResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+				sendRpc(BuildRpc.buildUiAddSubMenuResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
+            }
+            else
+            {
+                tmpObj.setId(corrId);
+                sendRpc(tmpObj);
+            }
 		}
 
 		public override void onUiChangeRegistrationRequest(HmiApiLib.Controllers.UI.IncomingRequests.ChangeRegistration msg)

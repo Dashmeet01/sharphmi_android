@@ -4,6 +4,7 @@ using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using HmiApiLib.Base;
 using HmiApiLib.Builder;
 using HmiApiLib.Common.Enums;
 using HmiApiLib.Common.Structs;
@@ -1089,6 +1090,8 @@ namespace SharpHmiAndroid
                      TextView textViewAppExitReason = (TextView)rpcView.FindViewById(Resource.Id.app_exit_reason_tv);
                      Spinner spnAppExitReason = (Spinner)rpcView.FindViewById(Resource.Id.app_exit_reason);
 
+                     editTextdApplicationId.Text = "2000000000";
+
                      rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
                      {
                          rpcAlertDialog.Dispose();
@@ -1099,21 +1102,36 @@ namespace SharpHmiAndroid
                          var appExitReasonAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
                          spnAppExitReason.Adapter = appExitReasonAdapter;
 
+                        HmiApiLib.Controllers.UI.OutgoingResponses.Alert tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.Alert();
+                        tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Alert)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Alert>(adapter.Context, tmpObj.getMethod(), appID);
+                         if (tmpObj != null)
+                         {
+                            spnAppExitReason.SetSelection((int)tmpObj.getResultCode());
+
+                            if (tmpObj.getTryAgainTime() != null)
+                                editTextdApplicationId.Text = tmpObj.getTryAgainTime().ToString();
+                         }
+
                          rpcAlertDialog.SetTitle("Alert");
                          textViewApplicationId.Text = "TryAgainTime";
                          textViewAppExitReason.Text = "ResultCode";
 
+                        RpcMessage rpcMessage = null;
+
                          rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
                          {
                              if (editTextdApplicationId.Text.Equals(""))
-                                 AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, 0));
+                                 rpcMessage = BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, 0);
                              else
-                                 AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, Java.Lang.Integer.ParseInt(editTextdApplicationId.Text)));
+                                 rpcMessage = BuildRpc.buildUiAlertResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnAppExitReason.SelectedItemPosition, Java.Lang.Integer.ParseInt(editTextdApplicationId.Text));
+
+                            AppUtils.savePreferenceValueForRpc(adapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage, appID);
+                            AppInstanceManager.Instance.sendRpc(rpcMessage);
                          });
 
                          rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
                          {
-
+                            AppUtils.removeSavedPreferenceValueForRpc(adapter.Context, tmpObj.getMethod(), appID);
                          });
                      }
                      rpcAlertDialog.Show();
@@ -3744,7 +3762,6 @@ namespace SharpHmiAndroid
 			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
 			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
 
-			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
 			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
 			spnGeneric.Adapter = adapter;
 
@@ -3752,17 +3769,24 @@ namespace SharpHmiAndroid
 			{
 				rpcAlertDialog.Dispose();
 			});
-
+            HmiApiLib.Controllers.UI.OutgoingResponses.Show tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.Show();
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Show)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Show>(adapter.Context, tmpObj.getMethod(), appID);
+            if (tmpObj != null)
+            {
+                spnGeneric.SetSelection((int)tmpObj.getResultCode());
+            }
 
 			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
 			{
+                RpcMessage rpcMessage = null;
+                rpcMessage = BuildRpc.buildUiShowResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition);
 
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiShowResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
-
+                AppUtils.savePreferenceValueForRpc(adapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage, appID);
+                AppInstanceManager.Instance.sendRpc(rpcMessage);
 			});
 			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
 			{
-
+                AppUtils.removeSavedPreferenceValueForRpc(adapter.Context, tmpObj.getMethod(), appID);
 			});
 
 			rpcAlertDialog.Show();
@@ -3980,7 +4004,7 @@ namespace SharpHmiAndroid
         private void AddSubMenuResponse()
         {
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			View rpcView = layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
 			rpcAlertDialog.SetView(rpcView);
 
 			rpcAlertDialog.SetTitle("AddSubMenu");
@@ -3988,25 +4012,30 @@ namespace SharpHmiAndroid
 			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
 			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
 
-			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
 			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
 			spnGeneric.Adapter = adapter;
+
+            HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu();
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu>(adapter.Context, tmpObj.getMethod(), appID);
+            if (tmpObj != null)
+            {
+                spnGeneric.SetSelection((int)tmpObj.getResultCode());
+            }
 
 			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
 			{
 				rpcAlertDialog.Dispose();
 			});
 
-
 			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
 			{
-
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiAddSubMenuResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
-
+                RpcMessage rpcMessage = BuildRpc.buildUiAddSubMenuResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition);
+                AppUtils.savePreferenceValueForRpc(adapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage, appID);
+                AppInstanceManager.Instance.sendRpc(rpcMessage);
 			});
 			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
 			{
-
+                AppUtils.removeSavedPreferenceValueForRpc(adapter.Context, tmpObj.getMethod(), appID);
 			});
 
 			rpcAlertDialog.Show();
@@ -4027,6 +4056,13 @@ namespace SharpHmiAndroid
 			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
 			spnGeneric.Adapter = adapter;
 
+            HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand();
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand>(adapter.Context, tmpObj.getMethod(), appID);
+            if (tmpObj != null)
+            {
+                spnGeneric.SetSelection((int)tmpObj.getResultCode());
+            }
+
 			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
 			{
 				rpcAlertDialog.Dispose();
@@ -4035,13 +4071,15 @@ namespace SharpHmiAndroid
 
 			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
 			{
-
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildUiAddCommandResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+                RpcMessage rpcMessage = null;
+                rpcMessage = BuildRpc.buildUiAddCommandResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition);
+                AppUtils.savePreferenceValueForRpc(adapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage, appID);
+                AppInstanceManager.Instance.sendRpc(rpcMessage);
 
 			});
 			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
 			{
-
+                AppUtils.removeSavedPreferenceValueForRpc(adapter.Context, tmpObj.getMethod(), appID);
 			});
 
 			rpcAlertDialog.Show();
