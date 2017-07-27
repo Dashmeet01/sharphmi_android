@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <CheckBox
+            android:id="@+id/screen_param_resolution_width_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ResolutionWidth" />
+        <EditText
+            android:id="@+id/screen_param_resolution_width_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+        <CheckBox
+            android:id="@+id/screen_param_resolution_height_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ResolutionHeight" />
+        <EditText
+            android:id="@+id/screen_param_resolution_height_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+        <CheckBox
+            android:id="@+id/screen_param_press_available_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PressAvailable" />
+        <CheckBox
+            android:id="@+id/screen_param_multi_touch_available_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MultiTouchAvailable" />
+        <CheckBox
+            android:id="@+id/screen_param_double_press_available_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DoublePressAvailable" />
+    </LinearLayout>
+</ScrollView>

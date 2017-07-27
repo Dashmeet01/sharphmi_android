@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:minWidth="300px"
+        android:orientation="vertical"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip">
+        <Button
+            android:id="@+id/set_display_capabilities_add_display_capabilities_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Display Capabilities" />
+        <ListView
+            android:id="@+id/set_display_capabilities_add_display_capabilities_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/set_display_capabilities_add_button_capabilities_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button Capabilities" />
+        <ListView
+            android:id="@+id/set_display_capabilities_button_capabilities_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/set_display_capabilities_add_soft_button_capabilities_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Soft Button Capabilities" />
+        <ListView
+            android:id="@+id/set_display_capabilities_soft_button_capabilities_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <CheckBox
+            android:id="@+id/set_display_capabilities_preset_bank_capabilities_cb"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:checked="false"
+            android:textStyle="bold"
+            android:text="PresetBankCapabilities" />
+        <TextView
+            android:id="@+id/set_display_capabilities_result_code_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dip"
+            android:text="ResultCode" />
+        <Spinner
+            android:id="@+id/set_display_capabilities_result_code_spn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+    </LinearLayout>
+</ScrollView>

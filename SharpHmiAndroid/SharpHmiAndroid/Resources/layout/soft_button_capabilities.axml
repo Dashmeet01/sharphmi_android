@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <CheckBox
+            android:id="@+id/soft_button_capabilities_short_press_available_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ShortPressAvailable" />
+        <CheckBox
+            android:id="@+id/soft_button_capabilities_long_press_available_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LongPressAvailable" />
+        <CheckBox
+            android:id="@+id/soft_button_capabilities_up_down_available_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="UpDownAvailable" />
+        <CheckBox
+            android:id="@+id/soft_button_capabilities_image_supported_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ImageSupported" />
+    </LinearLayout>
+</ScrollView>

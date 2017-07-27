@@ -1315,6 +1315,12 @@
     <AndroidResource Include="Resources\layout\did_result_response.xml" />
     <AndroidResource Include="Resources\layout\touch_event_item_adapter.xml" />
     <AndroidResource Include="Resources\layout\subscribe_vehicle_data_response.xml" />
+    <AndroidResource Include="Resources\layout\display_capabilities.axml" />
+    <AndroidResource Include="Resources\layout\text_field.axml" />
+    <AndroidResource Include="Resources\layout\image_field.axml" />
+    <AndroidResource Include="Resources\layout\set_display_layout.axml" />
+    <AndroidResource Include="Resources\layout\soft_button_capabilities.axml" />
+    <AndroidResource Include="Resources\layout\screen_param.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

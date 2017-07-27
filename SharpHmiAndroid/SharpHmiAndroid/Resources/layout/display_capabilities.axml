@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <CheckBox
+            android:id="@+id/display_type_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DisplayType" />
+        <Spinner
+            android:id="@+id/display_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/display_capabilities_add_text_fields_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Text Fields" />
+        <ListView
+            android:id="@+id/display_capabilities_text_fields_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/display_capabilities_add_image_fields_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Image Fields" />
+        <ListView
+            android:id="@+id/display_capabilities_image_fields_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/display_capabilities_add_media_clock_formats_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Media Clock Format" />
+        <ListView
+            android:id="@+id/display_capabilities_media_clock_formats_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/display_capabilities_add_image_types_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Image Type" />
+        <ListView
+            android:id="@+id/display_capabilities_image_types_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <CheckBox
+            android:id="@+id/display_capabilities_graphic_supported_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GraphicSupported" />
+        <CheckBox
+            android:id="@+id/display_capabilities_templates_available_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TemplatesAvailable" />
+        <EditText
+            android:id="@+id/display_capabilities_templates_available_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ts_hint"
+            android:textSize="12sp"
+            android:enabled="false" />
+        <Button
+            android:id="@+id/display_capabilities_add_screen_params_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Screen Params" />
+        <ListView
+            android:id="@+id/display_capabilities_screen_params_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <CheckBox
+            android:id="@+id/display_capabilities_num_custom_presets_available_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NumCustomPresetsAvailable" />
+        <EditText
+            android:id="@+id/display_capabilities_num_custom_presets_available_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </LinearLayout>
+</ScrollView>
