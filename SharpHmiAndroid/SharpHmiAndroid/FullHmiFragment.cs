@@ -68,6 +68,20 @@ namespace SharpHmiAndroid
 		// Navigation Outgoing Notifications
 		private string NavigationNotificationOnTBTClientState = "NavigationNotificationOnTBTClientState";
 
+		// SDL Outgoing Request
+		private string SDLRequestActivateApp = "SDLRequestActivateApp";
+        private string SDLRequestGetListOfPermissions = "SDLRequestGetListOfPermissions";
+        private string SDLRequestGetStatusUpdate = "SDLRequestGetStatusUpdate";
+        private string SDLRequestGetURLS = "SDLRequestGetURLS";
+        private string SDLRequestGetUserFriendlyMessage = "SDLRequestGetUserFriendlyMessage";
+        private string SDLRequestUpdateSDL = "SDLRequestUpdateSDL";
+
+		// SDL Outgoing Notifications
+		private string SDLNotificationOnAllowSDLFunctionality = "SDLNotificationOnAllowSDLFunctionality";
+        private string SDLNotificationOnAppPermissionConsent = "SDLNotificationOnAppPermissionConsent";
+        private string SDLNotificationOnPolicyUpdate = "SDLNotificationOnPolicyUpdate";
+        private string SDLNotificationOnReceivedPolicyUpdate = "SDLNotificationOnReceivedPolicyUpdate";
+
 		int appID;
         public static readonly String sClickedAppID = "APP_ID";
 
@@ -766,8 +780,10 @@ namespace SharpHmiAndroid
                 NavigationResponseSendLocation, NavigationResponseShowConstantTBT, NavigationResponseStartAudioStream,
                 NavigationResponseStartStream, NavigationResponseStopAudioStream, NavigationResponseStopStream,
                 NavigationResponseSubscribeWayPoints, NavigationResponseUnsubscribeWayPoints, NavigationResponseUpdateTurnList,
-                NavigationNotificationOnTBTClientState, "ActivateAppRequestSDL", "GetListOfPermissionsRequest", "GetStatusUpdateRequest", "GetURLSRequest",
-                "GetUserFriendlyMessageRequest", "UpdateSDLRequest", "OnAllowSDLFunctionalityNotification", "OnAppPermissionConsentNotification", "OnPolicyUpdateNotification", "OnReceivedPolicyUpdateNotification",
+                NavigationNotificationOnTBTClientState, SDLRequestActivateApp, SDLRequestGetListOfPermissions,
+                SDLRequestGetStatusUpdate, SDLRequestGetURLS, SDLRequestGetUserFriendlyMessage, SDLRequestUpdateSDL, 
+                SDLNotificationOnAllowSDLFunctionality, SDLNotificationOnAppPermissionConsent, SDLNotificationOnPolicyUpdate,
+                SDLNotificationOnReceivedPolicyUpdate,
                 "TTSChangeRegistrationResponse", "TTSGetCapabilitiesResponse", "TTSGetLanguageResponse", "TTSGetSupportedLanguagesResponse", "TTSIsReadyResponse", "TTSSetGlobalPropertiesResponse", "SpeakResponse", "StopSpeakingResponse",  
                 "TTSOnLanguageChangeNotification", "TTSOnResetTimeoutNotification", "TTSStartedNotification", "TTSStoppedNotification", "AddCommandResponse","AddSubMenuResponse", "AlertResponse", "UIChangeRegistrationResponse", "ClosePopUpResponse", "DeleteCommandResponse", 
                 "DeleteSubMenuResponse", "EndAudioPassThruResponse", "UIGetCapabilitiesResponse", "UIGetLanguageResponse", "UIGetSupportedLanguagesResponse", "UIIsReadyResponse", "PerformAudioPassThruResponse", "PerformInteractionResponse",
@@ -960,6 +976,46 @@ namespace SharpHmiAndroid
 				 else if (clickedItem.Equals(NavigationNotificationOnTBTClientState))
 				 {
 					 CreateNavigationNotificationOnTBTClientState();
+				 }
+				 else if (clickedItem.Equals(SDLRequestActivateApp))
+				 {
+					 CreateSDLRequestActivateApp();
+				 }
+				 else if (clickedItem.Equals(SDLRequestGetListOfPermissions))
+				 {
+					 CreateSDLRequestGetListOfPermissions();
+				 }
+				 else if (clickedItem.Equals(SDLRequestGetStatusUpdate))
+				 {
+					 CreateSDLRequestGetStatusUpdate();
+				 }
+				 else if (clickedItem.Equals(SDLRequestGetURLS))
+				 {
+					 CreateSDLRequestGetURLS();
+				 }
+				 else if (clickedItem.Equals(SDLRequestGetUserFriendlyMessage))
+				 {
+					 CreateSDLRequestGetUserFriendlyMessage();
+				 }
+				 else if (clickedItem.Equals(SDLRequestUpdateSDL))
+				 {
+					 CreateSDLRequestUpdateSDL();
+				 }
+				 else if (clickedItem.Equals(SDLNotificationOnAllowSDLFunctionality))
+				 {
+					 CreateSDLNotificationOnAllowSDLFunctionality();
+				 }
+				 else if (clickedItem.Equals(SDLNotificationOnAppPermissionConsent))
+				 {
+					 CreateSDLNotificationOnAppPermissionConsent();
+				 }
+				 else if (clickedItem.Equals(SDLNotificationOnPolicyUpdate))
+				 {
+					 CreateSDLNotificationOnPolicyUpdate();
+				 }
+				 else if (clickedItem.Equals(SDLNotificationOnReceivedPolicyUpdate))
+				 {
+					 CreateSDLNotificationOnReceivedPolicyUpdate();
 				 }
                  else
 
@@ -1411,59 +1467,384 @@ namespace SharpHmiAndroid
 				 {
 					 CreateVRGetSupportedLanguageResponse(); 
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ActivateAppRequestSDL"))
-				 {
-					 ActivateAppRequestSDL();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetListOfPermissionsRequest"))
-				 {
-					 GetListOfPermissionsRequest();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetStatusUpdateRequest"))
-				 {
-					 GetStatusUpdateRequest();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetURLSRequest"))
-				 {
-					 GetURLSRequest();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetUserFriendlyMessageRequest"))
-				 {
-					 GetUserFriendlyMessageRequest();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UpdateSDLRequest"))
-				 {
-					 UpdateSDLRequest();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnAllowSDLFunctionalityNotification"))
-				 {
-					 OnAllowSDLFunctionalityNotification();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnAppPermissionConsentNotification"))
-				 {
-					 OnAppPermissionConsentNotification();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnPolicyUpdateNotification"))
-				 {
-					 OnPolicyUpdateNotification();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnReceivedPolicyUpdateNotification"))
-				 {
-					 OnReceivedPolicyUpdateNotification();
-				 }
                 				 
              };
 
             rpcListAlertDialog.Show();
+        }
+
+        private void CreateSDLRequestActivateApp()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			TextView textView = (TextView)rpcView.FindViewById(Resource.Id.app_id_tv);
+			EditText editTextAppId = (EditText)rpcView.FindViewById(Resource.Id.app_id);
+
+			rpcAlertDialog.SetTitle("ActivateAppRequestSDL");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			{
+				 //AppInstanceManager.Instance.sendRpc(BuildRpc.buildSdlActivateAppRequest(BuildRpc.getNextId(), Java.Lang.Integer.ParseInt(editTextAppId.Text)));
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLRequestGetListOfPermissions()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			TextView textView = (TextView)rpcView.FindViewById(Resource.Id.app_id_tv);
+			EditText editTextAppId = (EditText)rpcView.FindViewById(Resource.Id.app_id);
+
+			rpcAlertDialog.SetTitle("GetListOfPermissions");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 
+			 });
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLRequestGetStatusUpdate()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("GetStatusUpdate");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not present in buildRpc
+			 });
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLRequestGetURLS()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			TextView textView = (TextView)rpcView.FindViewById(Resource.Id.app_id_tv);
+			textView.Text = "Service";
+
+			EditText editTextService = (EditText)rpcView.FindViewById(Resource.Id.app_id);
+
+			rpcAlertDialog.SetTitle("GetURLS");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not available in BuildRPC.cs
+			 });
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLRequestGetUserFriendlyMessage()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_exit_application, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			TextView textViewMessageCode = (TextView)rpcView.FindViewById(Resource.Id.appplication_id_tv);
+			textViewMessageCode.Text = "MessageCode";
+			EditText editTextdApplicationId = (EditText)rpcView.FindViewById(Resource.Id.appplication_id_et);
+			editTextdApplicationId.InputType = Android.Text.InputTypes.ClassText;
+
+			TextView textViewlanguage = (TextView)rpcView.FindViewById(Resource.Id.app_exit_reason_tv);
+			textViewlanguage.Text = "Language";
+
+			Spinner spnlanguage = (Spinner)rpcView.FindViewById(Resource.Id.app_exit_reason);
+			string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
+			var appExitReasonAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
+			spnlanguage.Adapter = appExitReasonAdapter;
+
+			rpcAlertDialog.SetTitle("GetUserFriendlyMessage");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			{
+				List<String> messageCodes = new List<string>();
+				messageCodes.AddRange(editTextdApplicationId.Text.Split(','));
+				//Method currently not available in BuildRPC.cs
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLRequestUpdateSDL()
+        {
+            AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
+            rpcAlertDialog.SetView(rpcView);
+
+            rpcAlertDialog.SetTitle("UpdateSDL");
+
+            rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+            {
+                rpcAlertDialog.Dispose();
+            });
+
+            rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+             {
+                 //Method currently not present in buildRpc
+             });
+            rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+             {
+
+             });
+
+            rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLNotificationOnAllowSDLFunctionality()
+        {
+            AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_allow_sdl_functionality, null);
+            rpcAlertDialog.SetView(rpcView);
+            rpcAlertDialog.SetTitle("OnAllowSDLFunctionality");
+
+            TextView textViewName = (TextView)rpcView.FindViewById(Resource.Id.device_name_sdl_tv);
+            EditText editTextName = (EditText)rpcView.FindViewById(Resource.Id.device_name_sdl_et);
+
+            TextView textId = (TextView)rpcView.FindViewById(Resource.Id.device_id_sdl_tv);
+            EditText editTextId = (EditText)rpcView.FindViewById(Resource.Id.device_id_sdl_et);
+
+            TextView textViewTransportType = (TextView)rpcView.FindViewById(Resource.Id.transport_type_sdl_tv);
+            Spinner spnTransportType = (Spinner)rpcView.FindViewById(Resource.Id.transport_type_sdl_spn);
+
+            CheckBox checkBoxIsSDLAllowed = (CheckBox)rpcView.FindViewById(Resource.Id.is_sdl_allowed_cb);
+
+            CheckBox checkBoxAllowed = (CheckBox)rpcView.FindViewById(Resource.Id.allowed_cb);
+
+            TextView textViewSource = (TextView)rpcView.FindViewById(Resource.Id.consent_source_tv);
+            Spinner spnConsentSource = (Spinner)rpcView.FindViewById(Resource.Id.consent_source_spn);
+
+            string[] transportType = Enum.GetNames(typeof(HmiApiLib.Common.Enums.TransportType));
+            var transportTypeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, transportType);
+            spnTransportType.Adapter = transportTypeAdapter;
+
+            string[] consentSource = Enum.GetNames(typeof(HmiApiLib.Common.Enums.ConsentSource));
+            var consentSourceAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, consentSource);
+            spnConsentSource.Adapter = consentSourceAdapter;
+
+
+            DeviceInfo devInfo = new DeviceInfo();
+            devInfo.name = editTextName.Text;
+            devInfo.name = editTextId.Text;
+            devInfo.transportType = (HmiApiLib.Common.Enums.TransportType)spnTransportType.SelectedItemPosition;
+            devInfo.isSDLAllowed = checkBoxIsSDLAllowed.Checked;
+
+
+            rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+            {
+                rpcAlertDialog.Dispose();
+            });
+
+            rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+            {
+                //Method currently not present in buildRpc
+            });
+
+            rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+            {
+
+            });
+
+            rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLNotificationOnAppPermissionConsent()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_permission_consent, null);
+			rpcAlertDialog.SetView(rpcView);
+			rpcAlertDialog.SetTitle("OnAppPermissionConsent");
+
+			TextView textViewAppID = (TextView)rpcView.FindViewById(Resource.Id.app_id_sdl_tv);
+			EditText editTextAppID = (EditText)rpcView.FindViewById(Resource.Id.app_id_sdl_et);
+
+			TextView textViewConsentSource = (TextView)rpcView.FindViewById(Resource.Id.consented_source__sdl_tv);
+			Spinner spnConsentSource = (Spinner)rpcView.FindViewById(Resource.Id.consented_source_sdl_spn);
+
+			string[] consentSource = Enum.GetNames(typeof(HmiApiLib.Common.Enums.ConsentSource));
+			var consentSourceAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, consentSource);
+			spnConsentSource.Adapter = consentSourceAdapter;
+
+
+			ListView ListViewConsentedFunctions = (ListView)rpcView.FindViewById(Resource.Id.consented_functions_sdl_lv);
+
+
+			List<PermissionItem> consentedFunctions = new List<PermissionItem>();
+
+			Button consentFunctionsButton = (Button)rpcView.FindViewById(Resource.Id.consented_functions_sdl_btn);
+			consentFunctionsButton.Click += delegate
+			{
+				AlertDialog.Builder consentFunctionsAlertDialog = new AlertDialog.Builder(this.Context);
+				View consentFunctionsView = (View)layoutIinflater.Inflate(Resource.Layout.permissison_item, null);
+				consentFunctionsAlertDialog.SetView(consentFunctionsView);
+				consentFunctionsAlertDialog.SetTitle("PermissionItem");
+
+				TextView textViewName = (TextView)consentFunctionsView.FindViewById(Resource.Id.permission_item_name_tv);
+				EditText editTextName = (EditText)consentFunctionsView.FindViewById(Resource.Id.permission_item_name_et);
+
+				TextView textViewID = (TextView)consentFunctionsView.FindViewById(Resource.Id.permission_item_id_tv);
+				EditText editTextID = (EditText)consentFunctionsView.FindViewById(Resource.Id.permission_item_id_et);
+
+				CheckBox checkBoxAllowed = (CheckBox)consentFunctionsView.FindViewById(Resource.Id.permission_item_allowed_cb);
+
+				consentFunctionsAlertDialog.SetNegativeButton("ok", (senderAlert, args) =>
+			   {
+				   PermissionItem item = new PermissionItem();
+				   item.name = editTextName.Text;
+
+				   if (editTextAppID.Text.Equals(""))
+					   item.id = 0;
+				   else
+					   item.id = Java.Lang.Integer.ParseInt(editTextID.Text);
+				   item.allowed = checkBoxAllowed.Checked;
+
+
+				   consentedFunctions.Add(item);
+
+			   });
+
+				consentFunctionsAlertDialog.SetPositiveButton("Cancel", (senderAlert, args) =>
+			   {
+				   consentFunctionsAlertDialog.Dispose();
+			   });
+
+				consentFunctionsAlertDialog.Show();
+
+			};
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+				//Method currently not present in buildRpc
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+		   {
+
+		   });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLNotificationOnPolicyUpdate()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("OnPolicyUpdate");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not present in buildRpc
+			 });
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateSDLNotificationOnReceivedPolicyUpdate()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			TextView textView = (TextView)rpcView.FindViewById(Resource.Id.app_id_tv);
+			textView.Text = "policyfile";
+
+			EditText editTextService = (EditText)rpcView.FindViewById(Resource.Id.app_id);
+			editTextService.InputType = Android.Text.InputTypes.ClassText;
+
+			rpcAlertDialog.SetTitle("OnReceivedPolicyUpdate");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not available in BuildRPC.cs
+			 });
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
         }
 
         private void CreateNavigationResponseAlertManeuver()
@@ -3351,388 +3732,6 @@ namespace SharpHmiAndroid
 
 			rpcAlertDialog.Show();
         }
-
-        private void OnReceivedPolicyUpdateNotification()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			TextView textView = (TextView)rpcView.FindViewById(Resource.Id.app_id_tv);
-			textView.Text = "policyfile";
-
-			EditText editTextService = (EditText)rpcView.FindViewById(Resource.Id.app_id);
-            editTextService.InputType = Android.Text.InputTypes.ClassText;
-
-			rpcAlertDialog.SetTitle("OnReceivedPolicyUpdate");
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-				 //Method currently not available in BuildRPC.cs
-			 });
-
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-			rpcAlertDialog.Show();
-        }
-
-        private void OnPolicyUpdateNotification()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("OnPolicyUpdate");
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-				 //Method currently not present in buildRpc
-			 });
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-			rpcAlertDialog.Show();
-        }
-
-        private void OnAppPermissionConsentNotification()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_permission_consent, null);
-			rpcAlertDialog.SetView(rpcView);
-			rpcAlertDialog.SetTitle("OnAppPermissionConsent");
-
-			TextView textViewAppID = (TextView)rpcView.FindViewById(Resource.Id.app_id_sdl_tv);
-			EditText editTextAppID = (EditText)rpcView.FindViewById(Resource.Id.app_id_sdl_et);
-
-			TextView textViewConsentSource = (TextView)rpcView.FindViewById(Resource.Id.consented_source__sdl_tv);
-			Spinner spnConsentSource = (Spinner)rpcView.FindViewById(Resource.Id.consented_source_sdl_spn);
-
-			string[] consentSource = Enum.GetNames(typeof(HmiApiLib.Common.Enums.ConsentSource));
-			var consentSourceAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, consentSource);
-			spnConsentSource.Adapter = consentSourceAdapter;
-
-
-			ListView ListViewConsentedFunctions= (ListView)rpcView.FindViewById(Resource.Id.consented_functions_sdl_lv);
-
-
-			List<PermissionItem> consentedFunctions = new List<PermissionItem>();
-
-			Button consentFunctionsButton = (Button)rpcView.FindViewById(Resource.Id.consented_functions_sdl_btn);
-			consentFunctionsButton.Click += delegate
-			{
-				AlertDialog.Builder consentFunctionsAlertDialog = new AlertDialog.Builder(this.Context);
-                View consentFunctionsView= (View)layoutIinflater.Inflate(Resource.Layout.permissison_item, null);
-				consentFunctionsAlertDialog.SetView(consentFunctionsView);
-				consentFunctionsAlertDialog.SetTitle("PermissionItem");
-
-				TextView textViewName = (TextView)consentFunctionsView.FindViewById(Resource.Id.permission_item_name_tv);
-				EditText editTextName = (EditText)consentFunctionsView.FindViewById(Resource.Id.permission_item_name_et);
-
-				TextView textViewID = (TextView)consentFunctionsView.FindViewById(Resource.Id.permission_item_id_tv);
-				EditText editTextID = (EditText)consentFunctionsView.FindViewById(Resource.Id.permission_item_id_et);
-
-				CheckBox checkBoxAllowed = (CheckBox)consentFunctionsView.FindViewById(Resource.Id.permission_item_allowed_cb);
-
-				consentFunctionsAlertDialog.SetNegativeButton("ok", (senderAlert, args) =>
-			   {
-                   PermissionItem item= new PermissionItem();
-                   item.name = editTextName.Text;
-
-                   if (editTextAppID.Text.Equals(""))
-                       item.id = 0;
-                    else
-                       item.id = Java.Lang.Integer.ParseInt(editTextID.Text);
-                   item.allowed = checkBoxAllowed.Checked;
-
-
-                    consentedFunctions.Add(item);
-
-			   });
-
-				consentFunctionsAlertDialog.SetPositiveButton("Cancel", (senderAlert, args) =>
-			   {
-				   consentFunctionsAlertDialog.Dispose();
-			   });
-
-				consentFunctionsAlertDialog.Show();
-
-			};
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-				//Method currently not present in buildRpc
-			});
-
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-		   {
-
-		   });
-
-			rpcAlertDialog.Show();
-
-		}
-
-        private void OnAllowSDLFunctionalityNotification()
-        {
-
-            AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_allow_sdl_functionality, null);
-            rpcAlertDialog.SetView(rpcView);
-            rpcAlertDialog.SetTitle("OnAllowSDLFunctionality");
-
-			TextView textViewName = (TextView)rpcView.FindViewById(Resource.Id.device_name_sdl_tv);
-			EditText editTextName = (EditText)rpcView.FindViewById(Resource.Id.device_name_sdl_et);
-
-            TextView textId = (TextView)rpcView.FindViewById(Resource.Id.device_id_sdl_tv);
-			EditText editTextId = (EditText)rpcView.FindViewById(Resource.Id.device_id_sdl_et);
-
-            TextView textViewTransportType = (TextView)rpcView.FindViewById(Resource.Id.transport_type_sdl_tv);
-            Spinner spnTransportType = (Spinner)rpcView.FindViewById(Resource.Id.transport_type_sdl_spn);
-
-            CheckBox checkBoxIsSDLAllowed = (CheckBox)rpcView.FindViewById(Resource.Id.is_sdl_allowed_cb);
-
-            CheckBox checkBoxAllowed = (CheckBox)rpcView.FindViewById(Resource.Id.allowed_cb);
- 
-            TextView textViewSource = (TextView)rpcView.FindViewById(Resource.Id.consent_source_tv);
-            Spinner spnConsentSource = (Spinner)rpcView.FindViewById(Resource.Id.consent_source_spn);
-
-            string[] transportType = Enum.GetNames(typeof(HmiApiLib.Common.Enums.TransportType));
-            var transportTypeAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, transportType);
-            spnTransportType.Adapter = transportTypeAdapter;
-
-            string[] consentSource = Enum.GetNames(typeof(HmiApiLib.Common.Enums.ConsentSource));
-            var consentSourceAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, consentSource);
-            spnConsentSource.Adapter = consentSourceAdapter;
-
-
-            DeviceInfo devInfo = new DeviceInfo();
-            devInfo.name = editTextName.Text;
-            devInfo.name = editTextId.Text;
-            devInfo.transportType = (HmiApiLib.Common.Enums.TransportType)spnTransportType.SelectedItemPosition;
-            devInfo.isSDLAllowed = checkBoxIsSDLAllowed.Checked;
-
-
-            rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-            {
-                 rpcAlertDialog.Dispose();
-            });
-
-            rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-            {
-                  //Method currently not present in buildRpc
-            });
-
-            rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-            {
-
-            });
-
-             rpcAlertDialog.Show();
-    }
-
-        private void UpdateSDLRequest()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("UpdateSDL");
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-				 //Method currently not present in buildRpc
-			 });
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-			rpcAlertDialog.Show();
-        }
-
-        private void GetUserFriendlyMessageRequest()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_exit_application, null);
-			rpcAlertDialog.SetView(rpcView);
-
-
-			TextView textViewMessageCode = (TextView)rpcView.FindViewById(Resource.Id.appplication_id_tv);
-            textViewMessageCode.Text = "MessageCode";
-			EditText editTextdApplicationId = (EditText)rpcView.FindViewById(Resource.Id.appplication_id_et);
-            editTextdApplicationId.InputType= Android.Text.InputTypes.ClassText;
-
-			TextView textViewlanguage = (TextView)rpcView.FindViewById(Resource.Id.app_exit_reason_tv);
-            textViewlanguage.Text = "Language";
-
-			Spinner spnlanguage = (Spinner)rpcView.FindViewById(Resource.Id.app_exit_reason);
-            string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
-			var appExitReasonAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
-			spnlanguage.Adapter = appExitReasonAdapter;
-
-			rpcAlertDialog.SetTitle("GetUserFriendlyMessage");
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			{
-				List<String> messageCodes = new List<string>();
-				messageCodes.AddRange(editTextdApplicationId.Text.Split(','));
-				//Method currently not available in BuildRPC.cs
-
-			});
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-                
-            rpcAlertDialog.Show();
-        }
-
-        private void GetURLSRequest()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			TextView textView = (TextView)rpcView.FindViewById(Resource.Id.app_id_tv);
-            textView.Text = "Service";
-
-			EditText editTextService = (EditText)rpcView.FindViewById(Resource.Id.app_id);
-
-			rpcAlertDialog.SetTitle("GetURLS");
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-				 //Method currently not available in BuildRPC.cs
-			 });
-
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-            rpcAlertDialog.Show();
-        }
-
-        private void GetStatusUpdateRequest()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
-			rpcAlertDialog.SetView(rpcView);
-
-            rpcAlertDialog.SetTitle("GetStatusUpdate");
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-            		
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-						  //Method currently not present in buildRpc
-			  });
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-            rpcAlertDialog.Show();
-
-        }
-
-        private void GetListOfPermissionsRequest()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			TextView textView = (TextView)rpcView.FindViewById(Resource.Id.app_id_tv);
-			EditText editTextAppId = (EditText)rpcView.FindViewById(Resource.Id.app_id);
-
-			rpcAlertDialog.SetTitle("GetListOfPermissions");
-
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-				 //Method currently not available in BuildRPC.cs
-
-			 });
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-            rpcAlertDialog.Show();
-        }
-
-        private void ActivateAppRequestSDL()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			TextView textView = (TextView)rpcView.FindViewById(Resource.Id.app_id_tv);
-			EditText editTextAppId = (EditText)rpcView.FindViewById(Resource.Id.app_id);
-
-			rpcAlertDialog.SetTitle("ActivateAppRequestSDL");
-
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-				 //AppInstanceManager.Instance.sendRpc(BuildRpc.buildSdlActivateAppRequest(BuildRpc.getNextId(), Java.Lang.Integer.ParseInt(editTextAppId.Text)));
-
-			 });
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-            rpcAlertDialog.Show();
-		}
 
         private void ShowResponse()
         {
