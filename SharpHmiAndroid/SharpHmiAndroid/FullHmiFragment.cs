@@ -133,6 +133,16 @@ namespace SharpHmiAndroid
         private string UINotificationOnSystemContext = "UINotificationOnSystemContext";
         private string UINotificationOnTouchEvent = "UINotificationOnTouchEvent";
 
+		// VehicleInfo Outgoing Response
+		private string VIResponseDiagnosticMessage = "VIResponseDiagnosticMessage";
+        private string VIResponseGetDTCs = "VIResponseGetDTCs";
+        private string VIResponseGetVehicleData = "VIResponseGetVehicleData";
+        private string VIResponseGetVehicleType = "VIResponseGetVehicleType";
+        private string VIResponseIsReady = "VIResponseIsReady";
+        private string VIResponseReadDID = "VIResponseReadDID";
+        private string VIResponseSubscribeVehicleData = "VIResponseSubscribeVehicleData";
+        private string VIResponseUnsubscribeVehicleData = "VIResponseUnsubscribeVehicleData";
+
 		int appID;
         public static readonly String sClickedAppID = "APP_ID";
 
@@ -1241,35 +1251,35 @@ namespace SharpHmiAndroid
                  {
                      CreateUINotificationOnTouchEvent();
                  }
-                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("DiagnosticMessageResponse"))
+                else if (clickedItem.Equals(VIResponseDiagnosticMessage))
 				 {
-					 CreateDiagnosticMessageResponse();
+					 CreateVIResponseDiagnosticMessage();
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetDTCsResponse"))
+                else if (clickedItem.Equals(VIResponseGetDTCs))
 				 {
-					 CreateGetDTCsResponse();
+					 CreateVIResponseGetDTCs();
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetVehicleDataResponse"))
+                else if (clickedItem.Equals(VIResponseGetVehicleData))
 				 {
-					 CreateGetVehicleDataResponse();
+                    CreateVIResponseGetVehicleData();
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("GetVehicleTypeResponse"))
+                else if (clickedItem.Equals(VIResponseGetVehicleType))
 				 {
-					 CreateGetVehicleTypeResponse();
+                    CreateVIResponseGetVehicleType();
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("ReadDidResponse"))
+                else if (clickedItem.Equals(VIResponseReadDID))
 				 {
-					 CreateReadDidResponse();
+                    CreateVIResponseReadDID();
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SubscribeVehicleDataResponse"))
+                else if (clickedItem.Equals(VIResponseSubscribeVehicleData))
 				 {
-					 CreateSubscribeVehicleDataResponse();
+                    CreateVIResponseSubscribeVehicleData();
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("UnsubscribeVehicleDataResponse"))
+                else if (clickedItem.Equals(VIResponseUnsubscribeVehicleData))
 				 {
-					 CreateSubscribeVehicleDataResponse();
+					 CreateVIResponseSubscribeVehicleData();
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("VRGetSupportedLanguageResponse"))
+                else if (clickedItem.Equals("VRGetSupportedLanguageResponse"))
 				 {
 					 CreateVRGetSupportedLanguageResponse(); 
 				 }
@@ -5212,7 +5222,7 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
         }
 
-        private void CreateSubscribeVehicleDataResponse()
+        private void CreateVIResponseSubscribeVehicleData()
 		{
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
 			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.subscribe_vehicle_data_response, null);
@@ -5369,7 +5379,7 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
 		}
 
-		private void CreateReadDidResponse()
+		private void CreateVIResponseReadDID()
 		{
 			List<DIDResult> didResultList = new List<DIDResult>();
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
@@ -5452,7 +5462,7 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
 		}
 
-		private void CreateGetVehicleTypeResponse()
+		private void CreateVIResponseGetVehicleType()
 		{
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
 			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_vehicle_type, null);
@@ -5499,12 +5509,12 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
 		}
 
-		private void CreateGetVehicleDataResponse()
+		private void CreateVIResponseGetVehicleData()
 		{
 
 		}
 
-		private void CreateGetDTCsResponse()
+        private void CreateVIResponseGetDTCs()
 		{
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
 			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_dtc_response, null);
@@ -5545,7 +5555,7 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
 		}
 
-		private void CreateDiagnosticMessageResponse()
+        private void CreateVIResponseDiagnosticMessage()
 		{
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
 			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.slider_response, null);
