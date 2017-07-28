@@ -83,6 +83,22 @@ namespace SharpHmiAndroid
         private string SDLNotificationOnPolicyUpdate = "SDLNotificationOnPolicyUpdate";
         private string SDLNotificationOnReceivedPolicyUpdate = "SDLNotificationOnReceivedPolicyUpdate";
 
+		// TTS Outgoing Response
+		private string TTSResponseChangeRegistration = "TTSResponseChangeRegistration";
+		private string TTSResponseGetCapabilities = "TTSResponseGetCapabilities";
+		private string TTSResponseGetLanguage = "TTSResponseGetLanguage";
+		private string TTSResponseGetSupportedLanguages = "TTSResponseGetSupportedLanguages";
+		private string TTSResponseIsReady = "TTSResponseIsReady";
+		private string TTSResponseSetGlobalProperties = "TTSResponseSetGlobalProperties";
+		private string TTSResponseSpeak = "TTSResponseSpeak";
+		private string TTSResponseStopSpeaking = "TTSResponseStopSpeaking";
+
+		// TTS Outgoing Notifications
+		private string TTSNotificationOnLanguageChange = "TTSNotificationOnLanguageChange";
+		private string TTSNotificationOnResetTimeout = "TTSNotificationOnResetTimeout";
+		private string TTSNotificationStarted = "TTSNotificationStarted";
+		private string TTSNotificationStopped = "TTSNotificationStopped";
+
 		int appID;
         public static readonly String sClickedAppID = "APP_ID";
 
@@ -784,12 +800,13 @@ namespace SharpHmiAndroid
                 NavigationNotificationOnTBTClientState, SDLRequestActivateApp, SDLRequestGetListOfPermissions,
                 SDLRequestGetStatusUpdate, SDLRequestGetURLS, SDLRequestGetUserFriendlyMessage, SDLRequestUpdateSDL, 
                 SDLNotificationOnAllowSDLFunctionality, SDLNotificationOnAppPermissionConsent, SDLNotificationOnPolicyUpdate,
-                SDLNotificationOnReceivedPolicyUpdate,
-                "TTSChangeRegistrationResponse", "TTSGetCapabilitiesResponse", "TTSGetLanguageResponse", "TTSGetSupportedLanguagesResponse", "TTSIsReadyResponse", "TTSSetGlobalPropertiesResponse", "SpeakResponse", "StopSpeakingResponse",
-				"TTSOnLanguageChangeNotification", "TTSOnResetTimeoutNotification", "TTSStartedNotification", "TTSStoppedNotification", "AddCommandResponse","AddSubMenuResponse", "AlertResponse", "UIChangeRegistrationResponse", "ClosePopUpResponse", "DeleteCommandResponse",
+                SDLNotificationOnReceivedPolicyUpdate, TTSResponseChangeRegistration, TTSResponseGetCapabilities,
+                TTSResponseGetLanguage, TTSResponseGetSupportedLanguages, TTSResponseIsReady, TTSResponseSetGlobalProperties,
+                TTSResponseSpeak, TTSResponseStopSpeaking, TTSNotificationOnLanguageChange, TTSNotificationOnResetTimeout,
+				TTSNotificationStarted, TTSNotificationStopped, "AddCommandResponse","AddSubMenuResponse", "AlertResponse", "UIChangeRegistrationResponse", "ClosePopUpResponse", "DeleteCommandResponse",
 				"DeleteSubMenuResponse", "EndAudioPassThruResponse", "UIGetCapabilitiesResponse", "UIGetLanguageResponse", "UIGetSupportedLanguagesResponse", "UIIsReadyResponse", "PerformAudioPassThruResponse", "PerformInteractionResponse",
 				"ScrollableMessageResponse", "SetAppIconResponse", "SetDisplayLayoutResponse", "UISetGlobalPropertiesResponse", "SetMediaClockTimerResponse", "ShowResponse", "ShowCustomFormResponse", "SliderResponse", "OnCommandNotification", 
-                "OnDriverDistrationNotification", "OnKeyboardInputNotification", "UIOnLanguageChangeNotification", "OnRecordStartNotification", "TTSOnResetTimeoutNotification", "OnSystemContextNotification", "OnTouchEventNotification",  
+                "OnDriverDistrationNotification", "OnKeyboardInputNotification", "UIOnLanguageChangeNotification", "OnRecordStartNotification", "UIOnResetTimeoutNotification", "OnSystemContextNotification", "OnTouchEventNotification",  
                 "DiagnosticMessageResponse", "GetDTCsResponse","GetVehicleDataResponse", "GetVehicleTypeResponse", "ReadDidResponse", "SubscribeVehicleDataResponse", "UnsubscribeVehicleDataResponse", "VRGetSupportedLanguageResponse"};
 
             AlertDialog.Builder rpcListAlertDialog = new AlertDialog.Builder(this.Context);
@@ -1017,6 +1034,54 @@ namespace SharpHmiAndroid
 				 else if (clickedItem.Equals(SDLNotificationOnReceivedPolicyUpdate))
 				 {
 					 CreateSDLNotificationOnReceivedPolicyUpdate();
+				 }
+				 else if (clickedItem.Equals(TTSResponseChangeRegistration))
+				 {
+					 CreateTTSResponseChangeRegistration();
+				 }
+				 else if (clickedItem.Equals(TTSResponseGetCapabilities))
+				 {
+					 CreateTTSResponseGetCapabilities();
+				 }
+				 else if (clickedItem.Equals(TTSResponseGetLanguage))
+				 {
+					 CreateTTSResponseGetLanguage();
+				 }
+				 else if (clickedItem.Equals(TTSResponseGetSupportedLanguages))
+				 {
+					 CreateTTSResponseGetSupportedLanguages();
+				 }
+				 else if (clickedItem.Equals(TTSResponseIsReady))
+				 {
+					 CreateTTSResponseIsReady();
+				 }
+				 else if (clickedItem.Equals(TTSResponseSetGlobalProperties))
+				 {
+					 CreateTTSResponseSetGlobalProperties();
+				 }
+				 else if (clickedItem.Equals(TTSResponseSpeak))
+				 {
+					 CreateTTSResponseSpeak();
+				 }
+				 else if (clickedItem.Equals(TTSResponseStopSpeaking))
+				 {
+					 CreateTTSResponseStopSpeaking();
+				 }
+				 else if (clickedItem.Equals(TTSNotificationOnLanguageChange))
+				 {
+					 CreateTTSNotificationOnLanguageChange();
+				 }
+				 else if (clickedItem.Equals(TTSNotificationOnResetTimeout))
+				 {
+					 OnResetTimeoutNotification();
+				 }
+				 else if (clickedItem.Equals(TTSNotificationStarted))
+				 {
+					 CreateTTSNotificationStarted();
+				 }
+				 else if (clickedItem.Equals(TTSNotificationStopped))
+				 {
+					 CreateTTSNotificationStopped();
 				 }
                  else
 
@@ -1282,66 +1347,11 @@ namespace SharpHmiAndroid
 
 					 rpcAlertDialog.Show();
 				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSChangeRegistrationResponse"))
-				 {
-					 TTSChangeRegistrationResponse();
-				 }
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSGetCapabilitiesResponse"))
-				 {
-					 TTSGetCapabilitiesResponse();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSGetLanguageResponse"))
-				 {
-					 TTSGetLanguageResponse();
-				 }
-
-                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSGetSupportedLanguagesResponse"))
-                 {
-                     TTSGetSupportedLanguagesResponse();
-                 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSIsReadyResponse"))
-				 {
-					 TTSIsReadyResponse();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSSetGlobalPropertiesResponse"))
-				 {
-					 TTSSetGlobalPropertiesResponse();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("SpeakResponse"))
-				 {
-					 SpeakResponse();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("StopSpeakingResponse"))
-				 {
-					 StopSpeakingResponse();
-				 }
-
-                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSOnLanguageChangeNotification"))
-                 {
-                     TTSOnLanguageChangeNotification();
-                 }
-
 				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("OnResetTimeoutNotification"))
 				 {
 					 OnResetTimeoutNotification();
 				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSStartedNotification"))
-				 {
-					 TTSStartedNotification();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("TTSStoppedNotification"))
-				 {
-					 TTSStoppedNotification();
-				 }
-
-				 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("AddCommandResponse"))
+                 else if (rpcListView.GetItemAtPosition(e.Position).ToString().Equals("AddCommandResponse"))
 				 {
 					 AddCommandResponse();
 
@@ -1489,6 +1499,493 @@ namespace SharpHmiAndroid
              };
 
             rpcListAlertDialog.Show();
+        }
+
+        private void CreateTTSResponseChangeRegistration()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("ChangeRegistration");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTTSChangeRegistrationResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSResponseGetCapabilities()
+        {
+            AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.tts_get_capabilities, null);
+            rpcAlertDialog.SetView(rpcView);
+            rpcAlertDialog.SetTitle("GetCapabilities");
+
+
+            List<SpeechCapabilities> speechCapabilitiesList = new List<SpeechCapabilities>();
+
+            ListView ListViewSpeechCapabilities = (ListView)rpcView.FindViewById(Resource.Id.speech_capabilities_lv);
+
+            Button speechCapabilitiesButton = (Button)rpcView.FindViewById(Resource.Id.speech_capabilities_btn);
+            speechCapabilitiesButton.Click += delegate
+            {
+                AlertDialog.Builder speechCapabilitiesAlertDialog = new AlertDialog.Builder(this.Context);
+                View speechCapabilitiesView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+                speechCapabilitiesAlertDialog.SetView(speechCapabilitiesView);
+                speechCapabilitiesAlertDialog.SetTitle("SpeechCapabilities");
+
+
+                TextView textViewSpeechCapabilities = (TextView)speechCapabilitiesView.FindViewById(Resource.Id.result_code_spinner);
+                textViewSpeechCapabilities.Text = "SpeechCapabilities";
+                Spinner spnSpeechCapabilities = (Spinner)speechCapabilitiesView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+                string[] speechCapabilities = Enum.GetNames(typeof(HmiApiLib.Common.Enums.SpeechCapabilities));
+                var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, speechCapabilities);
+                spnSpeechCapabilities.Adapter = adapter;
+
+
+                speechCapabilitiesAlertDialog.SetNegativeButton("ok", (senderAlert, args) =>
+               {
+
+                   speechCapabilitiesList.Add((HmiApiLib.Common.Enums.SpeechCapabilities)spnSpeechCapabilities.SelectedItemPosition);
+
+               });
+
+                speechCapabilitiesAlertDialog.SetPositiveButton("Cancel", (senderAlert, args) =>
+               {
+                   speechCapabilitiesAlertDialog.Dispose();
+               });
+
+                speechCapabilitiesAlertDialog.Show();
+
+            };
+
+
+
+            List<PrerecordedSpeech> prerecordedSpeechList = new List<PrerecordedSpeech>();
+
+            ListView ListViewPrerecordedSpeech = (ListView)rpcView.FindViewById(Resource.Id.prerecorded_speech_lv);
+
+            Button prerecordedSpeechButton = (Button)rpcView.FindViewById(Resource.Id.prerecorded_speech_btn);
+            prerecordedSpeechButton.Click += delegate
+            {
+                AlertDialog.Builder prerecordedSpeechAlertDialog = new AlertDialog.Builder(this.Context);
+                View prerecordedSpeechView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+                prerecordedSpeechAlertDialog.SetView(prerecordedSpeechView);
+                prerecordedSpeechAlertDialog.SetTitle("PrerecordedSpeech");
+
+                TextView textViewConsentSource = (TextView)prerecordedSpeechView.FindViewById(Resource.Id.result_code_spinner);
+                textViewConsentSource.Text = "PrerecordedSpeech";
+                Spinner spnPrerecordedSpeech = (Spinner)prerecordedSpeechView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+                string[] prerecordedSpeech = Enum.GetNames(typeof(HmiApiLib.Common.Enums.PrerecordedSpeech));
+                var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, prerecordedSpeech);
+                spnPrerecordedSpeech.Adapter = adapter;
+
+
+                prerecordedSpeechAlertDialog.SetNegativeButton("ok", (senderAlert, args) =>
+               {
+
+                   prerecordedSpeechList.Add((HmiApiLib.Common.Enums.PrerecordedSpeech)spnPrerecordedSpeech.SelectedItemPosition);
+
+               });
+
+                prerecordedSpeechAlertDialog.SetPositiveButton("Cancel", (senderAlert, args) =>
+               {
+                   prerecordedSpeechAlertDialog.Dispose();
+               });
+
+                prerecordedSpeechAlertDialog.Show();
+
+            };
+
+
+            rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+            {
+                rpcAlertDialog.Dispose();
+            });
+
+            rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+            {
+                //Method currently not present in buildRpc
+            });
+
+            rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+           {
+
+           });
+
+            rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSResponseGetLanguage()
+        {
+            AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_language, null);
+            rpcAlertDialog.SetView(rpcView);
+            rpcAlertDialog.SetTitle("GetLanguage");
+
+            TextView textViewLanguage = (TextView)rpcView.FindViewById(Resource.Id.tts_language_tv);
+            textViewLanguage.Text = "Language";
+
+            Spinner spnLanguage = (Spinner)rpcView.FindViewById(Resource.Id.tts_language_spn);
+
+            TextView textViewResultCode = (TextView)rpcView.FindViewById(Resource.Id.tts_result_code_tv);
+            Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.tts_result_code_spn);
+
+
+            string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
+            var languageAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
+            spnLanguage.Adapter = languageAdapter;
+
+
+            string[] result = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+            var resultAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, result);
+            spnResultCode.Adapter = resultAdapter;
+
+
+            rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+            {
+                rpcAlertDialog.Dispose();
+            });
+
+            rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+            {
+                AppInstanceManager.Instance.sendRpc(BuildRpc.buildTtsGetLanguageResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Language)spnLanguage.SelectedItemPosition, (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition));
+            });
+
+            rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+           {
+
+           });
+
+            rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSResponseGetSupportedLanguages()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View getSystemInfoRpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_support_languages, null);
+			rpcAlertDialog.SetView(getSystemInfoRpcView);
+			rpcAlertDialog.SetTitle("GetSupportedLanguages");
+
+			TextView textViewConsentSource = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.result_code_tv);
+			Spinner spnResultCode = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.get_supported_language_result_code_spn);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = adapter;
+
+
+			ListView languagesListView = (Android.Widget.ListView)getSystemInfoRpcView.FindViewById(Resource.Id.tts_language_listview);
+
+
+			List<Language> languagesList = new List<Language>();
+
+			Button languagesButton = (Button)getSystemInfoRpcView.FindViewById(Resource.Id.add_tts_language_listview_btn);
+			languagesButton.Click += delegate
+			{
+				AlertDialog.Builder languagesAlertDialog = new AlertDialog.Builder(this.Context);
+				View languagesView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+				languagesAlertDialog.SetView(languagesView);
+				languagesAlertDialog.SetTitle("Language");
+
+				TextView textViewLanguages = (TextView)languagesView.FindViewById(Resource.Id.result_code_spinner);
+				textViewLanguages.Text = "SelectLanguage";
+				Spinner spnLanguages = (Spinner)languagesView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+				string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
+				var languageAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
+				spnLanguages.Adapter = languageAdapter;
+
+				languagesAlertDialog.SetNegativeButton("ok", (senderAlert, args) =>
+			   {
+				   languagesList.Add((HmiApiLib.Common.Enums.Language)spnLanguages.SelectedItemPosition);
+
+			   });
+
+				languagesAlertDialog.SetPositiveButton("Cancel", (senderAlert, args) =>
+			   {
+				   languagesAlertDialog.Dispose();
+			   });
+
+				languagesAlertDialog.Show();
+
+			};
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTTSGetSupportedLanguagesResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition, languagesList));
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+		   {
+
+		   });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSResponseIsReady()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.allow_device_to_Connect, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("IsReady");
+
+			CheckBox checkBoxAllow = (CheckBox)rpcView.FindViewById(Resource.Id.allow);
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spn);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.result_Code);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			checkBoxAllow.Text = ("Available");
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildIsReadyResponse(BuildRpc.getNextId(), HmiApiLib.Types.InterfaceType.TTS, checkBoxAllow.Checked, (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition));
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSResponseSetGlobalProperties()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("SetGlobalProperties");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTTSSetGlobalPropertiesResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSResponseSpeak()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("Speak");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTtsSpeakResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSResponseStopSpeaking()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("StopSpeaking");
+
+			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
+			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
+
+			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnGeneric.Adapter = adapter;
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+
+				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTtsStopSpeakingResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
+
+			});
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
+
+			});
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSNotificationOnLanguageChange()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_language, null);
+			rpcAlertDialog.SetView(rpcView);
+			rpcAlertDialog.SetTitle("OnLanguageChange");
+
+			TextView textViewLanguage = (TextView)rpcView.FindViewById(Resource.Id.tts_language_tv);
+			textViewLanguage.Text = "Language";
+
+			Spinner spnLanguage = (Spinner)rpcView.FindViewById(Resource.Id.tts_language_spn);
+
+			TextView textViewResultCode = (TextView)rpcView.FindViewById(Resource.Id.tts_result_code_tv);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.tts_result_code_spn);
+
+
+			string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
+			var languageAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
+			spnLanguage.Adapter = languageAdapter;
+
+
+			string[] result = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
+			var resultAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, result);
+			spnResultCode.Adapter = resultAdapter;
+
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			{
+				//Method not available in Build RPC
+			});
+
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+		   {
+
+		   });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSNotificationStarted()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("Started");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not present in buildRpc
+			 });
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
+        }
+
+        private void CreateTTSNotificationStopped()
+        {
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
+			rpcAlertDialog.SetView(rpcView);
+
+			rpcAlertDialog.SetTitle("Stopped");
+
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
+
+			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
+			 {
+				 //Method currently not present in buildRpc
+			 });
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			 {
+
+			 });
+
+			rpcAlertDialog.Show();
         }
 
         private void CreateSDLRequestActivateApp()
@@ -3249,56 +3746,6 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.Show();
         }
 
-        private void TTSStartedNotification()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("Started");
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-				 //Method currently not present in buildRpc
-			 });
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-			rpcAlertDialog.Show();
-        }
-
-        private void TTSStoppedNotification()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.ui_with_only_send_request, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("Stopped");
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
-			 {
-				 //Method currently not present in buildRpc
-			 });
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			 {
-
-			 });
-
-			rpcAlertDialog.Show();
-        }
-
         private void OnResetTimeoutNotification()
         {
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
@@ -3329,338 +3776,6 @@ namespace SharpHmiAndroid
 			 {
 
 			 });
-
-			rpcAlertDialog.Show();
-        }
-
-        private void TTSOnLanguageChangeNotification()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_language, null);
-			rpcAlertDialog.SetView(rpcView);
-			rpcAlertDialog.SetTitle("OnLanguageChange");
-
-			TextView textViewLanguage = (TextView)rpcView.FindViewById(Resource.Id.tts_language_tv);
-			textViewLanguage.Text = "Language";
-
-			Spinner spnLanguage = (Spinner)rpcView.FindViewById(Resource.Id.tts_language_spn);
-
-			TextView textViewResultCode = (TextView)rpcView.FindViewById(Resource.Id.tts_result_code_tv);
-			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.tts_result_code_spn);
-
-
-			string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
-			var languageAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
-			spnLanguage.Adapter = languageAdapter;
-
-
-			string[] result = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-			var resultAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, result);
-			spnResultCode.Adapter = resultAdapter;
-
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-			    //Method not available in Build RPC
-            });
-
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-		   {
-
-		   });
-
-			rpcAlertDialog.Show();
-        }
-
-        private void StopSpeakingResponse()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("StopSpeaking");
-
-			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
-			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
-
-			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-			spnGeneric.Adapter = adapter;
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTtsStopSpeakingResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
-
-			});
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			{
-
-			});
-
-			rpcAlertDialog.Show();
-        }
-
-        private void TTSIsReadyResponse()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.allow_device_to_Connect, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("IsReady");
-
-			CheckBox checkBoxAllow = (CheckBox)rpcView.FindViewById(Resource.Id.allow);
-
-			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spn);
-			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.result_Code);
-
-			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-			spnResultCode.Adapter = adapter;
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			checkBoxAllow.Text = ("Available");
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-                AppInstanceManager.Instance.sendRpc(BuildRpc.buildIsReadyResponse(BuildRpc.getNextId(), HmiApiLib.Types.InterfaceType.TTS, checkBoxAllow.Checked, (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition));
-			});
-
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			{
-
-			});
-
-			rpcAlertDialog.Show();
-        }
-
-        private void TTSGetSupportedLanguagesResponse()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-            View getSystemInfoRpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_support_languages, null);
-			rpcAlertDialog.SetView(getSystemInfoRpcView);
-			rpcAlertDialog.SetTitle("GetSupportedLanguages");
-
-			TextView textViewConsentSource = (TextView)getSystemInfoRpcView.FindViewById(Resource.Id.result_code_tv);
-			Spinner spnResultCode = (Spinner)getSystemInfoRpcView.FindViewById(Resource.Id.get_supported_language_result_code_spn);
-
-			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-			spnResultCode.Adapter = adapter;
-
-
-			ListView languagesListView = (Android.Widget.ListView)getSystemInfoRpcView.FindViewById(Resource.Id.tts_language_listview);
-
-
-            List<Language> languagesList = new List<Language>();
-
-			Button languagesButton = (Button)getSystemInfoRpcView.FindViewById(Resource.Id.add_tts_language_listview_btn);
-			languagesButton.Click += delegate
-			{
-				AlertDialog.Builder languagesAlertDialog = new AlertDialog.Builder(this.Context);
-				View languagesView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
-				languagesAlertDialog.SetView(languagesView);
-				languagesAlertDialog.SetTitle("Language");
-
-				TextView textViewLanguages = (TextView)languagesView.FindViewById(Resource.Id.result_code_spinner);
-                textViewLanguages.Text = "SelectLanguage";
-				Spinner spnLanguages = (Spinner)languagesView.FindViewById(Resource.Id.genericspinner_Spinner);
-
-                string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
-				var languageAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
-				spnLanguages.Adapter = languageAdapter;
-
-				languagesAlertDialog.SetNegativeButton("ok", (senderAlert, args) =>
-			   {
-                    languagesList.Add((HmiApiLib.Common.Enums.Language)spnLanguages.SelectedItemPosition);
-
-			   });
-
-				languagesAlertDialog.SetPositiveButton("Cancel", (senderAlert, args) =>
-			   {
-				   languagesAlertDialog.Dispose();
-			   });
-
-				languagesAlertDialog.Show();
-
-			};
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTTSGetSupportedLanguagesResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition, languagesList));
-			});
-
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-		   {
-
-		   });
-
-			rpcAlertDialog.Show();
-        }
-
-        private void TTSGetLanguageResponse()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.get_language, null);
-			rpcAlertDialog.SetView(rpcView);
-			rpcAlertDialog.SetTitle("GetLanguage");
-
-			TextView textViewLanguage = (TextView)rpcView.FindViewById(Resource.Id.tts_language_tv);
-            textViewLanguage.Text = "Language";
-
-			Spinner spnLanguage = (Spinner)rpcView.FindViewById(Resource.Id.tts_language_spn);
-
-			TextView textViewResultCode = (TextView)rpcView.FindViewById(Resource.Id.tts_result_code_tv);
-			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.tts_result_code_spn);
-
-
-			string[] language = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Language));
-			var languageAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, language);
-			spnLanguage.Adapter = languageAdapter;
-
-
-            string[] result = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-			var resultAdapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, result);
-			spnResultCode.Adapter = resultAdapter;
-
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-                AppInstanceManager.Instance.sendRpc(BuildRpc.buildTtsGetLanguageResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Language)spnLanguage.SelectedItemPosition, (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition));
-			});
-
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-		   {
-
-		   });
-
-			rpcAlertDialog.Show();
-        }
-
-        private void TTSGetCapabilitiesResponse()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-            View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.tts_get_capabilities, null);
-			rpcAlertDialog.SetView(rpcView);
-			rpcAlertDialog.SetTitle("GetCapabilities");
-
-
-            List<SpeechCapabilities> speechCapabilitiesList = new List<SpeechCapabilities>();
-
-			ListView ListViewSpeechCapabilities = (ListView)rpcView.FindViewById(Resource.Id.speech_capabilities_lv);
-           
-			Button speechCapabilitiesButton = (Button)rpcView.FindViewById(Resource.Id.speech_capabilities_btn);
-			speechCapabilitiesButton.Click += delegate
-			{
-				AlertDialog.Builder speechCapabilitiesAlertDialog = new AlertDialog.Builder(this.Context);
-				View speechCapabilitiesView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
-				speechCapabilitiesAlertDialog.SetView(speechCapabilitiesView);
-				speechCapabilitiesAlertDialog.SetTitle("SpeechCapabilities");
-
-
-				TextView textViewSpeechCapabilities = (TextView)speechCapabilitiesView.FindViewById(Resource.Id.result_code_spinner);
-                textViewSpeechCapabilities.Text = "SpeechCapabilities";
-				Spinner spnSpeechCapabilities = (Spinner)speechCapabilitiesView.FindViewById(Resource.Id.genericspinner_Spinner);
-
-                string[] speechCapabilities = Enum.GetNames(typeof(HmiApiLib.Common.Enums.SpeechCapabilities));
-				var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, speechCapabilities);
-				spnSpeechCapabilities.Adapter = adapter;
-
-
-				speechCapabilitiesAlertDialog.SetNegativeButton("ok", (senderAlert, args) =>
-			   {
-				   
-                    speechCapabilitiesList.Add((HmiApiLib.Common.Enums.SpeechCapabilities)spnSpeechCapabilities.SelectedItemPosition);
-
-			   });
-
-				speechCapabilitiesAlertDialog.SetPositiveButton("Cancel", (senderAlert, args) =>
-			   {
-				   speechCapabilitiesAlertDialog.Dispose();
-			   });
-
-				speechCapabilitiesAlertDialog.Show();
-
-			};
-
-
-
-            List<PrerecordedSpeech> prerecordedSpeechList = new List<PrerecordedSpeech>();
-
-            ListView ListViewPrerecordedSpeech = (ListView)rpcView.FindViewById(Resource.Id.prerecorded_speech_lv);
-
-			Button prerecordedSpeechButton = (Button)rpcView.FindViewById(Resource.Id.prerecorded_speech_btn);
-			prerecordedSpeechButton.Click += delegate
-			{
-				AlertDialog.Builder prerecordedSpeechAlertDialog = new AlertDialog.Builder(this.Context);
-				View prerecordedSpeechView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
-				prerecordedSpeechAlertDialog.SetView(prerecordedSpeechView);
-				prerecordedSpeechAlertDialog.SetTitle("PrerecordedSpeech");
-
-				TextView textViewConsentSource = (TextView)prerecordedSpeechView.FindViewById(Resource.Id.result_code_spinner);
-                textViewConsentSource.Text = "PrerecordedSpeech";
-				Spinner spnPrerecordedSpeech = (Spinner)prerecordedSpeechView.FindViewById(Resource.Id.genericspinner_Spinner);
-
-				string[] prerecordedSpeech = Enum.GetNames(typeof(HmiApiLib.Common.Enums.PrerecordedSpeech));
-				var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, prerecordedSpeech);
-				spnPrerecordedSpeech.Adapter = adapter;
-
-
-				prerecordedSpeechAlertDialog.SetNegativeButton("ok", (senderAlert, args) =>
-			   {
-
-				   prerecordedSpeechList.Add((HmiApiLib.Common.Enums.PrerecordedSpeech)spnPrerecordedSpeech.SelectedItemPosition);
-
-			   });
-
-				prerecordedSpeechAlertDialog.SetPositiveButton("Cancel", (senderAlert, args) =>
-			   {
-				   prerecordedSpeechAlertDialog.Dispose();
-			   });
-
-				prerecordedSpeechAlertDialog.Show();
-
-			};
-
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-				//Method currently not present in buildRpc
-			});
-
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-		   {
-
-		   });
 
 			rpcAlertDialog.Show();
         }
@@ -3994,111 +4109,6 @@ namespace SharpHmiAndroid
 			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
 			{
                 AppUtils.removeSavedPreferenceValueForRpc(adapter.Context, tmpObj.getMethod(), appID);
-			});
-
-			rpcAlertDialog.Show();
-        }
-
-        private void SpeakResponse()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("Speak");
-
-			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
-			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
-
-            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-            var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-            spnGeneric.Adapter = adapter;
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTtsSpeakResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
-
-			});
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			{
-
-			});
-
-			rpcAlertDialog.Show();
-        }
-
-        private void TTSSetGlobalPropertiesResponse()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("SetGlobalProperties");
-
-			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
-			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
-
-			string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-			var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-			spnGeneric.Adapter = adapter;
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTTSSetGlobalPropertiesResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
-
-			});
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			{
-
-			});
-
-			rpcAlertDialog.Show();
-        }
-
-        private void TTSChangeRegistrationResponse()
-        {
-			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.genericspinner, null);
-			rpcAlertDialog.SetView(rpcView);
-
-			rpcAlertDialog.SetTitle("ChangeRegistration");
-
-			TextView rsltCode = (TextView)rpcView.FindViewById(Resource.Id.result_code_spinner);
-			Spinner spnGeneric = (Spinner)rpcView.FindViewById(Resource.Id.genericspinner_Spinner);
-
-            string[] resultCode = Enum.GetNames(typeof(HmiApiLib.Common.Enums.Result));
-            var adapter = new ArrayAdapter<String>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-            spnGeneric.Adapter = adapter;
-
-			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			{
-				rpcAlertDialog.Dispose();
-			});
-
-
-			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			{
-
-				AppInstanceManager.Instance.sendRpc(BuildRpc.buildTTSChangeRegistrationResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnGeneric.SelectedItemPosition));
-
-			});
-			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			{
-
 			});
 
 			rpcAlertDialog.Show();
