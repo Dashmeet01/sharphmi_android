@@ -1321,6 +1321,8 @@
     <AndroidResource Include="Resources\layout\set_display_layout.axml" />
     <AndroidResource Include="Resources\layout\soft_button_capabilities.axml" />
     <AndroidResource Include="Resources\layout\screen_param.axml" />
+    <AndroidResource Include="Resources\layout\on_received_policy_update.axml" />
+    <AndroidResource Include="Resources\layout\vr_perform_interaction_response.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
