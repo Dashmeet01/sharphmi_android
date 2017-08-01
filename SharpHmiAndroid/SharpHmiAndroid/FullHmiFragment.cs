@@ -1620,72 +1620,72 @@ namespace SharpHmiAndroid
 
         private void CreateVRResponseGetCapabilities()
         {
-			//AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			//View rpcView = layoutIinflater.Inflate(Resource.Layout.on_touch_event_notification, null);
-			//rpcAlertDialog.SetView(rpcView);
-			//rpcAlertDialog.SetTitle("GetCapabilities");
+			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
+			View rpcView = layoutIinflater.Inflate(Resource.Layout.on_touch_event_notification, null);
+			rpcAlertDialog.SetView(rpcView);
+			rpcAlertDialog.SetTitle("GetCapabilities");
 
-			//CheckBox resultCodeCheck = (CheckBox)rpcView.FindViewById(Resource.Id.on_touch_event_touch_type_checkbox);
-			//Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.on_touch_event_touch_type_spinner);
+			CheckBox resultCodeCheck = (CheckBox)rpcView.FindViewById(Resource.Id.on_touch_event_touch_type_checkbox);
+			Spinner spnResultCode = (Spinner)rpcView.FindViewById(Resource.Id.on_touch_event_touch_type_spinner);
 
-			//resultCodeCheck.Text = "Result Code";
+			resultCodeCheck.Text = "Result Code";
 
-			//var resultCodeAdapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
-			//spnResultCode.Adapter = resultCodeAdapter;
+			var resultCodeAdapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, resultCode);
+			spnResultCode.Adapter = resultCodeAdapter;
 
-			//rpcView.FindViewById<ListView>(Resource.Id.touch_event_listview).Visibility = ViewStates.Gone;
-			//string[] vrCapabilities = Enum.GetNames(typeof(VrCapabilities));
-			//bool[] vrCapabilitiesBoolArray = new bool[vrCapabilities.Length];
+			rpcView.FindViewById<ListView>(Resource.Id.touch_event_listview).Visibility = ViewStates.Gone;
+			string[] vrCapabilities = Enum.GetNames(typeof(VrCapabilities));
+			bool[] vrCapabilitiesBoolArray = new bool[vrCapabilities.Length];
 
-			//Button createTouchEvent = (Button)rpcView.FindViewById(Resource.Id.on_touch_event_create_touch_event);
-			//createTouchEvent.Text = "Add VR Capabilities";
-			//createTouchEvent.Click += (sender, e1) =>
-			//{
-			//	AlertDialog.Builder vrCapabilitiesAlertDialog = new AlertDialog.Builder(rpcAlertDialog.Context);
-			//	vrCapabilitiesAlertDialog.SetTitle("VR Capabilities");
+			Button createTouchEvent = (Button)rpcView.FindViewById(Resource.Id.on_touch_event_create_touch_event);
+			createTouchEvent.Text = "Add VR Capabilities";
+			createTouchEvent.Click += (sender, e1) =>
+			{
+				AlertDialog.Builder vrCapabilitiesAlertDialog = new AlertDialog.Builder(rpcAlertDialog.Context);
+				vrCapabilitiesAlertDialog.SetTitle("VR Capabilities");
 
-			//	vrCapabilitiesAlertDialog.SetMultiChoiceItems(vrCapabilities, vrCapabilitiesBoolArray, (object sender1, Android.Content.DialogMultiChoiceClickEventArgs e) => vrCapabilitiesBoolArray[e.Which] = e.IsChecked);
+				vrCapabilitiesAlertDialog.SetMultiChoiceItems(vrCapabilities, vrCapabilitiesBoolArray, (object sender1, Android.Content.DialogMultiChoiceClickEventArgs e) => vrCapabilitiesBoolArray[e.Which] = e.IsChecked);
 
-			//	vrCapabilitiesAlertDialog.SetNegativeButton("Cancel", (senderAlert, args) =>
-			//	{
-			//		vrCapabilitiesAlertDialog.Dispose();
-			//	});
+				vrCapabilitiesAlertDialog.SetNegativeButton("Cancel", (senderAlert, args) =>
+				{
+					vrCapabilitiesAlertDialog.Dispose();
+				});
 
-			//	vrCapabilitiesAlertDialog.SetPositiveButton("Add", (senderAlert, args) =>
-			//	{
+				vrCapabilitiesAlertDialog.SetPositiveButton("Add", (senderAlert, args) =>
+				{
 
-			//	});
+				});
 
-			//	vrCapabilitiesAlertDialog.Show();
-			//};
+				vrCapabilitiesAlertDialog.Show();
+			};
 
-			//rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
-			//{
-			//	rpcAlertDialog.Dispose();
-			//});
+			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
+			{
+				rpcAlertDialog.Dispose();
+			});
 
-			//rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
-			// {
-			//	 List<VrCapabilities> vrCapabilitiesList = new List<VrCapabilities>();
-			//	 for (int i = 0; i < languages.Length; i++)
-			//	 {
+			rpcAlertDialog.SetNegativeButton("Tx Later", (senderAlert, args) =>
+			 {
+				 List<VrCapabilities> vrCapabilitiesList = new List<VrCapabilities>();
+				 for (int i = 0; i < vrCapabilities.Length; i++)
+				 {
 
-			//		 if (vrCapabilitiesBoolArray[i])
-			//		 {
-			//			 vrCapabilitiesList.Add(((VrCapabilities)typeof(VrCapabilities).GetEnumValues().GetValue(i)));
-			//		 }
-			//	 }
+					 if (vrCapabilitiesBoolArray[i])
+					 {
+						 vrCapabilitiesList.Add(((VrCapabilities)typeof(VrCapabilities).GetEnumValues().GetValue(i)));
+					 }
+				 }
 
-			//	 AppInstanceManager.Instance.sendRpc(BuildRpc.buildVrGetCapabilitiesResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition, vrCapabilitiesList));
+				 AppInstanceManager.Instance.sendRpc(BuildRpc.buildVrGetCapabilitiesResponse(BuildRpc.getNextId(), (HmiApiLib.Common.Enums.Result)spnResultCode.SelectedItemPosition, vrCapabilitiesList));
 
-			// });
+			 });
 
-			//rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
-			//{
+			rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
+			{
 
-			//});
+			});
 
-			//rpcAlertDialog.Show();
+			rpcAlertDialog.Show();
         }
 
         private void CreateVRResponseDeleteCommand()
@@ -3963,11 +3963,19 @@ namespace SharpHmiAndroid
 			{
 				if (e.IsChecked)
 				{
-					registerdAppIdSpn.Enabled = true;
-					manualAppIdEditText.Enabled = true;
 					manualRegisterdAppIdRadioGroup.Enabled = true;
 					manualAppIdRadioButton.Enabled = true;
 					registerdAppIdRadioButton.Enabled = true;
+					if (manualAppIdRadioButton.Checked)
+					{
+						manualAppIdEditText.Enabled = true;
+						registerdAppIdSpn.Enabled = false;
+					}
+					else
+					{
+						registerdAppIdSpn.Enabled = true;
+						manualAppIdEditText.Enabled = false;
+					}
 				}
 				else
 				{
@@ -4068,11 +4076,19 @@ namespace SharpHmiAndroid
 			{
 				if (e.IsChecked)
 				{
-					registerdAppIdSpn.Enabled = true;
-					manualAppIdEditText.Enabled = true;
 					manualRegisterdAppIdRadioGroup.Enabled = true;
 					manualAppIdRadioButton.Enabled = true;
 					registerdAppIdRadioButton.Enabled = true;
+					if (manualAppIdRadioButton.Checked)
+					{
+						manualAppIdEditText.Enabled = true;
+						registerdAppIdSpn.Enabled = false;
+					}
+					else
+					{
+						registerdAppIdSpn.Enabled = true;
+						manualAppIdEditText.Enabled = false;
+					}
 				}
 				else
 				{
@@ -5592,11 +5608,10 @@ namespace SharpHmiAndroid
 
 			rpcAlertDialog.SetNegativeButton("Tx Now", (senderAlert, args) =>
            {
-			   //Method currently not available in Bild RPC...
-			   //RpcMessage rpcMessage = null;
-      //          rpcMessage = BuildRpc.buildBasicCommunicationOnEventChanged(BuildRpc.getNextId(), checkBoxAllow.Checked, (HmiApiLib.Common.Enums.Result)spnEventType.SelectedItemPosition);
-			   //AppUtils.savePreferenceValueForRpc(adapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage);
-			   //AppInstanceManager.Instance.sendRpc(rpcMessage);
+			   RpcMessage rpcMessage = null;
+               rpcMessage = BuildRpc.buildBasicCommunicationOnEventChangedNotification((HmiApiLib.Common.Enums.EventTypes)spnEventType.SelectedItemPosition, checkBoxAllow.Checked);
+			   AppUtils.savePreferenceValueForRpc(adapter.Context, ((RequestNotifyMessage)rpcMessage).getMethod(), rpcMessage);
+			   AppInstanceManager.Instance.sendRpc(rpcMessage);
 
            });
             rpcAlertDialog.SetPositiveButton("Reset", (senderAlert, args) =>
@@ -5738,12 +5753,11 @@ namespace SharpHmiAndroid
 		private void CreateBCNotificationOnAppDeactivated()
 		{
 			AlertDialog.Builder rpcAlertDialog = new AlertDialog.Builder(this.Context);
-			View rpcView = (View)layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
+			View rpcView = layoutIinflater.Inflate(Resource.Layout.on_app_activated, null);
 			rpcAlertDialog.SetView(rpcView);
 
 			CheckBox appIDCheckBox = (CheckBox)rpcView.FindViewById(Resource.Id.bc_on_activated_app_id_check);
 			appIDCheckBox.Checked = true;
-
 
 			EditText manualAppIdEditText = (EditText)rpcView.FindViewById(Resource.Id.bc_on_activated_app_id_et);
 			Spinner registerdAppIdSpn = (Spinner)rpcView.FindViewById(Resource.Id.bc_on_activated_app_id_spinner);
@@ -5763,11 +5777,19 @@ namespace SharpHmiAndroid
 			{
 				if (e.IsChecked)
 				{
-					registerdAppIdSpn.Enabled = true;
-					manualAppIdEditText.Enabled = true;
 					manualRegisterdAppIdRadioGroup.Enabled = true;
 					manualAppIdRadioButton.Enabled = true;
 					registerdAppIdRadioButton.Enabled = true;
+					if (manualAppIdRadioButton.Checked)
+					{
+						manualAppIdEditText.Enabled = true;
+						registerdAppIdSpn.Enabled = false;
+					}
+					else
+					{
+						registerdAppIdSpn.Enabled = true;
+						manualAppIdEditText.Enabled = false;
+					}
 				}
 				else
 				{
@@ -5799,19 +5821,15 @@ namespace SharpHmiAndroid
 			{
 				appIdList.Add(item.getAppID());
 			}
-			var appIDAdapter = new ArrayAdapter<int>(this.Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, appIdList);
+			var appIDAdapter = new ArrayAdapter<int>(Context, Android.Resource.Layout.SimpleSpinnerDropDownItem, appIdList);
 			registerdAppIdSpn.Adapter = appIDAdapter;
 
-
-			//Fetch Shared Prefernce
-
-			HmiApiLib.Controllers.BasicCommunication.OutGoingNotifications.OnAppDeactivated tmpObj = new HmiApiLib.Controllers.BasicCommunication.OutGoingNotifications.OnAppDeactivated();
+            HmiApiLib.Controllers.BasicCommunication.OutGoingNotifications.OnAppDeactivated tmpObj = new HmiApiLib.Controllers.BasicCommunication.OutGoingNotifications.OnAppDeactivated();
 			tmpObj = (HmiApiLib.Controllers.BasicCommunication.OutGoingNotifications.OnAppDeactivated)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.BasicCommunication.OutGoingNotifications.OnAppDeactivated>(appIDAdapter.Context, tmpObj.getMethod());
 			if (tmpObj != null)
 			{
-				manualAppIdEditText.Text = "" + tmpObj.getAppId();
+                manualAppIdEditText.Text = tmpObj.getAppId().ToString();
 			}
-
 
 			rpcAlertDialog.SetNeutralButton("Cancel", (senderAlert, args) =>
 			{
@@ -5836,14 +5854,10 @@ namespace SharpHmiAndroid
 						 else
 							 selectedAppID = Java.Lang.Integer.ParseInt(manualAppIdEditText.Text);
 
-					 //AppInstanceManager.Instance.sendRpc(BuildRpc.buildBasicCommunicationOnAppDeactivated(selectedAppID));
-
-
-					 //RpcMessage rpcMessage = null;
-					 //rpcMessage = BuildRpc.buildBasicCommunicationOnAppDeactivated(selectedAppID);
-					 //AppUtils.savePreferenceValueForRpc(appIDAdapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage);
-					 //AppInstanceManager.Instance.sendRpc(rpcMessage);
-
+					 RpcMessage rpcMessage = null;
+					 rpcMessage = BuildRpc.buildBasicCommunicationOnAppDeactivated(selectedAppID);
+					 AppUtils.savePreferenceValueForRpc(appIDAdapter.Context, ((RequestNotifyMessage)rpcMessage).getMethod(), rpcMessage);
+					 AppInstanceManager.Instance.sendRpc(rpcMessage);
 				 }
 
 			 });
@@ -5883,11 +5897,19 @@ namespace SharpHmiAndroid
 			{
 				if (e.IsChecked)
 				{
-					registerdAppIdSpn.Enabled = true;
-					manualAppIdEditText.Enabled = true;
 					manualRegisterdAppIdRadioGroup.Enabled = true;
 					manualAppIdRadioButton.Enabled = true;
 					registerdAppIdRadioButton.Enabled = true;
+					if (manualAppIdRadioButton.Checked)
+					{
+						manualAppIdEditText.Enabled = true;
+						registerdAppIdSpn.Enabled = false;
+					}
+                    else
+					{
+						registerdAppIdSpn.Enabled = true;
+						manualAppIdEditText.Enabled = false;
+					}
 				}
 				else
 				{
@@ -5927,7 +5949,7 @@ namespace SharpHmiAndroid
 			tmpObj = (HmiApiLib.Controllers.BasicCommunication.OutGoingNotifications.OnAppActivated)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.BasicCommunication.OutGoingNotifications.OnAppActivated>(appIDAdapter.Context, tmpObj.getMethod());
 			if (tmpObj != null)
 			{    
-                manualAppIdEditText.Text ="" + tmpObj.getAppId();
+                manualAppIdEditText.Text = tmpObj.getAppId().ToString();
 			}
 
 
@@ -5954,14 +5976,10 @@ namespace SharpHmiAndroid
 						 else
 							 selectedAppID = Java.Lang.Integer.ParseInt(manualAppIdEditText.Text);
 
-					 //AppInstanceManager.Instance.sendRpc(BuildRpc.buildBasicCommunicationOnAppActivated(selectedAppID));
-
-
-					 //RpcMessage rpcMessage = null;
-					 //rpcMessage = BuildRpc.buildBasicCommunicationOnAppActivated(selectedAppID);
-					 //AppUtils.savePreferenceValueForRpc(appIDAdapter.Context, ((RpcResponse)rpcMessage).getMethod(), rpcMessage);
-					 //AppInstanceManager.Instance.sendRpc(rpcMessage);
-                                       
+					 RpcMessage rpcMessage = null;
+					 rpcMessage = BuildRpc.buildBasicCommunicationOnAppActivated(selectedAppID);
+					 AppUtils.savePreferenceValueForRpc(appIDAdapter.Context, ((RequestNotifyMessage)rpcMessage).getMethod(), rpcMessage);
+                     AppInstanceManager.Instance.sendRpc(rpcMessage);
 				 }
 
 			 });

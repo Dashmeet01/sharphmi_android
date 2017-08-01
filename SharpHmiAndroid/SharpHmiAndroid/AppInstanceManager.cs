@@ -231,7 +231,7 @@ namespace SharpHmiAndroid
             int appID = (int)msg.getAppId();
 			int corrId = msg.getId();
             HmiApiLib.Controllers.UI.OutgoingResponses.Show tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.Show();
-            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Show)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Show>(((MainActivity)appUiCallback), tmpObj.getMethod(), appID);
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Show)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Show>(((MainActivity)appUiCallback), tmpObj.getMethod());
             if (null == tmpObj)
             {
 				sendRpc(BuildRpc.buildUiShowResponse(corrId, HmiApiLib.Common.Enums.Result.SUCCESS));
@@ -250,7 +250,7 @@ namespace SharpHmiAndroid
             int corrId = msg.getId();
 
             HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand();
-            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand>(((MainActivity)appUiCallback), tmpObj.getMethod(), appID);
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.AddCommand>(((MainActivity)appUiCallback), tmpObj.getMethod());
             if (null == tmpObj)
             {
 				List<RpcRequest> data;
@@ -299,7 +299,7 @@ namespace SharpHmiAndroid
 			sendRpc(BuildRpc.buildUiOnSystemContext(SystemContext.ALERT, appId));
 
             HmiApiLib.Controllers.UI.OutgoingResponses.Alert tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.Alert();
-            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Alert)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Alert>(((MainActivity)appUiCallback), tmpObj.getMethod(), (int)appId);
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.Alert)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.Alert>(((MainActivity)appUiCallback), tmpObj.getMethod());
             if (null == tmpObj)
             {
                 appUiCallback.onUiAlertRequestCallback(msg);
@@ -520,7 +520,7 @@ namespace SharpHmiAndroid
 			int corrId = msg.getId();
             int appID = (int)msg.getAppId();
             HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu tmpObj = new HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu();
-            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu>(((MainActivity)appUiCallback), tmpObj.getMethod(), appID);
+            tmpObj = (HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu)AppUtils.getSavedPreferenceValueForRpc<HmiApiLib.Controllers.UI.OutgoingResponses.AddSubMenu>(((MainActivity)appUiCallback), tmpObj.getMethod());
             if (null == tmpObj)
             {
 				List<RpcRequest> data;
