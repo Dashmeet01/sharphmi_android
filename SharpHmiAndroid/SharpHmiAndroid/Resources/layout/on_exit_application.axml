@@ -12,28 +12,49 @@
         android:orientation="vertical"
         android:paddingLeft="20dip"
         android:paddingRight="20dip">
-        <TextView
-            android:id="@+id/appplication_id_tv"
+        <CheckBox
+            android:id="@+id/bc_on_exit_application_app_id_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_id" />
+        <RadioGroup
+            android:id="@+id/bc_on_exit_application_app_id_manual_radioGroup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dip"
-            android:text="App Id" />
-        <EditText
-            android:text=""
-            android:id="@+id/appplication_id_et"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:freezesText="true"
-            android:inputType="number" />
+            android:paddingLeft="10dp"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/bc_on_exit_application_app_id_manual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manual" />
+            <EditText
+                android:text=""
+                android:id="@+id/bc_on_exit_application_app_id_et"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:inputType="number"
+                android:freezesText="true" />
+            <RadioButton
+                android:id="@+id/bc_on_exit_application_app_id_registered_apps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registered Apps" />
+            <Spinner
+                android:id="@+id/bc_on_exit_application_app_id_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+        </RadioGroup>
         <TextView
-            android:id="@+id/app_exit_reason_tv"
+            android:id="@+id/bc_on_exit_application_app_exit_reason_tv"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dip"
             android:text="App Exit Reason" />
         <Spinner
-            android:id="@+id/app_exit_reason"
+            android:id="@+id/bc_on_exit_application_app_exit_reason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible" />

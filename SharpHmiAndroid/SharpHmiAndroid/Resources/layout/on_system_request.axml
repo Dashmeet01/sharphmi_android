@@ -102,20 +102,40 @@
             android:layout_height="wrap_content"
             android:visibility="visible"
             android:freezesText="true" />
-        <TextView
-            android:id="@+id/app_id_tv"
+        <CheckBox
+            android:id="@+id/bc_on_system_request_app_id_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_id" />
+        <RadioGroup
+            android:id="@+id/bc_on_system_request_app_id_manual_radioGroup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dip"
-            android:inputType="number"
-            android:text="App ID" />
-        <EditText
-            android:text=""
-            android:id="@+id/app_id_et"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:inputType="number"
-            android:freezesText="true" />
+            android:paddingLeft="10dp"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/bc_on_system_request_app_id_manual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manual" />
+            <EditText
+                android:text=""
+                android:id="@+id/bc_on_system_request_app_id_et"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:inputType="number"
+                android:freezesText="true" />
+            <RadioButton
+                android:id="@+id/bc_on_system_request_app_id_registered_apps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registered Apps" />
+            <Spinner
+                android:id="@+id/bc_on_system_request_app_id_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+        </RadioGroup>
     </LinearLayout>
 </ScrollView>

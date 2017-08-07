@@ -12,19 +12,41 @@
         android:orientation="vertical"
         android:paddingLeft="20dip"
         android:paddingRight="20dip">
-        <TextView
-            android:id="@+id/app_id_sdl_tv"
+        <CheckBox
+            android:id="@+id/sdl_on_app_permisssion_consent_app_id_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_id" />
+        <RadioGroup
+            android:id="@+id/sdl_on_app_permisssion_consent_app_id_manual_radioGroup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dip"
-            android:text="AppID" />
-        <EditText
-            android:text=""
-            android:id="@+id/app_id_sdl_et"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:freezesText="true" />
+            android:paddingLeft="10dp"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/sdl_on_app_permisssion_consent_app_id_manual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manual" />
+            <EditText
+                android:text=""
+                android:id="@+id/sdl_on_app_permisssion_consent_app_id_et"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:inputType="number"
+                android:freezesText="true" />
+            <RadioButton
+                android:id="@+id/sdl_on_app_permisssion_consent_app_id_registered_apps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registered Apps" />
+            <Spinner
+                android:id="@+id/sdl_on_app_permisssion_consent_app_id_spn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+        </RadioGroup>
         <ListView
             android:id="@+id/consented_functions_sdl_lv"
             android:layout_width="fill_parent"

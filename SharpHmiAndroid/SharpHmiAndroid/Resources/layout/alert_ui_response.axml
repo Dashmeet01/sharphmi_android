@@ -13,46 +13,28 @@
         android:paddingLeft="20dip"
         android:paddingRight="20dip">
         <TextView
-            android:id="@+id/device_name_tv"
+            android:id="@+id/alert_try_again_time_tv"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dip"
-            android:text="DeviceName" />
+            android:text="TryAgainTime" />
         <EditText
             android:text=""
-            android:id="@+id/device_name"
+            android:id="@+id/alert_try_again_time_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:freezesText="true" />
         <TextView
-            android:id="@+id/device_id_tv"
+            android:id="@+id/alert_resultcode_tv"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dip"
-            android:text="DeviceId" />
-        <EditText
-            android:text=""
-            android:id="@+id/device_id"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible" />
-        <TextView
-            android:id="@+id/transport_type_tv"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dip"
-            android:text="TransportType" />
+            android:text="ResultCode" />
         <Spinner
-            android:id="@+id/transport_type"
+            android:id="@+id/alert_resultcode_spn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible" />
-        <CheckBox
-            android:id="@+id/is_sdl_allowed"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:textStyle="bold"
-            android:text="IsSDLAllowed" />
     </LinearLayout>
 </ScrollView>

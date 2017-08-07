@@ -11,20 +11,41 @@
         android:orientation="vertical"
         android:paddingLeft="20dip"
         android:paddingRight="20dip">
-        <TextView
-            android:id="@+id/tts_notification_app_id_tv"
+        <CheckBox
+            android:id="@+id/tts_notification_app_id_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_id" />
+        <RadioGroup
+            android:id="@+id/tts_notification_app_id_manual_radioGroup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dip"
-            android:text="AppID" />
-        <EditText
-            android:text=""
-            android:id="@+id/tts_notification_app_id_et"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:inputType="number"
-            android:freezesText="true" />
+            android:paddingLeft="10dp"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/tts_notification_app_id_manual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manual" />
+            <EditText
+                android:text=""
+                android:id="@+id/tts_notification_app_id_et"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:inputType="number"
+                android:freezesText="true" />
+            <RadioButton
+                android:id="@+id/tts_notification_app_id_registered_apps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registered Apps" />
+            <Spinner
+                android:id="@+id/tts_notification_app_id_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+        </RadioGroup>
         <TextView
             android:id="@+id/tts_notification_method_name_tv"
             android:layout_width="fill_parent"
